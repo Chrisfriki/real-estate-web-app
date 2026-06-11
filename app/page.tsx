@@ -96,14 +96,25 @@ export default function Page() {
 
         <main>
           {/* 1. Hero + Stats + Funnel */}
-          <section id="valoracion" className="bg-slate-50 pb-6 pt-2">
-            {/* Stats inline — above the form */}
-            <StatsInline />
-            {/* Keyword-rich sub-label */}
-            <p className="mx-auto mb-2 max-w-xl px-4 text-center text-xs text-slate-400">
-              Valoración gratuita de pisos, casas y áticos en Valencia, Alicante y Castellón
-            </p>
-            <PublicFunnel />
+          <section
+            id="valoracion"
+            className="relative pb-6 pt-2"
+            style={{
+              backgroundImage: "url('/hero.webp')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Overlay semitransparente para legibilidad */}
+            <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px]" />
+            {/* Contenido por encima del overlay */}
+            <div className="relative z-10">
+              <StatsInline />
+              <p className="mx-auto mb-2 max-w-xl px-4 text-center text-xs text-slate-500">
+                Valoración gratuita de pisos, casas y áticos en Valencia, Alicante y Castellón
+              </p>
+              <PublicFunnel />
+            </div>
           </section>
 
           {/* 2. Why Casa Facil */}
