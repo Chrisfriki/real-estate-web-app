@@ -6,7 +6,7 @@ export function CasaFacilLogo({ className }: { className?: string }) {
         src={`${base}/logo.png`}
         alt="Casa Fácil Soluciones Inmobiliarias"
         height={48}
-        className="h-12 w-auto"
+        className="h-16 w-auto"
       />
     </div>
   )
