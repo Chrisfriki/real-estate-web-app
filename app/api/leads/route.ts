@@ -3,7 +3,35 @@ import { put } from '@vercel/blob'
 import { db } from '@/lib/db'
 import { leads } from '@/lib/db/schema'
 
+// Simple in-memory rate limiter: max 5 submissions per IP per 10 minutes
+const ipMap = new Map<string, { count: number; resetAt: number }>()
+const WINDOW_MS = 10 * 60 * 1000
+const MAX_SUBMISSIONS = 5
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const entry = ipMap.get(ip)
+  if (!entry || now > entry.resetAt) {
+    ipMap.set(ip, { count: 1, resetAt: now + WINDOW_MS })
+    return false
+  }
+  if (entry.count >= MAX_SUBMISSIONS) return true
+  entry.count++
+  return false
+}
+
 export async function POST(request: NextRequest) {
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+    request.headers.get('x-real-ip') ??
+    'unknown'
+
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: 'Demasiadas solicitudes. Inténtalo de nuevo en unos minutos.' },
+      { status: 429 },
+    )
+  }
   try {
     const formData = await request.formData()
 

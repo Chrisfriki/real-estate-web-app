@@ -25,6 +25,12 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7, // 7 days
     updateAge: 60 * 60 * 24,
   },
+  rateLimit: {
+    enabled: true,
+    window: 60,  // 60-second window
+    max: 5,      // max 5 login attempts per IP per window
+    storage: 'memory',
+  },
   ...(process.env.NODE_ENV === 'development'
     ? {
         advanced: {
