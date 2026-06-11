@@ -38,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Remove API routes for static export
+        run: rm -rf app/api
+
       - name: Build static site
         run: pnpm build
         env:
