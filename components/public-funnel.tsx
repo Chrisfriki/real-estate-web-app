@@ -144,7 +144,7 @@ export function PublicFunnel() {
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10 sm:py-14">
       {/* Hero copy */}
-      <div className="mb-8 text-center">
+      <div className="mb-8 rounded-2xl bg-white/80 px-6 py-7 text-center shadow-sm backdrop-blur-sm">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
           <Sparkles className="size-3.5" />
           Informe de mercado real · sin valoraciones automáticas
@@ -153,7 +153,7 @@ export function PublicFunnel() {
           ¿Cuánto vale tu vivienda en la{' '}
           <span className="text-[#72b01d]">Comunidad Valenciana</span>?
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-500 sm:text-base">
+        <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
           Olvídate de las estimaciones erróneas de los robots. Un asesor de tu
           zona cruzará los datos catastrales de tu calle y preparará un informe
           personalizado y preciso.

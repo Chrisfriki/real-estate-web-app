@@ -106,7 +106,7 @@ export default function Page() {
             }}
           >
             {/* Overlay semitransparente para legibilidad */}
-            <div className="absolute inset-0 bg-white/45 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 bg-white/55 backdrop-blur-[2px]" />
             {/* Contenido por encima del overlay */}
             <div className="relative z-10">
               <StatsInline />
