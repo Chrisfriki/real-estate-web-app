@@ -26,7 +26,6 @@ export function StatsInline() {
     { value: '+800', label: 'Propiedades', icon: Home },
     { value: '+30 años', label: 'Experiencia local', icon: Award },
     { value: '24h', label: 'Tiempo de respuesta', icon: Clock },
-    { value: null, label: '227 reseñas Google', icon: Star },
   ]
 
   return (
@@ -35,22 +34,28 @@ export function StatsInline() {
         {stats.map(({ value, label, icon: Icon }) => (
           <div key={label} className="flex flex-col items-center gap-1 text-center">
             <Icon className="size-5 text-[#72b01d]" strokeWidth={1.75} />
-            {value !== null ? (
-              <span className="text-lg font-bold leading-tight tracking-tight text-slate-800 sm:text-xl">
-                {value}
-              </span>
-            ) : (
-              <span className="flex gap-0.5">
-                {[1,2,3,4,5].map((i) => (
-                  <Star key={i} className="size-4 text-yellow-400" fill="#facc15" strokeWidth={0} />
-                ))}
-              </span>
-            )}
+            <span className="text-lg font-bold leading-tight tracking-tight text-slate-800 sm:text-xl">
+              {value}
+            </span>
             <span className="text-[10px] font-medium leading-tight text-slate-500 sm:text-xs">
               {label}
             </span>
           </div>
         ))}
+        {/* Bloque de reseñas: estrellas + 4,9 + label */}
+        <div className="flex flex-col items-center gap-1 text-center">
+          <span className="flex gap-0.5">
+            {[1,2,3,4,5].map((i) => (
+              <Star key={i} className="size-5 text-yellow-400" fill="#facc15" strokeWidth={0} />
+            ))}
+          </span>
+          <span className="text-lg font-bold leading-tight tracking-tight text-slate-800 sm:text-xl">
+            4,9
+          </span>
+          <span className="text-[10px] font-medium leading-tight text-slate-500 sm:text-xs">
+            227 reseñas Google
+          </span>
+        </div>
       </div>
     </div>
   )

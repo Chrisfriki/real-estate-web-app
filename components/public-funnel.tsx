@@ -161,7 +161,7 @@ export function PublicFunnel() {
       </div>
 
       {/* Progress */}
-      <div className="mb-6">
+      <div className="mb-6 rounded-xl bg-white/70 px-3 pb-2 pt-3 backdrop-blur-sm">
         <div className="mb-3 flex items-center justify-between">
           {STEP_TITLES.map((t, i) => {
             const Icon = STEP_ICONS[i]
@@ -542,9 +542,11 @@ export function PublicFunnel() {
         </div>
       </div>
 
-      <p className="mt-5 flex items-center justify-center gap-2 text-center text-xs text-slate-400">
-        <Phone className="size-3.5" />
-        Sin compromiso · Te llamamos en menos de 24 horas
+      <p className="mt-5 flex items-center justify-center text-center text-xs">
+        <span className="flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-slate-600 backdrop-blur-sm">
+          <Phone className="size-3.5" />
+          Sin compromiso · Te llamamos en menos de 24 horas
+        </span>
       </p>
     </div>
   )
