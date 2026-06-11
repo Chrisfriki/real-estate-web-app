@@ -12,6 +12,9 @@ const nextConfig = {
   output: isGitHubPages ? "export" : undefined,
   basePath: isGitHubPages ? "/real-estate-web-app" : "",
   assetPrefix: isGitHubPages ? "/real-estate-web-app/" : "",
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isGitHubPages ? "/real-estate-web-app" : "",
+  },
 }
 
 export default nextConfig

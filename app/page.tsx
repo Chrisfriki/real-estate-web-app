@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { Lock, Phone } from 'lucide-react'
 import { CasaFacilLogo } from '@/components/casa-facil-logo'
 import { CrmDashboard } from '@/components/crm-dashboard'
@@ -97,14 +96,15 @@ export default function Page() {
 
         <main>
           {/* 1. Hero + Stats + Funnel */}
-          <section id="valoracion" className="relative pb-6 pt-2">
-            <Image
-              src="/hero.webp"
-              alt=""
-              fill
-              priority
-              className="object-cover object-center"
-            />
+          <section
+            id="valoracion"
+            className="relative pb-6 pt-2"
+            style={{
+              backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/hero.webp')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
             {/* Overlay semitransparente para legibilidad */}
             <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px]" />
             {/* Contenido por encima del overlay */}
