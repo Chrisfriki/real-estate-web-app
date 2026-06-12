@@ -232,22 +232,20 @@ export function TestimonialsSection() {
 
   return (
     <section id="opiniones" className="bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-4xl px-4">
         {/* Header centrado */}
         <div className="mb-8 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Clientes satisfechos
           </span>
           <h2 className="mt-3 text-3xl font-bold leading-snug tracking-tight text-slate-800 sm:text-4xl">
-            Opiniones de clientes que han{' '}
-            <span className="text-[#e63946]">valorado</span> y{' '}
-            <span className="text-[#e63946]">vendido</span>{' '}
-            con <span className="text-[#72b01d]">nosotros</span>
+            Opiniones de clientes<br />
+            que han <span className="text-[#e63946]">valorado</span> y <span className="text-[#e63946]">vendido</span> con <span className="text-[#72b01d]">nosotros</span>
           </h2>
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-4xl px-4">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-8">
 
           {/* Vertical brand panel — desktop only */}
@@ -587,7 +585,7 @@ export function TrustSection() {
 
   return (
     <section className="border-t border-slate-200 bg-white py-10">
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-4xl px-4">
         <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
           {badges.map(({ icon: Icon, label }) => (
             <div key={label} className="flex items-center gap-2.5 text-sm font-medium text-slate-500">
