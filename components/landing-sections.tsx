@@ -244,7 +244,7 @@ export function TestimonialsSection() {
           </h2>
         </div>
 
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
+        <div className="mx-auto flex max-w-4xl flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
 
           {/* Vertical brand panel — desktop only */}
           <div className="hidden lg:flex lg:w-64 lg:shrink-0">
