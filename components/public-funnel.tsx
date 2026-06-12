@@ -150,8 +150,8 @@ export function PublicFunnel() {
           Informe de mercado real · sin valoraciones automáticas
         </span>
         <h1 className="mt-4 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
-          ¿Cuánto vale tu vivienda en la{' '}
-          <span className="text-[#72b01d]">Comunidad Valenciana</span>?
+          ¿Cuánto vale tu vivienda en{' '}
+          <span className="text-[#72b01d]">Valencia y provincia</span>?
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
           Olvídate de las estimaciones erróneas de los robots. Un asesor de tu

@@ -9,9 +9,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: '¿Cuánto vale mi casa en la Comunidad Valenciana? | Casa Fácil',
+  title: '¿Cuánto vale mi casa en Valencia y provincia? | Casa Fácil',
   description:
-    'Descubre el precio real de tu vivienda en Valencia, Alicante o Castellón. Valoración gratuita, sin robots: un asesor local te llama en menos de 24h con datos catastrales reales.',
+    'Descubre el precio real de tu vivienda en Valencia y provincia. Valoración gratuita, sin robots: un asesor local te llama en menos de 24h con datos catastrales reales.',
   generator: 'v0.app',
   alternates: {
     canonical: 'https://www.casafacil.es/',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         url: 'https://www.casafacil.es/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Casa Fácil - Valoración de viviendas en la Comunidad Valenciana',
+        alt: 'Casa Fácil - Valoración de viviendas en Valencia y provincia',
       },
     ],
     locale: 'es_ES',
@@ -54,7 +54,7 @@ const schemaOrg = {
   '@type': 'RealEstateAgent',
   name: 'Casa Fácil - Soluciones Inmobiliarias',
   description:
-    'Agencia inmobiliaria local especializada en valoración y venta de viviendas en la Comunidad Valenciana',
+    'Agencia inmobiliaria local especializada en valoración y venta de viviendas en Valencia y provincia',
   url: 'https://www.casafacil.es',
   telephone: '+34961221468',
   address: {
@@ -106,7 +106,7 @@ const schemaFaq = {
       name: '¿Operáis en mi municipio?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Cubrimos toda la Comunidad Valenciana: Valencia, Alicante y Castellón. Si tienes dudas, llámanos al 961 22 14 68.',
+        text: 'Cubrimos toda la provincia de Valencia. Si tienes dudas, llámanos al 961 22 14 68.',
       },
     },
     {

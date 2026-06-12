@@ -147,7 +147,7 @@ export default function Page() {
             <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
               <CasaFacilLogo />
               <p className="text-center text-xs text-slate-400 sm:text-left">
-                © {new Date().getFullYear()} Casa Fácil · Soluciones Inmobiliarias · Comunidad Valenciana
+                © {new Date().getFullYear()} Casa Fácil · Soluciones Inmobiliarias · Valencia y provincia
               </p>
               <div className="flex items-center gap-5 text-xs text-slate-400">
                 <span className="cursor-pointer transition-colors hover:text-slate-600">Política de privacidad</span>

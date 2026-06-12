@@ -72,7 +72,7 @@ export function WhySection() {
     {
       icon: MapPin,
       title: 'Especialistas en tu zona',
-      body: 'Nuestros asesores operan en toda la Comunidad Valenciana: Valencia, Alicante y Castellón. Conocemos cada municipio.',
+      body: 'Nuestros asesores operan en Valencia y provincia. Conocemos el mercado real de cada municipio y barrio.',
     },
     {
       icon: Users,
@@ -86,8 +86,8 @@ export function WhySection() {
     },
     {
       icon: ShieldCheck,
-      title: 'Gestión jurídica completa',
-      body: 'Nos encargamos de toda la documentación: contrato de arras, notaría, certificado energético, plusvalía y más.',
+      title: 'Asesoramiento jurídico',
+      body: 'Te asesoramos en toda la documentación: contrato de arras, notaría, certificado energético, plusvalía y más.',
     },
     {
       icon: HandshakeIcon,
@@ -228,91 +228,139 @@ export function TestimonialsSection() {
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [isPaused, maxIndex])
 
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+
   return (
     <section id="opiniones" className="bg-white py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-8 text-center">
-          <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
-            Reseñas de Google
-          </span>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
-            Opiniones de clientes que han valorado y vendido con nosotros
-          </h2>
-          <div className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2">
-            <span className="text-lg font-bold text-slate-800">4,9</span>
-            <div className="flex">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
-              ))}
-            </div>
-            <span className="text-sm text-slate-500">227 reseñas verificadas</span>
-            <span className="text-xs font-semibold text-[#4285F4]">Google</span>
-          </div>
-        </div>
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
 
-        <div
-          className="relative"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div className="overflow-hidden">
-            <div
-              className="flex gap-5 transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(calc(-${current} * (100% / ${visible}) - ${current} * 20px / ${visible}))`,
-              }}
-            >
-              {REVIEWS.map((r) => (
-                <div
-                  key={r.name}
-                  className="flex shrink-0 flex-col gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
-                  style={{ width: `calc(${100 / visible}% - ${((visible - 1) * 20) / visible}px)` }}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-0.5">
-                      {[1, 2, 3, 4, 5].map((i) => (
-                        <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />
-                      ))}
-                    </div>
-                    <span className="text-xs text-slate-400">{r.date}</span>
-                  </div>
-                  <p className="flex-1 text-sm leading-relaxed text-slate-600">
-                    &ldquo;{r.text}&rdquo;
-                  </p>
-                  <div className="flex items-center gap-3 border-t border-slate-200 pt-3">
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#72b01d] text-xs font-bold text-white">
-                      {r.initials}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-slate-800">{r.name}</p>
-                      <p className="flex items-center gap-1 text-xs text-slate-400">
-                        <span className="font-medium text-[#4285F4]">Google</span>
-                        <span>· Reseña verificada</span>
-                      </p>
-                    </div>
-                  </div>
+          {/* Vertical brand panel — desktop only */}
+          <div className="hidden lg:flex lg:w-64 lg:shrink-0">
+            <div className="relative flex w-full flex-col items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-b from-[#72b01d] to-[#4a7a0f] p-8 text-center shadow-lg">
+              {/* Decorative circles */}
+              <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10" />
+              <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-white/10" />
+              <div className="absolute right-4 bottom-32 h-16 w-16 rounded-full bg-white/5" />
+
+              <div className="relative z-10 flex flex-col items-center">
+                <img
+                  src={`${base}/logo.png`}
+                  alt="Casa Fácil"
+                  className="w-44 brightness-0 invert"
+                />
+                <p className="mt-2 text-xs font-medium tracking-wide text-white/70 uppercase">
+                  Soluciones Inmobiliarias
+                </p>
+              </div>
+
+              <div className="relative z-10 flex flex-col items-center gap-3">
+                <span className="text-6xl font-bold text-white">4,9</span>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} className="size-5 fill-amber-400 text-amber-400" />
+                  ))}
                 </div>
-              ))}
+                <p className="text-sm font-medium text-white/90">227 reseñas verificadas</p>
+                <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white">
+                  Google
+                </span>
+              </div>
+
+              <div className="relative z-10 mt-4 rounded-xl border border-white/20 bg-white/10 px-4 py-3">
+                <p className="text-xs italic leading-relaxed text-white/80">
+                  "La inmobiliaria de referencia en Valencia y provincia"
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <button
-              onClick={prev}
-              disabled={current === 0}
-              aria-label="Anterior reseña"
-              className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
+          {/* Reviews column */}
+          <div className="flex flex-1 flex-col">
+            <div className="mb-8 text-center lg:text-left">
+              <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
+                Reseñas de Google
+              </span>
+              <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
+                Opiniones de clientes que han valorado y vendido con nosotros
+              </h2>
+              <div className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2">
+                <span className="text-lg font-bold text-slate-800">4,9</span>
+                <div className="flex">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span className="text-sm text-slate-500">227 reseñas verificadas</span>
+                <span className="text-xs font-semibold text-[#4285F4]">Google</span>
+              </div>
+            </div>
+
+            <div
+              className="relative"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
             >
-              <ChevronLeft className="size-4" />
-            </button>
-            <button
-              onClick={next}
-              disabled={current >= maxIndex}
-              aria-label="Siguiente reseña"
-              className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
-            >
-              <ChevronRight className="size-4" />
-            </button>
+              <div className="overflow-hidden">
+                <div
+                  className="flex gap-5 transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateX(calc(-${current} * (100% / ${visible}) - ${current} * 20px / ${visible}))`,
+                  }}
+                >
+                  {REVIEWS.map((r) => (
+                    <div
+                      key={r.name}
+                      className="flex shrink-0 flex-col gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
+                      style={{ width: `calc(${100 / visible}% - ${((visible - 1) * 20) / visible}px)` }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-0.5">
+                          {[1, 2, 3, 4, 5].map((i) => (
+                            <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />
+                          ))}
+                        </div>
+                        <span className="text-xs text-slate-400">{r.date}</span>
+                      </div>
+                      <p className="flex-1 text-sm leading-relaxed text-slate-600">
+                        &ldquo;{r.text}&rdquo;
+                      </p>
+                      <div className="flex items-center gap-3 border-t border-slate-200 pt-3">
+                        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#72b01d] text-xs font-bold text-white">
+                          {r.initials}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-semibold text-slate-800">{r.name}</p>
+                          <p className="flex items-center gap-1 text-xs text-slate-400">
+                            <span className="font-medium text-[#4285F4]">Google</span>
+                            <span>· Reseña verificada</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 flex items-center justify-center gap-4">
+                <button
+                  onClick={prev}
+                  disabled={current === 0}
+                  aria-label="Anterior reseña"
+                  className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  <ChevronLeft className="size-4" />
+                </button>
+                <button
+                  onClick={next}
+                  disabled={current >= maxIndex}
+                  aria-label="Siguiente reseña"
+                  className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  <ChevronRight className="size-4" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -391,7 +439,7 @@ const FAQS = [
   },
   {
     q: '¿Operáis en mi municipio?',
-    a: 'Cubrimos toda la Comunidad Valenciana, con asesores en las tres provincias: Valencia, Alicante y Castellón. Si tienes dudas sobre tu zona, llámanos al 961 22 14 68 y te confirmamos al momento.',
+    a: 'Cubrimos toda la provincia de Valencia, con asesores especializados en cada municipio. Si tienes dudas sobre tu zona, llámanos al 961 22 14 68 y te confirmamos al momento.',
   },
   {
     q: '¿Qué diferencia hay entre vuestra valoración y las de Idealista o Fotocasa?',
@@ -451,95 +499,118 @@ export function FaqSection() {
   )
 }
 
-// ─── Coverage zones — accordion ───────────────────────────────────────────────
-const PROVINCES = [
-  {
-    name: 'Valencia',
-    towns: [
-      'Silla', 'Alcàsser', 'Picassent', 'Beniparrell', 'Sollana',
-      'Almussafes', 'Albal', 'Catarroja', 'Paiporta', 'Massanassa',
-      'Sedaví', 'Alfafar', 'Turís', 'Montserrat', 'Montroy',
-      'Llocnou de la Corona', 'Benifaió', 'Guadassuar', 'Algemesí',
-    ],
-  },
-  {
-    name: 'Alicante',
-    towns: [
-      'Alicante', 'Elche', 'Torrevieja', 'Orihuela', 'Benidorm',
-      'Villena', 'Dénia', 'Calp', 'Altea', 'Santa Pola',
-      'Guardamar del Segura', 'Novelda', 'Crevillent', 'Petrer',
-    ],
-  },
-  {
-    name: 'Castellón',
-    towns: [
-      'Castelló de la Plana', 'Vila-real', 'Borriana', "l'Alcora",
-      'Benicàssim', 'Vinaròs', 'Nules', "la Vall d'Uixó",
-      'Almassora', 'Oropesa del Mar', 'Peñíscola', 'Benicarló',
-    ],
-  },
-]
-
-function ZoneAccordion({ name, towns }: { name: string; towns: string[] }) {
-  const [open, setOpen] = useState(name === 'Valencia')
-  return (
-    <div className="rounded-2xl border border-[#72b01d]/20 bg-white shadow-sm">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left"
-        aria-expanded={open}
-      >
-        <div className="flex items-center gap-2">
-          <MapPin className="size-4 text-[#72b01d]" />
-          <h3 className="text-base font-bold text-slate-800">
-            Valoración de viviendas en {name}
-          </h3>
-        </div>
-        <ChevronDown
-          className={`size-5 shrink-0 text-[#72b01d] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-        />
-      </button>
-      {open && (
-        <div className="animate-fade-up border-t border-slate-100 px-5 pb-5 pt-4">
-          <div className="flex flex-wrap gap-1.5">
-            {towns.map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-[#72b01d]/20 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
+// ─── Coverage zones — SVG map ─────────────────────────────────────────────────
 export function ZonesSection() {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
   return (
     <section id="cobertura" className="bg-[#f0f7e4] py-14 sm:py-16">
       <div className="mx-auto max-w-4xl px-4">
-        <div className="mb-8 text-center">
+        <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Cobertura local
           </span>
           <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
             Valoramos viviendas en toda la{' '}
-            <span className="text-[#72b01d]">Comunidad Valenciana</span>
+            <span className="text-[#72b01d]">provincia de Valencia</span>
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
-            Asesores especializados en cada provincia. Conocemos el mercado
-            real de cada municipio: no somos una agencia de ciudad que visita
+            Asesores especializados en Valencia ciudad y todos sus municipios.
+            Conocemos el mercado real de cada zona: no somos una agencia de ciudad que visita
             tu pueblo de vez en cuando.
           </p>
         </div>
 
-        <div className="flex flex-col gap-3">
-          {PROVINCES.map(({ name, towns }) => (
-            <ZoneAccordion key={name} name={name} towns={towns} />
-          ))}
+        <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-center">
+          {/* SVG Map */}
+          <div className="relative w-48 shrink-0 sm:w-56">
+            <svg
+              viewBox="0 0 220 460"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full drop-shadow-md"
+              aria-label="Mapa Comunitat Valenciana con provincia de Valencia destacada"
+            >
+              {/* Castellón — gray (north) */}
+              <path
+                d="M 55,8 L 182,8 L 184,155 L 148,161 L 87,163 L 44,148 Z"
+                fill="#cbd5e1"
+                stroke="white"
+                strokeWidth="2.5"
+              />
+              {/* Valencia — green (middle) */}
+              <path
+                d="M 44,148 L 87,163 L 148,161 L 184,155 L 186,330 L 158,338 L 88,340 L 33,322 L 20,272 L 24,198 Z"
+                fill="#72b01d"
+                stroke="white"
+                strokeWidth="2.5"
+              />
+              {/* Alicante — gray (south) */}
+              <path
+                d="M 33,322 L 88,340 L 158,338 L 186,330 L 183,415 L 144,445 L 97,440 L 63,418 Z"
+                fill="#cbd5e1"
+                stroke="white"
+                strokeWidth="2.5"
+              />
+              {/* Province labels */}
+              <text x="117" y="90" textAnchor="middle" fontSize="13" fill="#94a3b8" fontFamily="sans-serif" fontWeight="500">
+                Castellón
+              </text>
+              <text x="108" y="248" textAnchor="middle" fontSize="15" fill="white" fontFamily="sans-serif" fontWeight="700">
+                Valencia
+              </text>
+              <text x="117" y="393" textAnchor="middle" fontSize="13" fill="#94a3b8" fontFamily="sans-serif" fontWeight="500">
+                Alicante
+              </text>
+            </svg>
+            {/* Logo overlay centrado en la provincia de Valencia */}
+            <div
+              className="pointer-events-none absolute left-0 right-0"
+              style={{ top: '33%', height: '37%' }}
+            >
+              <img
+                src={`${base}/logo.png`}
+                alt=""
+                aria-hidden="true"
+                className="mx-auto h-full w-4/5 object-contain opacity-20"
+              />
+            </div>
+          </div>
+
+          {/* Info cards */}
+          <div className="flex flex-col gap-3 sm:max-w-xs">
+            <div className="rounded-2xl border border-[#72b01d]/25 bg-white p-5 shadow-sm">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
+                  <MapPin className="size-3.5 text-white" />
+                </span>
+                <span className="text-sm font-semibold text-slate-800">Zona de cobertura</span>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-500">
+                Toda la provincia de Valencia: capital, municipios del Área Metropolitana, l'Horta, la Ribera y comarca interior.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-[#72b01d]/25 bg-white p-5 shadow-sm">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
+                  <Home className="size-3.5 text-white" />
+                </span>
+                <span className="text-sm font-semibold text-slate-800">Especialistas locales</span>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-500">
+                Nuestros asesores viven y trabajan en Valencia. Conocen de primera mano los precios reales de cada barrio y municipio.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-[#72b01d]/25 bg-white p-5 shadow-sm">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
+                  <TrendingUp className="size-3.5 text-white" />
+                </span>
+                <span className="text-sm font-semibold text-slate-800">Mercado actualizado</span>
+              </div>
+              <p className="text-sm leading-relaxed text-slate-500">
+                Accedemos a operaciones cerradas recientemente en tu calle para darte el precio más preciso del mercado actual.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -549,7 +620,7 @@ export function ZonesSection() {
 // ─── Trust / legal badges ────────────────────────────────────────────────────
 export function TrustSection() {
   const badges = [
-    { icon: BadgeCheck, label: 'Agencia registrada API' },
+    { icon: BadgeCheck, label: 'Agencia registrada RAICV' },
     { icon: ShieldCheck, label: 'RGPD & privacidad garantizada' },
     { icon: BookOpen, label: 'Asesoría jurídica incluida' },
     { icon: FileText, label: 'Valoración sin compromiso' },
