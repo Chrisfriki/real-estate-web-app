@@ -231,8 +231,8 @@ export function TestimonialsSection() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
   return (
-    <section id="opiniones" className="bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-4xl px-4">
+    <section id="opiniones" className="overflow-x-hidden bg-white py-14 sm:py-16">
+      <div className="mx-auto max-w-3xl px-4">
         {/* Header centrado */}
         <div className="mb-8 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
@@ -245,11 +245,11 @@ export function TestimonialsSection() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-8">
+      <div className="mx-auto max-w-3xl px-4">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch lg:gap-6">
 
           {/* Vertical brand panel — desktop only */}
-          <div className="hidden lg:flex lg:w-80 lg:shrink-0">
+          <div className="hidden lg:flex lg:w-64 lg:shrink-0">
             <div className="relative flex w-full flex-col items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-b from-[#72b01d] to-[#4a7a0f] p-8 text-center shadow-lg">
               {/* Decorative circles */}
               <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10" />
@@ -303,7 +303,7 @@ export function TestimonialsSection() {
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              <div className="overflow-hidden">
+              <div className="w-full overflow-hidden">
                 <div
                   className="flex gap-5 transition-transform duration-500 ease-in-out"
                   style={{
