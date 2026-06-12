@@ -527,20 +527,20 @@ export function ZonesSection() {
           </p>
         </div>
 
-        {/* Grid: mapa 1fr | cards 300px en desktop, columna única en móvil */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_300px] sm:items-center sm:gap-3">
+        {/* Columnas fijas + justify-center: evita que 1fr expanda el mapa a espacio enorme */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[460px_380px] sm:items-center sm:justify-center sm:gap-8">
 
-          {/* Columna izquierda: mapa pegado a la derecha (borde junto a las tarjetas) */}
-          <div className="flex items-center justify-center sm:justify-end">
+          {/* Columna izquierda: mapa — ocupa exactamente 460px */}
+          <div className="flex items-center justify-center">
             <img
               src={`${base}/mapa-valencia.png`}
               alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
-              className="h-auto w-full max-w-[320px] sm:max-w-[700px]"
+              className="h-auto w-full max-w-[320px] sm:max-w-[460px]"
             />
           </div>
 
-          {/* Columna derecha: tarjetas */}
-          <div className="flex flex-col gap-3">
+          {/* Columna derecha: tarjetas — ocupa exactamente 380px */}
+          <div className="flex flex-col gap-[18px]">
             <div className="rounded-2xl border border-[#72b01d]/25 bg-white p-5 shadow-sm">
               <div className="mb-2 flex items-center gap-2">
                 <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
