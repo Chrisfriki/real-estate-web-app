@@ -527,15 +527,15 @@ export function ZonesSection() {
           </p>
         </div>
 
-        {/* Grid: mapa 1fr | cards 400px en desktop, columna única en móvil */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_400px] sm:items-center sm:gap-[72px]">
+        {/* Grid: mapa 1fr | cards 380px en desktop, columna única en móvil */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_380px] sm:items-center sm:gap-8">
 
           {/* Columna izquierda: mapa grande */}
-          <div className="flex min-h-[280px] items-center justify-center sm:min-h-[520px]">
+          <div className="flex items-center justify-center sm:block">
             <img
               src={`${base}/mapa-valencia.png`}
               alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
-              className="block h-auto w-full max-w-[340px] sm:max-w-none"
+              className="h-auto w-full max-w-[320px] sm:max-w-full"
             />
           </div>
 
@@ -592,11 +592,11 @@ export function TrustSection() {
 
   return (
     <section className="border-t border-slate-200 bg-white py-10">
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+      <div className="mx-auto max-w-5xl px-4">
+        <div className="grid grid-cols-2 justify-items-center gap-x-4 gap-y-5 sm:grid-cols-4 sm:gap-x-6">
           {badges.map(({ icon: Icon, label }) => (
-            <div key={label} className="flex items-center gap-2.5 text-sm font-medium text-slate-500">
-              <Icon className="size-5 text-[#72b01d]" />
+            <div key={label} className="flex items-center gap-2 text-sm font-medium text-slate-500">
+              <Icon className="size-4 shrink-0 text-[#72b01d]" />
               {label}
             </div>
           ))}

@@ -76,7 +76,10 @@ export default function Page() {
   return (
     <ToastProvider>
       {showLogin && (
-        <AdminLogin onSuccess={() => setShowLogin(false)} />
+        <AdminLogin
+          onSuccess={() => setShowLogin(false)}
+          onClose={() => setShowLogin(false)}
+        />
       )}
       <WhatsAppButton />
 
@@ -101,7 +104,7 @@ export default function Page() {
               <StatsInline />
               <p className="mx-auto mb-2 max-w-xl px-4 text-center text-xs">
                 <span className="rounded-full bg-white/80 px-3 py-1 text-slate-600 backdrop-blur-sm">
-                  Valoración gratuita de pisos, casas y áticos en Valencia, Alicante y Castellón
+                  Valoración gratuita de pisos, casas y áticos en Valencia y provincia
                 </span>
               </p>
               <PublicFunnel />

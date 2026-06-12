@@ -1,13 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Lock } from 'lucide-react'
+import { Lock, X } from 'lucide-react'
 import { signIn } from '@/lib/auth-client'
 
 const MAX_ATTEMPTS = 5
 const BLOCK_MS = 10 * 60 * 1000 // 10 minutos
 
-export function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
+export function AdminLogin({
+  onSuccess,
+  onClose,
+}: {
+  onSuccess: () => void
+  onClose?: () => void
+}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -17,6 +23,15 @@ export function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
   const [remaining, setRemaining] = useState(0)
 
   const blocked = blockedUntil !== null && Date.now() < blockedUntil
+
+  // Cerrar con Escape
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose?.()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
 
   // Countdown timer
   useEffect(() => {
@@ -76,8 +91,21 @@ export function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
   const secs = String(remaining % 60).padStart(2, '0')
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm">
-      <div className="animate-fade-up w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-8 shadow-2xl">
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose?.() }}
+    >
+      <div className="animate-fade-up relative w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-8 shadow-2xl">
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar"
+            className="absolute right-4 top-4 flex size-7 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+          >
+            <X className="size-4" />
+          </button>
+        )}
         <div className="mb-6 flex flex-col items-center gap-3 text-center">
           <span className="flex size-12 items-center justify-center rounded-full bg-slate-100">
             <Lock className="size-5 text-slate-500" />
