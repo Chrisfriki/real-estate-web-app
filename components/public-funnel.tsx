@@ -476,22 +476,49 @@ export function PublicFunnel() {
                   placeholder="Cuéntanos cualquier detalle relevante de tu vivienda…"
                 />
               </Field>
-              <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3.5">
-                <input
-                  type="checkbox"
-                  checked={rgpd}
-                  onChange={(e) => setRgpd(e.target.checked)}
-                  className="mt-0.5 size-4 shrink-0 cursor-pointer accent-[#72b01d]"
-                />
-                <span className="text-xs leading-relaxed text-slate-500">
-                  He leído y acepto la{' '}
-                  <span className="font-medium text-[#5c8f16]">
-                    política de privacidad
-                  </span>{' '}
-                  y el tratamiento de mis datos por Casa Fácil para gestionar mi
-                  solicitud de valoración. (RGPD)
-                </span>
-              </label>
+              <div>
+                <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3.5">
+                  <input
+                    type="checkbox"
+                    checked={rgpd}
+                    onChange={(e) => setRgpd(e.target.checked)}
+                    className="mt-0.5 size-4 shrink-0 cursor-pointer accent-[#72b01d]"
+                    aria-describedby="rgpd-info"
+                  />
+                  <span className="text-xs leading-relaxed text-slate-500">
+                    He leído y acepto la{' '}
+                    <a
+                      href="/politica-privacidad"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-[#5c8f16] underline underline-offset-2 hover:text-[#4a7a0f]"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Política de Privacidad
+                    </a>{' '}
+                    y el tratamiento de mis datos por Casa Fácil para gestionar mi solicitud de valoración.
+                    <span className="ml-1 text-slate-400">(obligatorio)</span>
+                  </span>
+                </label>
+                <p
+                  id="rgpd-info"
+                  className="mt-2 rounded-lg bg-slate-50 px-3.5 py-2.5 text-[11px] leading-relaxed text-slate-400"
+                >
+                  <strong className="text-slate-500">Responsable:</strong> Casa Fácil Soluciones Inmobiliarias.{' '}
+                  <strong className="text-slate-500">Finalidad:</strong> gestionar tu solicitud de valoración inmobiliaria.{' '}
+                  <strong className="text-slate-500">Legitimación:</strong> consentimiento del usuario.{' '}
+                  <strong className="text-slate-500">Derechos:</strong> puedes acceder, rectificar, suprimir y ejercer otros derechos.{' '}
+                  Más información en la{' '}
+                  <a
+                    href="/politica-privacidad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#5c8f16] underline underline-offset-2 hover:text-[#4a7a0f]"
+                  >
+                    Política de Privacidad
+                  </a>.
+                </p>
+              </div>
             </div>
           )}
         </div>

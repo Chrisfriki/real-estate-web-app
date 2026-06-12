@@ -139,8 +139,9 @@ export default function Page() {
                 © {new Date().getFullYear()} Casa Fácil · Soluciones Inmobiliarias · Valencia y provincia
               </p>
               <div className="flex items-center gap-5 text-xs text-slate-400">
-                <span className="cursor-pointer transition-colors hover:text-slate-600">Política de privacidad</span>
-                <span className="cursor-pointer transition-colors hover:text-slate-600">Aviso legal</span>
+                <a href="/politica-privacidad" className="transition-colors hover:text-slate-600">Política de privacidad</a>
+                <a href="/aviso-legal" className="transition-colors hover:text-slate-600">Aviso legal</a>
+                <a href="/politica-cookies" className="transition-colors hover:text-slate-600">Cookies</a>
                 <button
                   onClick={() => setShowLogin(true)}
                   className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-400 transition-colors hover:border-slate-300 hover:bg-slate-100 hover:text-slate-600"
