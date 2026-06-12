@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Lock, Phone } from 'lucide-react'
+import { Lock } from 'lucide-react'
 import { CasaFacilLogo } from '@/components/casa-facil-logo'
 import { CrmDashboard } from '@/components/crm-dashboard'
 import { PublicFunnel } from '@/components/public-funnel'
@@ -17,6 +17,7 @@ import {
   WhySection,
   ZonesSection,
 } from '@/components/landing-sections'
+import { FloatingHeader } from '@/components/floating-header'
 import { signOut, useSession } from '@/lib/auth-client'
 
 // ─── Floating WhatsApp button ─────────────────────────────────────────────────
@@ -80,25 +81,13 @@ export default function Page() {
       <WhatsAppButton />
 
       <div className="min-h-screen bg-slate-50">
-        {/* Header */}
-        <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur-md">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-            <CasaFacilLogo />
-            <a
-              href="tel:+34961221468"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
-            >
-              <Phone className="size-4 text-[#72b01d]" />
-              <span className="hidden sm:inline">961 22 14 68</span>
-            </a>
-          </div>
-        </header>
+        <FloatingHeader />
 
         <main>
           {/* 1. Hero + Stats + Funnel */}
           <section
             id="valoracion"
-            className="relative pb-6 pt-2"
+            className="relative pb-6 pt-20 sm:pt-24"
             style={{
               backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/hero.webp')`,
               backgroundSize: 'cover',
