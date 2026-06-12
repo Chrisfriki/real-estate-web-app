@@ -511,7 +511,7 @@ export function ZonesSection() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
   return (
     <section id="cobertura" className="bg-[#f0f7e4] py-14 sm:py-16">
-      <div className="mx-auto max-w-4xl px-4">
+      <div className="mx-auto max-w-5xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Cobertura local
@@ -527,18 +527,20 @@ export function ZonesSection() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-stretch sm:justify-center">
-          {/* Map image — altura fija en móvil, estira hasta las cards en desktop */}
-          <div className="h-72 w-64 shrink-0 sm:h-auto sm:w-72 lg:w-80">
+        {/* Grid: mapa 1fr | cards 400px en desktop, columna única en móvil */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_400px] sm:items-stretch sm:gap-12">
+
+          {/* Columna izquierda: mapa grande */}
+          <div className="flex min-h-[280px] items-center justify-center sm:min-h-[520px]">
             <img
               src={`${base}/mapa-valencia.png`}
               alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
-              className="h-full w-full object-contain"
+              className="block h-auto w-full max-w-[320px] sm:max-w-[480px]"
             />
           </div>
 
-          {/* Info cards */}
-          <div className="flex flex-col gap-3 sm:max-w-xs">
+          {/* Columna derecha: tarjetas */}
+          <div className="flex flex-col gap-3">
             <div className="rounded-2xl border border-[#72b01d]/25 bg-white p-5 shadow-sm">
               <div className="mb-2 flex items-center gap-2">
                 <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
