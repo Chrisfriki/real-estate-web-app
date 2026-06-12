@@ -242,21 +242,6 @@ export function TestimonialsSection() {
           <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
             Opiniones de clientes que han valorado y vendido con nosotros
           </h2>
-          <a
-            href="https://share.google/axkDFzU5FUsP0lA73"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 transition-colors hover:border-amber-300 hover:bg-amber-100"
-          >
-            <span className="text-lg font-bold text-slate-800">4,9</span>
-            <div className="flex">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
-              ))}
-            </div>
-            <span className="text-sm text-slate-500">227 reseñas verificadas</span>
-            <span className="text-xs font-semibold text-[#4285F4]">Google</span>
-          </a>
         </div>
 
         <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
@@ -287,7 +272,9 @@ export function TestimonialsSection() {
                     <Star key={i} className="size-5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-sm font-medium text-white/90">227 reseñas verificadas</p>
+                <span className="rounded-full bg-amber-400 px-3 py-1 text-xs font-bold text-slate-900">
+                  227 reseñas verificadas
+                </span>
                 <a
                   href="https://share.google/axkDFzU5FUsP0lA73"
                   target="_blank"
@@ -533,13 +520,13 @@ export function ZonesSection() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-center">
-          {/* Map image */}
-          <div className="w-64 shrink-0 sm:w-80 lg:w-96 xl:w-[420px]">
+        <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-stretch sm:justify-center">
+          {/* Map image — se estira hasta la altura de los cards */}
+          <div className="flex w-64 shrink-0 items-center sm:w-72 lg:w-80">
             <img
               src={`${base}/mapa-valencia.png`}
               alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
-              className="w-full"
+              className="h-full w-full object-contain"
             />
           </div>
 
