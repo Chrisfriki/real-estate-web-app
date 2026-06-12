@@ -262,9 +262,14 @@ export function TestimonialsSection() {
                   ))}
                 </div>
                 <p className="text-sm font-medium text-white/90">227 reseñas verificadas</p>
-                <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white">
-                  Google
-                </span>
+                <a
+                  href="https://share.google/axkDFzU5FUsP0lA73"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white transition-colors hover:bg-white/30"
+                >
+                  Ver en Google
+                </a>
               </div>
 
               <div className="relative z-10 mt-4 rounded-xl border border-white/20 bg-white/10 px-4 py-3">
@@ -277,14 +282,19 @@ export function TestimonialsSection() {
 
           {/* Reviews column */}
           <div className="flex flex-1 flex-col">
-            <div className="mb-8 text-center lg:text-left">
+            <div className="mb-8 text-center">
               <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
                 Reseñas de Google
               </span>
               <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
                 Opiniones de clientes que han valorado y vendido con nosotros
               </h2>
-              <div className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2">
+              <a
+                href="https://share.google/axkDFzU5FUsP0lA73"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 transition-colors hover:border-amber-300 hover:bg-amber-100"
+              >
                 <span className="text-lg font-bold text-slate-800">4,9</span>
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((i) => (
@@ -293,7 +303,7 @@ export function TestimonialsSection() {
                 </div>
                 <span className="text-sm text-slate-500">227 reseñas verificadas</span>
                 <span className="text-xs font-semibold text-[#4285F4]">Google</span>
-              </div>
+              </a>
             </div>
 
             <div
@@ -521,58 +531,13 @@ export function ZonesSection() {
         </div>
 
         <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-center">
-          {/* SVG Map */}
-          <div className="relative w-48 shrink-0 sm:w-56">
-            <svg
-              viewBox="0 0 220 460"
-              xmlns="http://www.w3.org/2000/svg"
+          {/* Map image */}
+          <div className="w-56 shrink-0 sm:w-64 lg:w-72">
+            <img
+              src={`${base}/mapa-valencia.png`}
+              alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
               className="w-full drop-shadow-md"
-              aria-label="Mapa Comunitat Valenciana con provincia de Valencia destacada"
-            >
-              {/* Castellón — gray (north) */}
-              <path
-                d="M 55,8 L 182,8 L 184,155 L 148,161 L 87,163 L 44,148 Z"
-                fill="#cbd5e1"
-                stroke="white"
-                strokeWidth="2.5"
-              />
-              {/* Valencia — green (middle) */}
-              <path
-                d="M 44,148 L 87,163 L 148,161 L 184,155 L 186,330 L 158,338 L 88,340 L 33,322 L 20,272 L 24,198 Z"
-                fill="#72b01d"
-                stroke="white"
-                strokeWidth="2.5"
-              />
-              {/* Alicante — gray (south) */}
-              <path
-                d="M 33,322 L 88,340 L 158,338 L 186,330 L 183,415 L 144,445 L 97,440 L 63,418 Z"
-                fill="#cbd5e1"
-                stroke="white"
-                strokeWidth="2.5"
-              />
-              {/* Province labels */}
-              <text x="117" y="90" textAnchor="middle" fontSize="13" fill="#94a3b8" fontFamily="sans-serif" fontWeight="500">
-                Castellón
-              </text>
-              <text x="108" y="248" textAnchor="middle" fontSize="15" fill="white" fontFamily="sans-serif" fontWeight="700">
-                Valencia
-              </text>
-              <text x="117" y="393" textAnchor="middle" fontSize="13" fill="#94a3b8" fontFamily="sans-serif" fontWeight="500">
-                Alicante
-              </text>
-            </svg>
-            {/* Logo overlay centrado en la provincia de Valencia */}
-            <div
-              className="pointer-events-none absolute left-0 right-0"
-              style={{ top: '33%', height: '37%' }}
-            >
-              <img
-                src={`${base}/logo.png`}
-                alt=""
-                aria-hidden="true"
-                className="mx-auto h-full w-4/5 object-contain opacity-20"
-              />
-            </div>
+            />
           </div>
 
           {/* Info cards */}
