@@ -232,7 +232,7 @@ export function TestimonialsSection() {
 
   return (
     <section id="opiniones" className="bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-5xl px-4">
 
         {/* Header centrado sobre el ancho completo */}
         <div className="mb-8 text-center">
@@ -244,7 +244,7 @@ export function TestimonialsSection() {
           </h2>
         </div>
 
-        <div className="mx-auto flex max-w-4xl flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
 
           {/* Vertical brand panel — desktop only */}
           <div className="hidden lg:flex lg:w-64 lg:shrink-0">
