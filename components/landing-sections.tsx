@@ -209,7 +209,7 @@ export function TestimonialsSection() {
   const [visible, setVisible] = useState(3)
   useEffect(() => {
     function update() {
-      setVisible(window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3)
+      setVisible(window.innerWidth < 640 ? 1 : window.innerWidth < 1280 ? 2 : 3)
     }
     update()
     window.addEventListener('resize', update)
@@ -232,31 +232,24 @@ export function TestimonialsSection() {
 
   return (
     <section id="opiniones" className="bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-7xl px-4">
-
-        {/* Header centrado sobre el ancho completo */}
+      <div className="mx-auto max-w-4xl px-4">
+        {/* Header centrado */}
         <div className="mb-8 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Clientes satisfechos
           </span>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
-            Opiniones de clientes que han valorado y vendido con nosotros
+          <h2 className="mt-3 text-4xl font-bold leading-tight tracking-tight text-slate-800 sm:text-5xl">
+            Opiniones de clientes que han valorado<br className="hidden sm:block" />{' '}
+            y vendido con <span className="text-[#72b01d]">nosotros</span>
           </h2>
-          <a
-            href="https://share.google/axkDFzU5FUsP0lA73"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-1.5 text-sm font-semibold text-amber-700 transition-colors hover:bg-amber-100"
-          >
-            <span className="text-amber-400">★★★★★</span>
-            <span>4,9 · 227 reseñas en Google</span>
-          </a>
         </div>
+      </div>
 
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
+      <div className="px-4 sm:px-8 lg:pl-8 lg:pr-6">
+        <div className="flex flex-col gap-8 md:flex-row md:items-stretch md:gap-6 lg:gap-10">
 
-          {/* Vertical brand panel — desktop only */}
-          <div className="hidden lg:flex lg:w-64 lg:shrink-0">
+          {/* Vertical brand panel */}
+          <div className="hidden md:flex md:w-60 md:shrink-0 lg:w-96">
             <div className="relative flex w-full flex-col items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-b from-[#72b01d] to-[#4a7a0f] p-8 text-center shadow-lg">
               {/* Decorative circles */}
               <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10" />
