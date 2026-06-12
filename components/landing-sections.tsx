@@ -71,7 +71,7 @@ export function WhySection() {
     },
     {
       icon: MapPin,
-      title: 'Especialistas en tu zona',
+      title: 'Especialistas en Valencia',
       body: 'Nuestros asesores operan en Valencia y provincia. Conocemos el mercado real de cada municipio y barrio.',
     },
     {
@@ -233,6 +233,32 @@ export function TestimonialsSection() {
   return (
     <section id="opiniones" className="bg-white py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
+
+        {/* Header centrado sobre el ancho completo */}
+        <div className="mb-8 text-center">
+          <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
+            Reseñas de Google
+          </span>
+          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
+            Opiniones de clientes que han valorado y vendido con nosotros
+          </h2>
+          <a
+            href="https://share.google/axkDFzU5FUsP0lA73"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 transition-colors hover:border-amber-300 hover:bg-amber-100"
+          >
+            <span className="text-lg font-bold text-slate-800">4,9</span>
+            <div className="flex">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+            <span className="text-sm text-slate-500">227 reseñas verificadas</span>
+            <span className="text-xs font-semibold text-[#4285F4]">Google</span>
+          </a>
+        </div>
+
         <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
 
           {/* Vertical brand panel — desktop only */}
@@ -280,31 +306,8 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-          {/* Reviews column */}
+          {/* Carousel column */}
           <div className="flex flex-1 flex-col">
-            <div className="mb-8 text-center">
-              <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
-                Reseñas de Google
-              </span>
-              <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
-                Opiniones de clientes que han valorado y vendido con nosotros
-              </h2>
-              <a
-                href="https://share.google/axkDFzU5FUsP0lA73"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 transition-colors hover:border-amber-300 hover:bg-amber-100"
-              >
-                <span className="text-lg font-bold text-slate-800">4,9</span>
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="size-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <span className="text-sm text-slate-500">227 reseñas verificadas</span>
-                <span className="text-xs font-semibold text-[#4285F4]">Google</span>
-              </a>
-            </div>
 
             <div
               className="relative"
@@ -532,11 +535,11 @@ export function ZonesSection() {
 
         <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start sm:justify-center">
           {/* Map image */}
-          <div className="w-56 shrink-0 sm:w-64 lg:w-72">
+          <div className="w-64 shrink-0 sm:w-80 lg:w-96 xl:w-[420px]">
             <img
               src={`${base}/mapa-valencia.png`}
               alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
-              className="w-full drop-shadow-md"
+              className="w-full"
             />
           </div>
 
@@ -547,10 +550,10 @@ export function ZonesSection() {
                 <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
                   <MapPin className="size-3.5 text-white" />
                 </span>
-                <span className="text-sm font-semibold text-slate-800">Zona de cobertura</span>
+                <span className="text-sm font-semibold text-slate-800">Valencia y toda su provincia</span>
               </div>
               <p className="text-sm leading-relaxed text-slate-500">
-                Toda la provincia de Valencia: capital, municipios del Área Metropolitana, l'Horta, la Ribera y comarca interior.
+                Capital, municipios del Área Metropolitana, l'Horta, la Ribera y comarca interior. Toda la provincia de Valencia.
               </p>
             </div>
             <div className="rounded-2xl border border-[#72b01d]/25 bg-white p-5 shadow-sm">
@@ -558,7 +561,7 @@ export function ZonesSection() {
                 <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
                   <Home className="size-3.5 text-white" />
                 </span>
-                <span className="text-sm font-semibold text-slate-800">Especialistas locales</span>
+                <span className="text-sm font-semibold text-slate-800">Asesores locales en Valencia</span>
               </div>
               <p className="text-sm leading-relaxed text-slate-500">
                 Nuestros asesores viven y trabajan en Valencia. Conocen de primera mano los precios reales de cada barrio y municipio.
@@ -569,7 +572,7 @@ export function ZonesSection() {
                 <span className="flex size-7 items-center justify-center rounded-full bg-[#72b01d]">
                   <TrendingUp className="size-3.5 text-white" />
                 </span>
-                <span className="text-sm font-semibold text-slate-800">Mercado actualizado</span>
+                <span className="text-sm font-semibold text-slate-800">Precios reales del mercado valenciano</span>
               </div>
               <p className="text-sm leading-relaxed text-slate-500">
                 Accedemos a operaciones cerradas recientemente en tu calle para darte el precio más preciso del mercado actual.
