@@ -205,20 +205,28 @@ export function TestimonialsSection() {
   const [current, setCurrent] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [cardPx, setCardPx] = useState({ width: 380, visible: 2 })
 
-  const [visible, setVisible] = useState(2)
   useEffect(() => {
-    function update() {
-      setVisible(window.innerWidth < 640 ? 1 : 2)
+    function measure() {
+      const vis = window.innerWidth < 640 ? 1 : 2
+      const containerWidth = carouselRef.current?.offsetWidth ?? 760
+      const w = Math.floor((containerWidth - (vis - 1) * 20) / vis)
+      setCardPx({ width: w, visible: vis })
     }
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
   }, [])
 
-  const maxIndex = REVIEWS.length - visible
+  const maxIndex = REVIEWS.length - cardPx.visible
   const prev = useCallback(() => setCurrent((c) => Math.max(c - 1, 0)), [])
   const next = useCallback(() => setCurrent((c) => Math.min(c + 1, maxIndex)), [maxIndex])
+
+  useEffect(() => {
+    setCurrent((c) => Math.min(c, maxIndex))
+  }, [maxIndex])
 
   useEffect(() => {
     if (isPaused) return
@@ -232,37 +240,34 @@ export function TestimonialsSection() {
 
   return (
     <section id="opiniones" className="overflow-x-hidden bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-3xl px-4">
-        {/* Header centrado */}
+      <div className="mx-auto max-w-[1180px] px-6">
+
+        {/* Header */}
         <div className="mb-8 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Clientes satisfechos
           </span>
           <h2 className="mt-3 text-3xl font-bold leading-snug tracking-tight text-slate-800 sm:text-4xl">
             Opiniones de clientes<br />
-            que han <span className="text-[#e63946]">valorado</span> y <span className="text-[#e63946]">vendido</span> con <span className="text-[#72b01d]">nosotros</span>
+            que han <span className="text-[#e63946]">valorado</span> y{' '}
+            <span className="text-[#e63946]">vendido</span> con{' '}
+            <span className="text-[#72b01d]">nosotros</span>
           </h2>
         </div>
-      </div>
 
-      <div className="mx-auto max-w-3xl px-4">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch lg:gap-6">
+        {/* Content row */}
+        <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-stretch lg:gap-8">
 
-          {/* Vertical brand panel — desktop only */}
-          <div className="hidden lg:flex lg:w-64 lg:shrink-0">
-            <div className="relative flex w-full flex-col items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-b from-[#72b01d] to-[#4a7a0f] p-8 text-center shadow-lg">
-              {/* Decorative circles */}
+          {/* Green brand panel — visible on all sizes */}
+          <div className="w-full max-w-[320px] shrink-0 lg:w-56 lg:max-w-none">
+            <div className="relative flex h-full w-full flex-col items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-b from-[#72b01d] to-[#4a7a0f] p-8 text-center shadow-lg">
               <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10" />
               <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-white/10" />
               <div className="absolute right-4 bottom-32 h-16 w-16 rounded-full bg-white/5" />
 
               <div className="relative z-10 flex flex-col items-center">
-                <img
-                  src={`${base}/logo.png`}
-                  alt="Casa Fácil"
-                  className="w-44 brightness-0 invert"
-                />
-                <p className="mt-2 text-xs font-medium tracking-wide text-white/70 uppercase">
+                <img src={`${base}/logo.png`} alt="Casa Fácil" className="w-44 brightness-0 invert" />
+                <p className="mt-2 text-xs font-medium uppercase tracking-wide text-white/70">
                   Soluciones Inmobiliarias
                 </p>
               </div>
@@ -295,26 +300,23 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-          {/* Carousel column */}
-          <div className="flex flex-1 flex-col">
-
+          {/* Carousel column — min-w-0 prevents flex overflow */}
+          <div className="min-w-0 flex-1">
             <div
               className="relative"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              <div className="w-full overflow-hidden">
+              <div ref={carouselRef} className="overflow-hidden">
                 <div
                   className="flex gap-5 transition-transform duration-500 ease-in-out"
-                  style={{
-                    transform: `translateX(calc(-${current} * (100% / ${visible}) - ${current} * 20px / ${visible}))`,
-                  }}
+                  style={{ transform: `translateX(-${current * (cardPx.width + 20)}px)` }}
                 >
                   {REVIEWS.map((r) => (
                     <div
                       key={r.name}
                       className="flex shrink-0 flex-col gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
-                      style={{ width: `calc(${100 / visible}% - ${((visible - 1) * 20) / visible}px)` }}
+                      style={{ width: `${cardPx.width}px` }}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex gap-0.5">
@@ -343,6 +345,9 @@ export function TestimonialsSection() {
                   ))}
                 </div>
               </div>
+
+              {/* Fade hint — indica que hay más cards */}
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent" />
 
               <div className="mt-6 flex items-center justify-center gap-4">
                 <button
