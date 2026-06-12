@@ -232,7 +232,7 @@ export function TestimonialsSection() {
 
   return (
     <section id="opiniones" className="bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-6xl px-4">
 
         {/* Header centrado sobre el ancho completo */}
         <div className="mb-8 text-center">
