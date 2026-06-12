@@ -206,7 +206,7 @@ export function TestimonialsSection() {
   const [isPaused, setIsPaused] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
-  const [cardPx, setCardPx] = useState({ width: 380, visible: 2 })
+  const [cardPx, setCardPx] = useState({ width: 300, visible: 1 })
 
   useEffect(() => {
     function measure() {
@@ -300,8 +300,8 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-          {/* Carousel column — min-w-0 prevents flex overflow */}
-          <div className="min-w-0 flex-1">
+          {/* Carousel column — w-full en móvil, flex-1 en desktop */}
+          <div className="w-full min-w-0 lg:flex-1">
             <div
               className="relative"
               onMouseEnter={() => setIsPaused(true)}
