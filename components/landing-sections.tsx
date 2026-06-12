@@ -528,8 +528,8 @@ export function ZonesSection() {
         </div>
 
         <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-stretch sm:justify-center">
-          {/* Map image — se estira hasta la altura de los cards */}
-          <div className="flex w-64 shrink-0 items-center sm:w-72 lg:w-80">
+          {/* Map image — altura fija en móvil, estira hasta las cards en desktop */}
+          <div className="h-72 w-64 shrink-0 sm:h-auto sm:w-72 lg:w-80">
             <img
               src={`${base}/mapa-valencia.png`}
               alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
