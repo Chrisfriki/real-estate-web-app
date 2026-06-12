@@ -511,7 +511,7 @@ export function ZonesSection() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
   return (
     <section id="cobertura" className="bg-[#f0f7e4] py-14 sm:py-16">
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Cobertura local
@@ -528,14 +528,14 @@ export function ZonesSection() {
         </div>
 
         {/* Grid: mapa 1fr | cards 400px en desktop, columna única en móvil */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_400px] sm:items-stretch sm:gap-12">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_400px] sm:items-center sm:gap-[72px]">
 
           {/* Columna izquierda: mapa grande */}
           <div className="flex min-h-[280px] items-center justify-center sm:min-h-[520px]">
             <img
               src={`${base}/mapa-valencia.png`}
               alt="Mapa de la Comunitat Valenciana con la provincia de Valencia destacada en verde"
-              className="block h-auto w-full max-w-[320px] sm:max-w-[480px]"
+              className="block h-auto w-full max-w-[340px] sm:max-w-none"
             />
           </div>
 
