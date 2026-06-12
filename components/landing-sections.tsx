@@ -527,8 +527,8 @@ export function ZonesSection() {
           </p>
         </div>
 
-        {/* Grid: mapa 1fr | cards 380px en desktop, columna única en móvil */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_380px] sm:items-center sm:gap-8">
+        {/* Grid: mapa 1fr | cards 320px en desktop, columna única en móvil */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_320px] sm:items-center sm:gap-6">
 
           {/* Columna izquierda: mapa grande */}
           <div className="flex items-center justify-center sm:block">
