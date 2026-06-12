@@ -232,16 +232,25 @@ export function TestimonialsSection() {
 
   return (
     <section id="opiniones" className="bg-white py-14 sm:py-16">
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-7xl px-4">
 
         {/* Header centrado sobre el ancho completo */}
         <div className="mb-8 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
-            Reseñas de Google
+            Clientes satisfechos
           </span>
           <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
             Opiniones de clientes que han valorado y vendido con nosotros
           </h2>
+          <a
+            href="https://share.google/axkDFzU5FUsP0lA73"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-1.5 text-sm font-semibold text-amber-700 transition-colors hover:bg-amber-100"
+          >
+            <span className="text-amber-400">★★★★★</span>
+            <span>4,9 · 227 reseñas en Google</span>
+          </a>
         </div>
 
         <div className="flex flex-col gap-8 lg:flex-row lg:items-stretch lg:gap-10">
