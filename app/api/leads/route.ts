@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
 import { db } from '@/lib/db'
 import { leads } from '@/lib/db/schema'
+import { sendInternalLeadEmail, sendUserConfirmationEmail } from '@/lib/email'
 
 // Simple in-memory rate limiter: max 5 submissions per IP per 10 minutes
 const ipMap = new Map<string, { count: number; resetAt: number }>()
@@ -110,6 +111,32 @@ export async function POST(request: NextRequest) {
         catastralDocName,
       })
       .returning()
+
+    // Send emails in parallel — failures don't block the 200 response
+    const [internalResult, userResult] = await Promise.allSettled([
+      sendInternalLeadEmail({
+        provincia, municipio, direccion, codigoPostal,
+        tipo, metros, habitaciones, banos,
+        estado, planta, ascensor,
+        anio: anioRaw ? parseInt(anioRaw, 10) : null,
+        vistas: vistas || null,
+        garaje, trastero,
+        exteriores: exteriores || null,
+        climatizacion: climatizacion || null,
+        orientacion: orientacion || null,
+        piscina, nombre, telefono, email, plazo,
+        comentarios: comentarios || null,
+        catastralDocName,
+      }),
+      sendUserConfirmationEmail(nombre, email),
+    ])
+
+    if (internalResult.status === 'rejected') {
+      console.error('[email] Internal lead email failed:', internalResult.reason)
+    }
+    if (userResult.status === 'rejected') {
+      console.error('[email] User confirmation email failed:', userResult.reason)
+    }
 
     return NextResponse.json({ ok: true, id: inserted.id })
   } catch (error) {
