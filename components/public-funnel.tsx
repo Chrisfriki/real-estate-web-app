@@ -223,16 +223,10 @@ export function PublicFunnel() {
               </Field>
               <Field label="Municipio / Pueblo" hint="Ej: Silla, Alcàsser, Beniparrell">
                 <TextInput
-                  list="municipios"
                   value={form.municipio}
                   onChange={(e) => set('municipio', e.target.value)}
                   placeholder="Escribe tu municipio"
                 />
-                <datalist id="municipios">
-                  {MUNICIPIOS_SUGERIDOS.map((m) => (
-                    <option key={m} value={m} />
-                  ))}
-                </datalist>
               </Field>
               <Field label="Dirección exacta" hint="Calle, número, piso y puerta">
                 <TextInput
