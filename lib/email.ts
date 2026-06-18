@@ -1,6 +1,11 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy init — avoid throwing at module eval time when RESEND_API_KEY is absent during build
+let _resend: Resend | null = null
+function getResend(): Resend {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY)
+  return _resend
+}
 
 export interface LeadEmailData {
   provincia: string
@@ -43,7 +48,7 @@ export async function sendInternalLeadEmail(data: LeadEmailData): Promise<void> 
     return
   }
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: process.env.FROM_EMAIL ?? 'Casa Fácil <noreply@casafacil.es>',
     to,
     subject: `🏠 Nuevo lead: ${data.nombre} — ${data.municipio} (${data.tipo})`,
@@ -59,7 +64,7 @@ export async function sendUserConfirmationEmail(nombre: string, email: string): 
     return
   }
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: process.env.FROM_EMAIL ?? 'Casa Fácil <noreply@casafacil.es>',
     to: email,
     subject: 'Hemos recibido tu solicitud de valoración',
