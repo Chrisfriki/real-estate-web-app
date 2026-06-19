@@ -80,7 +80,7 @@ export function FloatingHeader() {
       {/* ── Floating island ──────────────────────────────────────────────── */}
       <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
         <div
-          className="pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-full"
+          className="pointer-events-auto relative flex w-full items-center gap-2 overflow-hidden rounded-full lg:gap-3"
           style={islandStyle}
         >
           {/* Reflejo interno superior (sustituye ::before) */}
@@ -102,29 +102,43 @@ export function FloatingHeader() {
 
           {/* Desktop nav — centrado */}
           <nav className="relative z-10 hidden flex-1 items-center justify-center gap-1 lg:flex">
-            {NAV.map(item => (
-              <button
-                key={item.id}
-                onClick={() => scrollTo(item.href)}
-                className={[
-                  'rounded-full px-4 py-2 text-[15px] font-medium transition-all duration-200',
-                  active === item.id
-                    ? 'bg-[#eaf5d3] font-semibold text-[#4a7a0f] shadow-sm ring-1 ring-[#72b01d]/30'
-                    : 'text-slate-600 hover:bg-white/60 hover:text-slate-900',
-                ].join(' ')}
-              >
-                {item.label}
-              </button>
-            ))}
+            {NAV.map(item => {
+              const isValoracion = item.id === 'valoracion'
+              const isActive = active === item.id
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => scrollTo(item.href)}
+                  className={[
+                    'rounded-full px-4 py-2 text-[15px] font-medium transition-all duration-200',
+                    isValoracion && isCompact
+                      ? 'bg-[#72b01d] font-semibold text-white shadow-md shadow-[#72b01d]/30 hover:bg-[#65a015]'
+                      : isActive
+                        ? 'bg-[#eaf5d3] font-semibold text-[#4a7a0f] shadow-sm ring-1 ring-[#72b01d]/30'
+                        : 'text-slate-600 hover:bg-white/60 hover:text-slate-900',
+                  ].join(' ')}
+                >
+                  {item.label}
+                </button>
+              )
+            })}
           </nav>
 
           {/* Spacer móvil */}
           <div className="relative z-10 flex-1 lg:hidden" />
 
+          {/* CTA Valoración — siempre visible en móvil, fuera del menú hamburguesa */}
+          <button
+            onClick={() => scrollTo('#valoracion')}
+            className="relative z-10 inline-flex shrink-0 items-center rounded-full bg-[#72b01d] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#65a015] lg:hidden"
+          >
+            Valorar
+          </button>
+
           {/* Botón teléfono */}
           <a
             href="tel:+34961221468"
-            className="relative z-10 inline-flex shrink-0 items-center gap-2 rounded-full bg-white/70 px-5 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-slate-200/60 transition-colors hover:bg-white/90"
+            className="relative z-10 inline-flex shrink-0 items-center gap-2 rounded-full bg-white/70 px-3 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-slate-200/60 transition-colors hover:bg-white/90 sm:px-5"
           >
             <Phone className="size-[18px] text-[#72b01d]" />
             <span className="hidden sm:inline">961 22 14 68</span>
