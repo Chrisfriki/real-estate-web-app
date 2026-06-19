@@ -29,7 +29,7 @@ export function StatsInline() {
   ]
 
   return (
-    <div className="mx-auto mb-4 mt-6 max-w-2xl px-4">
+    <div className="mx-auto mb-4 mt-6 max-w-2xl px-4 lg:hidden">
       <div className="grid grid-cols-4 gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
         {stats.map(({ value, label, icon: Icon }) => (
           <div key={label} className="flex flex-col items-center gap-1 text-center">
@@ -97,7 +97,7 @@ export function WhySection() {
   ]
 
   return (
-    <section id="por-que" className="bg-slate-50 py-14 sm:py-16">
+    <section id="por-que" className="scroll-mt-24 bg-slate-50 py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
@@ -241,7 +241,7 @@ export function TestimonialsSection() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
   return (
-    <section id="opiniones" className="overflow-x-hidden bg-white py-14 sm:py-16">
+    <section id="opiniones" className="scroll-mt-24 overflow-x-hidden bg-white py-14 sm:py-16">
       <div className="mx-auto max-w-[1180px] px-6">
 
         {/* Header */}
@@ -403,7 +403,7 @@ export function HowItWorksSection() {
   ]
 
   return (
-    <section id="como-funciona" className="bg-slate-50 py-14 sm:py-16">
+    <section id="como-funciona" className="scroll-mt-24 bg-slate-50 py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
@@ -479,7 +479,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 export function FaqSection() {
   return (
-    <section id="faq" className="bg-white py-14 sm:py-16">
+    <section id="faq" className="scroll-mt-24 bg-white py-14 sm:py-16">
       <div className="mx-auto max-w-3xl px-4">
         <div className="mb-8 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">

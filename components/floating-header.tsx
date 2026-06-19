@@ -14,7 +14,10 @@ export function FloatingHeader() {
   const [active, setActive]     = useState('valoracion')
   const [menuOpen, setMenuOpen] = useState(false)
   const [isCompact, setIsCompact] = useState(false)
+  const [hidden, setHidden]     = useState(false)
   const lastScrollY = useRef(0)
+  const navigatingRef = useRef(false)
+  const navTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
   // Scroll-spy via IntersectionObserver
@@ -36,20 +39,29 @@ export function FloatingHeader() {
     return () => observer.disconnect()
   }, [])
 
-  // Dirección de scroll → estado compacto / grande
+  // Posición de scroll → tamaño compacto. Dirección de scroll → ocultar/mostrar.
   useEffect(() => {
     function onScroll() {
       const y = window.scrollY
-      const goingDown = y > lastScrollY.current
-      setIsCompact(goingDown && y > 80)
+      const delta = y - lastScrollY.current
+      setIsCompact(y > 80)
+      if (Math.abs(delta) > 4 && !navigatingRef.current) {
+        setHidden(delta > 0 && y > 160)
+      }
       lastScrollY.current = y
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const effectivelyHidden = hidden && !menuOpen
+
   const scrollTo = (href: string) => {
     setMenuOpen(false)
+    setHidden(false)
+    navigatingRef.current = true
+    if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current)
+    navTimeoutRef.current = setTimeout(() => { navigatingRef.current = false }, 800)
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -78,9 +90,16 @@ export function FloatingHeader() {
   return (
     <>
       {/* ── Floating island ──────────────────────────────────────────────── */}
-      <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+      <div
+        className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4"
+        style={{
+          transform:  effectivelyHidden ? 'translateY(-130%)' : 'translateY(0)',
+          opacity:    effectivelyHidden ? 0 : 1,
+          transition: 'transform 0.3s ease, opacity 0.3s ease',
+        }}
+      >
         <div
-          className="pointer-events-auto relative flex w-full items-center gap-2 overflow-hidden rounded-full lg:gap-3"
+          className={`relative flex w-full items-center gap-2 overflow-hidden rounded-full lg:gap-3 ${effectivelyHidden ? 'pointer-events-none' : 'pointer-events-auto'}`}
           style={islandStyle}
         >
           {/* Reflejo interno superior (sustituye ::before) */}
@@ -111,7 +130,7 @@ export function FloatingHeader() {
                   onClick={() => scrollTo(item.href)}
                   className={[
                     'rounded-full px-4 py-2 text-[15px] font-medium transition-all duration-200',
-                    isValoracion && isCompact
+                    isValoracion && isCompact && active !== 'valoracion'
                       ? 'bg-[#72b01d] font-semibold text-white shadow-md shadow-[#72b01d]/30 hover:bg-[#65a015]'
                       : isActive
                         ? 'bg-[#eaf5d3] font-semibold text-[#4a7a0f] shadow-sm ring-1 ring-[#72b01d]/30'

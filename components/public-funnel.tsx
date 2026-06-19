@@ -45,6 +45,7 @@ import {
   Toggle,
 } from './form-controls'
 import { useToast } from './toast'
+import { TrustSidebar } from './trust-sidebar'
 
 const STEP_ICONS = [MapPin, Building2, Home, Settings2, UserRound]
 
@@ -142,7 +143,9 @@ export function PublicFunnel() {
   const progress = ((step + 1) / 5) * 100
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-4 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:py-14">
+      <div className="lg:grid lg:grid-cols-[1fr_300px] lg:items-start lg:gap-8">
+        <div className="mx-auto w-full max-w-2xl lg:mx-0 lg:max-w-none">
       {/* Hero copy */}
       <div className="mb-8 rounded-2xl bg-white/80 px-6 py-7 text-center shadow-sm backdrop-blur-sm">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
@@ -569,6 +572,9 @@ export function PublicFunnel() {
           Sin compromiso · Te llamamos en menos de 24 horas
         </span>
       </p>
+        </div>
+        <TrustSidebar />
+      </div>
     </div>
   )
 }

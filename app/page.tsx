@@ -90,7 +90,7 @@ export default function Page() {
           {/* 1. Hero + Stats + Funnel */}
           <section
             id="valoracion"
-            className="relative pb-6 pt-24 sm:pt-28"
+            className="relative scroll-mt-24 pb-6 pt-24 sm:pt-28"
             style={{
               backgroundImage: `url('${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/hero.webp')`,
               backgroundSize: 'cover',
