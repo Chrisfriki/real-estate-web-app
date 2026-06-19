@@ -140,22 +140,21 @@ export function CtaBanner() {
   }
 
   return (
-    <section className="bg-white py-12 sm:py-20">
-      <div className="mx-auto max-w-[960px] px-4">
-        <div className="flex flex-col items-center gap-5 rounded-3xl border border-[#5ba81f]/15 bg-white p-6 text-center shadow-[0_8px_30px_rgba(15,23,42,0.06)] sm:gap-6 sm:p-12">
-          <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
-            Valoración gratuita
-          </span>
-          <h2 className="text-balance text-2xl font-bold tracking-tight text-slate-800 sm:text-3xl">
-            ¿Quieres saber cuánto podría valer tu vivienda?
-          </h2>
-          <p className="max-w-md text-pretty text-sm leading-relaxed text-slate-500 sm:text-base">
-            Recibe una valoración gratuita de un asesor local en menos de 24h. Sin compromiso y sin estimaciones automáticas.
-          </p>
+    <section className="bg-slate-50 py-8 sm:py-10">
+      <div className="mx-auto max-w-[1000px] px-4">
+        <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#5ba81f]/15 bg-white px-6 py-5 text-center sm:flex-row sm:justify-between sm:gap-8 sm:px-8 sm:py-6 sm:text-left">
+          <div>
+            <h2 className="text-lg font-bold tracking-tight text-slate-800 sm:text-xl">
+              ¿Quieres una <span className="text-[#72b01d]">valoración real</span> de tu vivienda?
+            </h2>
+            <p className="mt-1 text-sm leading-relaxed text-slate-500">
+              Un asesor local revisa tu caso y te responde en menos de 24h. Sin compromiso y sin estimaciones automáticas.
+            </p>
+          </div>
           <a
             href="#valoracion"
             onClick={scrollToForm}
-            className="mt-1 inline-flex shrink-0 items-center justify-center rounded-xl bg-[#72b01d] px-7 py-3.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-[#65a015] hover:shadow-md"
+            className="inline-flex shrink-0 items-center justify-center rounded-xl bg-[#72b01d] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#65a015]"
           >
             Solicitar valoración gratuita
           </a>
