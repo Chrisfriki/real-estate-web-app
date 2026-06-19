@@ -16,7 +16,6 @@ import {
   ShieldCheck,
   Star,
   TrendingUp,
-  Users,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -67,32 +66,22 @@ export function WhySection() {
     {
       icon: FileText,
       title: 'Informe catastral real',
-      body: 'Cruzamos los datos reales del Catastro con ventas recientes en tu calle. Sin estimaciones automáticas que se equivocan hasta un 30%.',
+      body: 'Cruzamos datos del Catastro con ventas reales de la zona para darte una valoración más precisa.',
     },
     {
       icon: MapPin,
       title: 'Especialistas en Valencia',
-      body: 'Nuestros asesores operan en Valencia y provincia. Conocemos el mercado real de cada municipio y barrio.',
-    },
-    {
-      icon: Users,
-      title: 'Trato personal',
-      body: 'Un único asesor acompaña tu operación de principio a fin. Sin centralitas ni formularios perdidos.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Máximo precio de venta',
-      body: 'Nuestra estrategia de marketing y red de compradores cualificados consigue los mejores precios del mercado local.',
+      body: 'Conocemos el mercado local, calle a calle, en Valencia y provincia.',
     },
     {
       icon: ShieldCheck,
       title: 'Asesoramiento jurídico',
-      body: 'Te asesoramos en toda la documentación: contrato de arras, notaría, certificado energético, plusvalía y más.',
+      body: 'Te acompañamos con arras, notaría, certificado energético y documentación clave.',
     },
     {
       icon: HandshakeIcon,
       title: 'Sin exclusividad obligatoria',
-      body: 'Trabajamos con transparencia. Te ofrecemos un contrato de colaboración flexible adaptado a tus necesidades.',
+      body: 'Trabajamos con transparencia y sin imponer compromisos que no necesites.',
     },
   ]
 
@@ -113,16 +102,16 @@ export function WhySection() {
           </p>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {reasons.map(({ icon: Icon, title, body }) => (
             <div
               key={title}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
             >
-              <span className="mb-4 flex size-10 items-center justify-center rounded-xl bg-[#f0f7e4]">
+              <span className="mb-3 flex size-10 items-center justify-center rounded-xl bg-[#f0f7e4]">
                 <Icon className="size-5 text-[#72b01d]" />
               </span>
-              <h3 className="mb-2 text-base font-semibold text-slate-800">{title}</h3>
+              <h3 className="mb-1.5 text-base font-semibold text-slate-800">{title}</h3>
               <p className="text-sm leading-relaxed text-slate-500">{body}</p>
             </div>
           ))}
@@ -212,7 +201,8 @@ export function TestimonialsSection() {
 
   useEffect(() => {
     function measure() {
-      const vis = window.innerWidth < 640 ? 1 : 2
+      const screenWidth = window.innerWidth
+      const vis = screenWidth < 640 ? 1 : screenWidth < 1024 ? 2 : 3
       const containerWidth = carouselRef.current?.offsetWidth ?? 760
       const w = Math.floor((containerWidth - (vis - 1) * 20) / vis)
       setCardPx({ width: w, visible: vis })
@@ -257,119 +247,106 @@ export function TestimonialsSection() {
           </h2>
         </div>
 
-        {/* Content row */}
-        <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-stretch lg:gap-8">
+        {/* Google summary bar — horizontal, full width */}
+        <div className="relative mb-10 overflow-hidden rounded-2xl bg-gradient-to-br from-[#72b01d] to-[#4a7a0f] px-6 py-6 shadow-md sm:px-10">
+          <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/10" />
+          <div className="absolute -bottom-10 left-1/3 h-28 w-28 rounded-full bg-white/5" />
 
-          {/* Green brand panel — visible on all sizes */}
-          <div className="w-full max-w-[320px] shrink-0 lg:w-56 lg:max-w-none">
-            <div className="relative flex h-full w-full flex-col items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-b from-[#72b01d] to-[#4a7a0f] p-8 text-center shadow-lg">
-              <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/10" />
-              <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-white/10" />
-              <div className="absolute right-4 bottom-32 h-16 w-16 rounded-full bg-white/5" />
+          <div className="relative z-10 flex flex-col items-center gap-5 text-center sm:flex-row sm:justify-between sm:gap-6 sm:text-left">
+            <img src={`${base}/logo.png`} alt="Casa Fácil" className="h-9 w-auto shrink-0 brightness-0 invert" />
 
-              <div className="relative z-10 flex flex-col items-center">
-                <img src={`${base}/logo.png`} alt="Casa Fácil" className="w-44 brightness-0 invert" />
-                <p className="mt-2 text-xs font-medium uppercase tracking-wide text-white/70">
-                  Soluciones Inmobiliarias
-                </p>
-              </div>
-
-              <div className="relative z-10 flex flex-col items-center gap-3">
-                <span className="text-6xl font-bold text-white">4,9</span>
-                <div className="flex gap-1">
+            <div className="flex items-center gap-3">
+              <span className="text-3xl font-bold text-white">4,9</span>
+              <div className="flex flex-col items-start gap-1">
+                <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="size-5 fill-amber-400 text-amber-400" />
+                    <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <span className="rounded-full bg-amber-400 px-3 py-1 text-xs font-bold text-slate-900">
-                  227 reseñas verificadas
-                </span>
-                <a
-                  href="https://share.google/axkDFzU5FUsP0lA73"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white transition-colors hover:bg-white/30"
-                >
-                  Ver en Google
-                </a>
+                <span className="text-xs font-semibold text-white/90">227 reseñas verificadas</span>
               </div>
+            </div>
 
-              <div className="relative z-10 mt-4 rounded-xl border border-white/20 bg-white/10 px-4 py-3">
-                <p className="text-xs italic leading-relaxed text-white/80">
-                  "La inmobiliaria de referencia en Valencia y provincia"
-                </p>
-              </div>
+            <p className="hidden max-w-xs text-sm italic leading-snug text-white/80 lg:block">
+              "La inmobiliaria de referencia en Valencia y provincia"
+            </p>
+
+            <a
+              href="https://share.google/axkDFzU5FUsP0lA73"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#4a7a0f] shadow-sm transition-colors hover:bg-white/90"
+            >
+              Ver en Google
+            </a>
+          </div>
+        </div>
+
+        {/* Carousel */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div ref={carouselRef} className="overflow-hidden">
+            <div
+              className="flex gap-5 transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${current * (cardPx.width + 20)}px)` }}
+            >
+              {REVIEWS.map((r) => (
+                <div
+                  key={r.name}
+                  className="flex shrink-0 flex-col gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
+                  style={{ width: `${cardPx.width}px` }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-0.5">
+                      {[1, 2, 3, 4, 5].map((i) => (
+                        <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <span className="text-xs text-slate-400">{r.date}</span>
+                  </div>
+                  <p className="flex-1 text-sm leading-relaxed text-slate-600">
+                    &ldquo;{r.text}&rdquo;
+                  </p>
+                  <div className="flex items-center gap-3 border-t border-slate-200 pt-3">
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#72b01d] text-xs font-bold text-white">
+                      {r.initials}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold text-slate-800">{r.name}</p>
+                      <p className="flex items-center gap-1 text-xs text-slate-400">
+                        <span className="font-medium text-[#4285F4]">Google</span>
+                        <span>· Reseña verificada</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Carousel column — w-full en móvil, flex-1 en desktop */}
-          <div className="w-full min-w-0 lg:flex-1">
-            <div
-              className="relative"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
+          {/* Fade hint — indica que hay más cards */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent" />
+
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <button
+              onClick={prev}
+              disabled={current === 0}
+              aria-label="Anterior reseña"
+              className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
             >
-              <div ref={carouselRef} className="overflow-hidden">
-                <div
-                  className="flex gap-5 transition-transform duration-500 ease-in-out"
-                  style={{ transform: `translateX(-${current * (cardPx.width + 20)}px)` }}
-                >
-                  {REVIEWS.map((r) => (
-                    <div
-                      key={r.name}
-                      className="flex shrink-0 flex-col gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm"
-                      style={{ width: `${cardPx.width}px` }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex gap-0.5">
-                          {[1, 2, 3, 4, 5].map((i) => (
-                            <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />
-                          ))}
-                        </div>
-                        <span className="text-xs text-slate-400">{r.date}</span>
-                      </div>
-                      <p className="flex-1 text-sm leading-relaxed text-slate-600">
-                        &ldquo;{r.text}&rdquo;
-                      </p>
-                      <div className="flex items-center gap-3 border-t border-slate-200 pt-3">
-                        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#72b01d] text-xs font-bold text-white">
-                          {r.initials}
-                        </span>
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-semibold text-slate-800">{r.name}</p>
-                          <p className="flex items-center gap-1 text-xs text-slate-400">
-                            <span className="font-medium text-[#4285F4]">Google</span>
-                            <span>· Reseña verificada</span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Fade hint — indica que hay más cards */}
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent" />
-
-              <div className="mt-6 flex items-center justify-center gap-4">
-                <button
-                  onClick={prev}
-                  disabled={current === 0}
-                  aria-label="Anterior reseña"
-                  className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <ChevronLeft className="size-4" />
-                </button>
-                <button
-                  onClick={next}
-                  disabled={current >= maxIndex}
-                  aria-label="Siguiente reseña"
-                  className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <ChevronRight className="size-4" />
-                </button>
-              </div>
-            </div>
+              <ChevronLeft className="size-4" />
+            </button>
+            <button
+              onClick={next}
+              disabled={current >= maxIndex}
+              aria-label="Siguiente reseña"
+              className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all hover:border-[#72b01d] hover:text-[#72b01d] disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ChevronRight className="size-4" />
+            </button>
           </div>
         </div>
       </div>

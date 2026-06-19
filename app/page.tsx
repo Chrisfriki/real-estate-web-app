@@ -111,14 +111,14 @@ export default function Page() {
             </div>
           </section>
 
-          {/* 2. Why Casa Facil */}
+          {/* 2. Reviews — social proof right after the form */}
+          <TestimonialsSection />
+
+          {/* 3. Why Casa Facil */}
           <WhySection />
 
-          {/* 3. CTA banner */}
+          {/* 4. CTA banner */}
           <CtaBanner />
-
-          {/* 4. Reviews — social proof before process */}
-          <TestimonialsSection />
 
           {/* 5. How it works */}
           <HowItWorksSection />

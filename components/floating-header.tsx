@@ -5,8 +5,8 @@ import { Phone, Menu, X } from 'lucide-react'
 
 const NAV = [
   { label: 'Valoración',      href: '#valoracion',    id: 'valoracion'    },
-  { label: 'Ventajas',        href: '#por-que',       id: 'por-que'       },
   { label: 'Opiniones',       href: '#opiniones',     id: 'opiniones'     },
+  { label: 'Ventajas',        href: '#por-que',       id: 'por-que'       },
   { label: 'Proceso y dudas', href: '#como-funciona', id: 'como-funciona' },
 ]
 
