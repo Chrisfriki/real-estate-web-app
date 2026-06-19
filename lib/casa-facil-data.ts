@@ -51,8 +51,11 @@ export const TIPOS_INMUEBLE = [
   'Piso',
   'Ático',
   'Dúplex',
+  'Bajo vivienda',
   'Chalet',
   'Casa adosada',
+  'Local comercial',
+  'Otro',
 ] as const
 
 export const ESTADOS = [

@@ -259,18 +259,38 @@ export function PublicFunnel() {
                   columns={3}
                 />
               </Field>
-              <Field label="Metros cuadrados útiles construidos">
-                <RangeSlider
-                  value={form.metros}
-                  onChange={(v) => set('metros', v)}
-                  min={20}
-                  max={500}
-                  step={5}
-                  unit="m²"
-                />
+              <Field
+                label="Metros cuadrados aproximados"
+                hint="Si no lo sabes exacto, introduce una aproximación. Nosotros lo revisamos después."
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="relative">
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      min={1}
+                      value={form.metros || ''}
+                      onChange={(e) => set('metros', Math.max(0, Number(e.target.value) || 0))}
+                      placeholder="Ej: 92 m²"
+                      className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 pr-12 text-2xl font-bold text-slate-800 shadow-sm outline-none transition-all placeholder:text-base placeholder:font-medium placeholder:text-slate-400 focus:border-[#72b01d] focus:ring-2 focus:ring-[#72b01d]/20"
+                    />
+                    <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-slate-400">
+                      m²
+                    </span>
+                  </div>
+                  <RangeSlider
+                    value={form.metros}
+                    onChange={(v) => set('metros', v)}
+                    min={20}
+                    max={500}
+                    step={5}
+                    unit="m²"
+                    hideValue
+                  />
+                </div>
               </Field>
               <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Habitaciones">
+                <Field label={form.tipo === 'Local comercial' ? 'Estancias / despachos' : 'Habitaciones'}>
                   <Stepper
                     value={form.habitaciones}
                     onChange={(v) => set('habitaciones', v)}
@@ -278,7 +298,7 @@ export function PublicFunnel() {
                     max={12}
                   />
                 </Field>
-                <Field label="Baños">
+                <Field label={form.tipo === 'Local comercial' ? 'Aseos' : 'Baños'}>
                   <Stepper
                     value={form.banos}
                     onChange={(v) => set('banos', v)}
@@ -470,7 +490,11 @@ export function PublicFunnel() {
                   rows={3}
                   value={form.comentarios}
                   onChange={(e) => set('comentarios', e.target.value)}
-                  placeholder="Cuéntanos cualquier detalle relevante de tu vivienda…"
+                  placeholder={
+                    form.tipo === 'Local comercial'
+                      ? 'Indícanos si el local tiene buena fachada/visibilidad, salida de humos, o qué actividad tenía antes (opcional)'
+                      : 'Cuéntanos cualquier detalle relevante de tu vivienda…'
+                  }
                 />
               </Field>
               <div>

@@ -183,6 +183,7 @@ export function RangeSlider({
   max,
   step = 1,
   unit = '',
+  hideValue = false,
 }: {
   value: number
   onChange: (v: number) => void
@@ -190,19 +191,22 @@ export function RangeSlider({
   max: number
   step?: number
   unit?: string
+  hideValue?: boolean
 }) {
-  const pct = ((value - min) / (max - min)) * 100
+  const pct = Math.min(100, Math.max(0, ((value - min) / (max - min)) * 100))
   return (
     <div>
-      <div className="mb-3 flex items-baseline justify-between">
-        <span className="text-2xl font-bold text-slate-800 tabular-nums">
-          {value}
-          <span className="ml-1 text-sm font-medium text-slate-400">{unit}</span>
-        </span>
-        <span className="text-xs text-slate-400">
-          {min} – {max} {unit}
-        </span>
-      </div>
+      {!hideValue && (
+        <div className="mb-3 flex items-baseline justify-between">
+          <span className="text-2xl font-bold text-slate-800 tabular-nums">
+            {value}
+            <span className="ml-1 text-sm font-medium text-slate-400">{unit}</span>
+          </span>
+          <span className="text-xs text-slate-400">
+            {min} – {max} {unit}
+          </span>
+        </div>
+      )}
       <input
         type="range"
         min={min}

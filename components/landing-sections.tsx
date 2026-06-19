@@ -65,28 +65,28 @@ export function WhySection() {
   const reasons = [
     {
       icon: FileText,
-      title: 'Informe catastral real',
-      body: 'Cruzamos datos del Catastro con ventas reales de la zona para darte una valoración más precisa.',
+      title: 'Valoración real, no automática',
+      body: 'Cruzamos datos del Catastro con ventas recientes de tu zona.',
     },
     {
       icon: MapPin,
       title: 'Especialistas en Valencia',
-      body: 'Conocemos el mercado local, calle a calle, en Valencia y provincia.',
+      body: 'Conocemos el mercado local de Valencia ciudad y provincia.',
     },
     {
       icon: ShieldCheck,
-      title: 'Asesoramiento jurídico',
-      body: 'Te acompañamos con arras, notaría, certificado energético y documentación clave.',
+      title: 'Te guiamos con el papeleo',
+      body: 'Arras, notaría, certificado energético y documentación clave.',
     },
     {
       icon: HandshakeIcon,
       title: 'Sin exclusividad obligatoria',
-      body: 'Trabajamos con transparencia y sin imponer compromisos que no necesites.',
+      body: 'Tú decides cómo avanzar. Sin compromisos que no necesitas.',
     },
   ]
 
   return (
-    <section id="por-que" className="scroll-mt-24 bg-slate-50 py-14 sm:py-16">
+    <section id="por-que" className="scroll-mt-24 bg-slate-50 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
@@ -106,10 +106,10 @@ export function WhySection() {
           {reasons.map(({ icon: Icon, title, body }) => (
             <div
               key={title}
-              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+              className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-shadow hover:shadow-md"
             >
-              <span className="mb-3 flex size-10 items-center justify-center rounded-xl bg-[#f0f7e4]">
-                <Icon className="size-5 text-[#72b01d]" />
+              <span className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-[#f0f7e4]">
+                <Icon className="size-6 text-[#72b01d]" />
               </span>
               <h3 className="mb-1.5 text-base font-semibold text-slate-800">{title}</h3>
               <p className="text-sm leading-relaxed text-slate-500">{body}</p>
@@ -129,7 +129,7 @@ export function CtaBanner() {
   }
 
   return (
-    <section className="bg-slate-50 py-8 sm:py-10">
+    <section className="bg-slate-50 py-10 sm:py-14">
       <div className="mx-auto max-w-[1000px] px-4">
         <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#5ba81f]/15 bg-white px-6 py-5 text-center sm:flex-row sm:justify-between sm:gap-8 sm:px-8 sm:py-6 sm:text-left">
           <div>
@@ -231,7 +231,7 @@ export function TestimonialsSection() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
   return (
-    <section id="opiniones" className="scroll-mt-24 overflow-x-hidden bg-white py-14 sm:py-16">
+    <section id="opiniones" className="scroll-mt-24 overflow-x-hidden bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-[1180px] px-6">
 
         {/* Header */}
@@ -359,28 +359,28 @@ export function HowItWorksSection() {
   const steps = [
     {
       n: '01',
-      title: 'Rellenas el formulario',
-      body: 'Cuéntanos los detalles de tu vivienda en menos de 3 minutos. Cuanta más información, más preciso será tu informe.',
+      title: 'Rellenas los datos básicos',
+      body: 'Indicas dirección, tipo de inmueble, metros aproximados y características principales.',
     },
     {
       n: '02',
-      title: 'Analizamos tu calle',
-      body: 'Un asesor de tu zona cruza los datos catastrales, ventas reales recientes y la demanda actual de compradores activos.',
+      title: 'Revisamos tu zona',
+      body: 'Cruzamos datos del Catastro, ventas recientes y demanda real en tu municipio.',
     },
     {
       n: '03',
-      title: 'Te llamamos en 24h',
-      body: 'Recibirás una llamada personalizada con el valor real de mercado de tu vivienda, sin presiones ni compromisos.',
+      title: 'Te llamamos en menos de 24h',
+      body: 'Un asesor local te explica el valor estimado y resuelve tus dudas sin compromiso.',
     },
     {
       n: '04',
-      title: 'Empezamos a trabajar juntos',
-      body: 'Si decides vender, diseñamos juntos la mejor estrategia de precio y marketing. Si no, el informe es tuyo sin ningún coste.',
+      title: 'Recibes una estrategia clara',
+      body: 'Si quieres vender, te proponemos precio, plan de salida y próximos pasos. Si no, te quedas con la valoración.',
     },
   ]
 
   return (
-    <section id="como-funciona" className="scroll-mt-24 bg-slate-50 py-14 sm:py-16">
+    <section id="como-funciona" className="scroll-mt-24 bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
@@ -456,7 +456,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 export function FaqSection() {
   return (
-    <section id="faq" className="scroll-mt-24 bg-white py-14 sm:py-16">
+    <section id="faq" className="scroll-mt-24 bg-slate-50 py-16 sm:py-20">
       <div className="mx-auto max-w-3xl px-4">
         <div className="mb-8 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
@@ -489,7 +489,7 @@ export function FaqSection() {
 export function ZonesSection() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
   return (
-    <section id="cobertura" className="bg-[#f0f7e4] py-14 sm:py-16">
+    <section id="cobertura" className="bg-[#f0f7e4] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-[#5c8f16]">
