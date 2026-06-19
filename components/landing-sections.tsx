@@ -140,23 +140,26 @@ export function CtaBanner() {
   }
 
   return (
-    <section className="bg-[#72b01d] py-10">
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-4 text-center sm:flex-row sm:justify-between sm:text-left">
-        <div>
-          <h2 className="text-xl font-bold text-white sm:text-2xl">
-            ¿Sabes cuánto vale realmente tu casa?
+    <section className="bg-white py-12 sm:py-20">
+      <div className="mx-auto max-w-[960px] px-4">
+        <div className="flex flex-col items-center gap-5 rounded-3xl border border-[#5ba81f]/15 bg-white p-6 text-center shadow-[0_8px_30px_rgba(15,23,42,0.06)] sm:gap-6 sm:p-12">
+          <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
+            Valoración gratuita
+          </span>
+          <h2 className="text-balance text-2xl font-bold tracking-tight text-slate-800 sm:text-3xl">
+            ¿Quieres saber cuánto podría valer tu vivienda?
           </h2>
-          <p className="mt-1 text-sm text-white/80">
-            Sin robots. Sin estimaciones erróneas. Un asesor local te responde en menos de 24h.
+          <p className="max-w-md text-pretty text-sm leading-relaxed text-slate-500 sm:text-base">
+            Recibe una valoración gratuita de un asesor local en menos de 24h. Sin compromiso y sin estimaciones automáticas.
           </p>
+          <a
+            href="#valoracion"
+            onClick={scrollToForm}
+            className="mt-1 inline-flex shrink-0 items-center justify-center rounded-xl bg-[#72b01d] px-7 py-3.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-[#65a015] hover:shadow-md"
+          >
+            Solicitar valoración gratuita
+          </a>
         </div>
-        <a
-          href="#valoracion"
-          onClick={scrollToForm}
-          className="shrink-0 rounded-xl bg-white px-6 py-3 text-sm font-bold text-[#5c8f16] shadow-sm transition-all hover:bg-slate-50 hover:shadow-md"
-        >
-          Solicitar valoración gratuita
-        </a>
       </div>
     </section>
   )
