@@ -4,6 +4,7 @@ import {
   Award,
   BadgeCheck,
   BookOpen,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -359,50 +360,75 @@ export function HowItWorksSection() {
   const steps = [
     {
       n: '01',
-      title: 'Rellenas los datos básicos',
-      body: 'Indicas dirección, tipo de inmueble, metros aproximados y características principales.',
+      title: 'Rellenas el formulario',
+      body: 'Nos indicas la dirección, el tipo de inmueble, los metros aproximados y las características principales.',
+      points: ['Dirección y municipio', 'Tipo de inmueble', 'Metros aproximados', 'Características básicas'],
     },
     {
       n: '02',
-      title: 'Revisamos tu zona',
-      body: 'Cruzamos datos del Catastro, ventas recientes y demanda real en tu municipio.',
+      title: 'Analizamos tu zona y tu inmueble',
+      body: 'Revisamos datos catastrales, ventas recientes y demanda real en tu municipio para preparar una valoración ajustada.',
+      points: ['Datos catastrales', 'Ventas comparables', 'Demanda actual de compradores'],
     },
     {
       n: '03',
       title: 'Te llamamos en menos de 24h',
-      body: 'Un asesor local te explica el valor estimado y resuelve tus dudas sin compromiso.',
+      body: 'Un asesor local te explica el valor estimado de tu vivienda y resuelve tus dudas sin compromiso.',
+      points: ['Valor aproximado de mercado', 'Resolución de dudas', 'Sin obligación de vender'],
     },
     {
       n: '04',
-      title: 'Recibes una estrategia clara',
-      body: 'Si quieres vender, te proponemos precio, plan de salida y próximos pasos. Si no, te quedas con la valoración.',
+      title: 'Definimos la mejor estrategia',
+      body: 'Si quieres vender, te proponemos un precio de salida, los siguientes pasos y cómo enfocar la comercialización.',
+      points: ['Precio recomendado', 'Estrategia de salida', 'Documentación necesaria', 'Asesoramiento inicial'],
+    },
+    {
+      n: '05',
+      title: 'Te acompañamos durante todo el proceso',
+      body: 'Gestionamos contactos, visitas, negociación y te acompañamos hasta el cierre de la operación.',
+      points: ['Gestión de interesados', 'Organización de visitas', 'Negociación de ofertas', 'Acompañamiento hasta la firma'],
     },
   ]
 
   return (
-    <section id="como-funciona" className="scroll-mt-24 bg-white py-16 sm:py-20">
+    <section id="como-funciona" className="scroll-mt-24 bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-10 text-center">
+        <div className="mb-14 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Proceso
           </span>
           <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
-            Cómo funciona la valoración de tu casa:{' '}
-            <span className="text-[#72b01d]">4 pasos</span>
+            ¿Cómo funciona la valoración y venta de tu vivienda?
           </h2>
+          <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-500 sm:text-base">
+            Te explicamos qué pasa desde que envías tus datos hasta que decides si quieres vender.
+            Sin compromiso y con asesoramiento real.
+          </p>
         </div>
 
-        <div className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="absolute left-0 right-0 top-9 hidden h-px bg-slate-200 lg:block" />
-          {steps.map(({ n, title, body }) => (
-            <div key={n} className="relative flex flex-col items-center text-center">
-              <span className="relative z-10 flex size-[68px] items-center justify-center rounded-full border-4 border-white bg-[#72b01d] text-xl font-bold text-white shadow-md">
-                {n}
-              </span>
-              <h3 className="mt-4 text-base font-semibold text-slate-800">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500">{body}</p>
-            </div>
-          ))}
+        <div className="relative mx-auto max-w-3xl">
+          <div className="absolute left-7 top-2 bottom-2 w-px bg-slate-200 sm:left-8" />
+          <div className="flex flex-col gap-12 sm:gap-14">
+            {steps.map(({ n, title, body, points }) => (
+              <div key={n} className="relative flex gap-5 sm:gap-6">
+                <span className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full bg-[#72b01d] text-lg font-bold text-white shadow-md ring-4 ring-white sm:size-16 sm:text-xl">
+                  {n}
+                </span>
+                <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                  <h3 className="text-base font-semibold text-slate-800 sm:text-lg">{title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-slate-500">{body}</p>
+                  <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                    {points.map((point) => (
+                      <li key={point} className="flex items-start gap-2 text-sm text-slate-600">
+                        <Check className="mt-0.5 size-3.5 shrink-0 text-[#72b01d]" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
