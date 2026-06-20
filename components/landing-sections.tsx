@@ -116,10 +116,10 @@ export function WhySection() {
           {reasons.map(({ icon: Icon, title, body }) => (
             <div
               key={title}
-              className="flex flex-col items-center rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-shadow hover:shadow-md"
+              className="flex flex-col items-center rounded-2xl border border-t-2 border-slate-200 border-t-[#c9a875]/50 bg-gradient-to-b from-white to-[#f7f8f2] p-6 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
             >
-              <span className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-[#f0f7e4]">
-                <Icon className="size-6 text-[#72b01d]" />
+              <span className="mb-4 flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#86c232] to-[#4a7a0f] shadow-md ring-2 ring-[#c9a875]/40">
+                <Icon className="size-6 text-white" />
               </span>
               <h3 className="mb-1.5 text-base font-semibold text-slate-800">{title}</h3>
               <p className="text-sm leading-relaxed text-slate-500">{body}</p>
@@ -439,21 +439,22 @@ export function HowItWorksSection() {
         </div>
 
         <div className="relative mx-auto max-w-3xl">
-          <div className="absolute left-7 top-2 bottom-2 w-px bg-slate-200 sm:left-8" />
-          <div className="flex flex-col gap-12 sm:gap-14">
+          <div className="absolute left-8 top-2 bottom-2 w-px bg-gradient-to-b from-[#72b01d]/25 via-[#c9a875]/25 to-transparent sm:left-9" />
+          <div className="flex flex-col gap-14 sm:gap-16">
             {steps.map(({ n, title, body, points }) => (
               <div key={n} className="relative flex gap-5 sm:gap-6">
-                <span className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full bg-[#72b01d] text-lg font-bold text-white shadow-md ring-4 ring-white sm:size-16 sm:text-xl">
-                  {n}
+                <span className="relative z-10 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#86c232] via-[#72b01d] to-[#3f6b0d] text-xl font-bold text-white shadow-lg ring-[3px] ring-[#c9a875]/50 sm:size-[72px] sm:text-2xl">
+                  <span className="absolute inset-0 bg-gradient-to-b from-white/35 to-transparent" />
+                  <span className="relative">{n}</span>
                 </span>
-                <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
-                  <h3 className="text-base font-semibold text-slate-800 sm:text-lg">{title}</h3>
-                  <p className="mt-1 text-sm text-slate-400">{body}</p>
-                  <ul className="mt-4 flex flex-col gap-3">
+                <div className="flex-1 pt-1">
+                  <h3 className="text-xl font-bold text-slate-800 sm:text-2xl">{title}</h3>
+                  <p className="mt-1.5 text-sm text-slate-500 sm:text-base">{body}</p>
+                  <ul className="mt-5 flex flex-col gap-3">
                     {points.map(({ icon: Icon, label }) => (
-                      <li key={label} className="flex items-center gap-2.5">
-                        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#f0f7e4]">
-                          <Icon className="size-3.5 text-[#72b01d]" />
+                      <li key={label} className="flex items-center gap-3">
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#86c232] to-[#4a7a0f] shadow-sm">
+                          <Icon className="size-3.5 text-white" />
                         </span>
                         <span className="text-sm font-medium text-slate-700">{label}</span>
                       </li>
