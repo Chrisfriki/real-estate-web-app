@@ -4,19 +4,28 @@ import {
   Award,
   BadgeCheck,
   BookOpen,
-  Check,
+  Calculator,
+  Calendar,
+  CheckCircle2,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ClipboardList,
   Clock,
+  FileCheck,
   FileText,
   HandshakeIcon,
   Home,
   HelpCircle,
   MapPin,
+  Ruler,
+  Scale,
   ShieldCheck,
   Star,
+  Tag,
+  Target,
   TrendingUp,
+  Users,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -361,32 +370,55 @@ export function HowItWorksSection() {
     {
       n: '01',
       title: 'Rellenas el formulario',
-      body: 'Nos indicas la dirección, el tipo de inmueble, los metros aproximados y las características principales.',
-      points: ['Dirección y municipio', 'Tipo de inmueble', 'Metros aproximados', 'Características básicas'],
+      body: 'Nos indicas la información básica del inmueble para empezar a valorar tu caso.',
+      points: [
+        { icon: MapPin, label: 'Dirección y municipio' },
+        { icon: Home, label: 'Tipo de inmueble' },
+        { icon: Ruler, label: 'Metros aproximados' },
+        { icon: ClipboardList, label: 'Características básicas' },
+      ],
     },
     {
       n: '02',
       title: 'Analizamos tu zona y tu inmueble',
-      body: 'Revisamos datos catastrales, ventas recientes y demanda real en tu municipio para preparar una valoración ajustada.',
-      points: ['Datos catastrales', 'Ventas comparables', 'Demanda actual de compradores'],
+      body: 'Revisamos la información clave del mercado para preparar una valoración ajustada.',
+      points: [
+        { icon: FileText, label: 'Datos catastrales' },
+        { icon: TrendingUp, label: 'Ventas comparables' },
+        { icon: Users, label: 'Demanda actual de compradores' },
+      ],
     },
     {
       n: '03',
       title: 'Te llamamos en menos de 24h',
-      body: 'Un asesor local te explica el valor estimado de tu vivienda y resuelve tus dudas sin compromiso.',
-      points: ['Valor aproximado de mercado', 'Resolución de dudas', 'Sin obligación de vender'],
+      body: 'Un asesor local revisa contigo el caso y te orienta sin compromiso.',
+      points: [
+        { icon: Calculator, label: 'Valor aproximado de mercado' },
+        { icon: HelpCircle, label: 'Resolución de dudas' },
+        { icon: ShieldCheck, label: 'Sin obligación de vender' },
+      ],
     },
     {
       n: '04',
       title: 'Definimos la mejor estrategia',
-      body: 'Si quieres vender, te proponemos un precio de salida, los siguientes pasos y cómo enfocar la comercialización.',
-      points: ['Precio recomendado', 'Estrategia de salida', 'Documentación necesaria', 'Asesoramiento inicial'],
+      body: 'Si quieres vender, te proponemos cómo enfocar la salida al mercado.',
+      points: [
+        { icon: Tag, label: 'Precio recomendado' },
+        { icon: Target, label: 'Estrategia de salida' },
+        { icon: FileCheck, label: 'Documentación necesaria' },
+        { icon: HandshakeIcon, label: 'Asesoramiento inicial' },
+      ],
     },
     {
       n: '05',
       title: 'Te acompañamos durante todo el proceso',
-      body: 'Gestionamos contactos, visitas, negociación y te acompañamos hasta el cierre de la operación.',
-      points: ['Gestión de interesados', 'Organización de visitas', 'Negociación de ofertas', 'Acompañamiento hasta la firma'],
+      body: 'Gestionamos la comercialización y te acompañamos hasta el cierre.',
+      points: [
+        { icon: Users, label: 'Gestión de interesados' },
+        { icon: Calendar, label: 'Organización de visitas' },
+        { icon: Scale, label: 'Negociación de ofertas' },
+        { icon: CheckCircle2, label: 'Acompañamiento hasta la firma' },
+      ],
     },
   ]
 
@@ -416,12 +448,14 @@ export function HowItWorksSection() {
                 </span>
                 <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
                   <h3 className="text-base font-semibold text-slate-800 sm:text-lg">{title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-slate-500">{body}</p>
-                  <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-                    {points.map((point) => (
-                      <li key={point} className="flex items-start gap-2 text-sm text-slate-600">
-                        <Check className="mt-0.5 size-3.5 shrink-0 text-[#72b01d]" />
-                        {point}
+                  <p className="mt-1 text-sm text-slate-400">{body}</p>
+                  <ul className="mt-4 flex flex-col gap-3">
+                    {points.map(({ icon: Icon, label }) => (
+                      <li key={label} className="flex items-center gap-2.5">
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#f0f7e4]">
+                          <Icon className="size-3.5 text-[#72b01d]" />
+                        </span>
+                        <span className="text-sm font-medium text-slate-700">{label}</span>
                       </li>
                     ))}
                   </ul>
