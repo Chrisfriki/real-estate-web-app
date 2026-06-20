@@ -1,29 +1,27 @@
 'use client'
 
+import type { LucideIcon } from 'lucide-react'
 import {
   Award,
   BadgeCheck,
   BookOpen,
-  Calculator,
-  Calendar,
-  CheckCircle2,
+  Camera,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ClipboardList,
   Clock,
   FileCheck,
   FileText,
+  Gift,
   HandshakeIcon,
   Home,
   HelpCircle,
+  Landmark,
   MapPin,
-  Ruler,
-  Scale,
+  Megaphone,
+  Phone,
   ShieldCheck,
   Star,
-  Tag,
-  Target,
   TrendingUp,
   Users,
 } from 'lucide-react'
@@ -366,66 +364,55 @@ export function TestimonialsSection() {
 
 // ─── How it works ────────────────────────────────────────────────────────────
 export function HowItWorksSection() {
-  const steps = [
+  type Point = { icon: LucideIcon; text: string; bold?: boolean; tail?: string; pill?: boolean }
+  const steps: { n: string; title: string; points: Point[] }[] = [
     {
       n: '01',
-      title: 'Rellenas el formulario',
-      body: 'Nos indicas la información básica del inmueble para empezar a valorar tu caso.',
+      title: 'Indica tu vivienda',
       points: [
-        { icon: MapPin, label: 'Dirección y municipio' },
-        { icon: Home, label: 'Tipo de inmueble' },
-        { icon: Ruler, label: 'Metros aproximados' },
-        { icon: ClipboardList, label: 'Características básicas' },
+        { icon: MapPin, text: 'Introduce la dirección y algunos detalles del inmueble.' },
+        { icon: Gift, text: 'Valoración gratuita en 24h máx', pill: true },
       ],
     },
     {
       n: '02',
-      title: 'Analizamos tu zona y tu inmueble',
-      body: 'Revisamos la información clave del mercado para preparar una valoración ajustada.',
+      title: 'Llamada y asesoramiento',
       points: [
-        { icon: FileText, label: 'Datos catastrales' },
-        { icon: TrendingUp, label: 'Ventas comparables' },
-        { icon: Users, label: 'Demanda actual de compradores' },
+        { icon: Phone, text: 'Te llamamos en menos de 24h para darte el valor estimado.' },
+        { icon: ShieldCheck, text: 'Sin obligación de vender', bold: true, tail: 'tú decides si quieres avanzar.' },
       ],
     },
     {
       n: '03',
-      title: 'Te llamamos en menos de 24h',
-      body: 'Un asesor local revisa contigo el caso y te orienta sin compromiso.',
+      title: 'Visitamos y preparamos tu vivienda',
       points: [
-        { icon: Calculator, label: 'Valor aproximado de mercado' },
-        { icon: HelpCircle, label: 'Resolución de dudas' },
-        { icon: ShieldCheck, label: 'Sin obligación de vender' },
+        { icon: Home, text: 'Si decides vender, un asesor visita tu vivienda en persona.' },
+        { icon: Camera, text: 'Reportaje fotográfico profesional', bold: true, tail: '+ vídeo y tour virtual si aplica.' },
       ],
     },
     {
       n: '04',
-      title: 'Definimos la mejor estrategia',
-      body: 'Si quieres vender, te proponemos cómo enfocar la salida al mercado.',
+      title: 'Publicamos en los principales portales',
       points: [
-        { icon: Tag, label: 'Precio recomendado' },
-        { icon: Target, label: 'Estrategia de salida' },
-        { icon: FileCheck, label: 'Documentación necesaria' },
-        { icon: HandshakeIcon, label: 'Asesoramiento inicial' },
+        { icon: Megaphone, text: 'Difusión en los grandes portales (Idealista, Fotocasa y más).' },
+        { icon: Users, text: 'Gestión de contactos y visitas de interesados.' },
       ],
     },
     {
       n: '05',
-      title: 'Te acompañamos durante todo el proceso',
-      body: 'Gestionamos la comercialización y te acompañamos hasta el cierre.',
+      title: 'Vendemos tu vivienda',
       points: [
-        { icon: Users, label: 'Gestión de interesados' },
-        { icon: Calendar, label: 'Organización de visitas' },
-        { icon: Scale, label: 'Negociación de ofertas' },
-        { icon: CheckCircle2, label: 'Acompañamiento hasta la firma' },
+        { icon: TrendingUp, text: 'Negociamos el mejor precio', bold: true, tail: 'con los interesados.' },
+        { icon: FileCheck, text: 'Gestionamos la firma de contratos (reserva y arras).' },
+        { icon: Landmark, text: 'Te acompañamos hasta la firma ante notario.' },
       ],
     },
   ]
 
   return (
-    <section id="como-funciona" className="scroll-mt-24 bg-white py-20 sm:py-28">
+    <section id="como-funciona" className="scroll-mt-24 bg-white py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-14 text-center">
+        <div className="mb-10 text-center">
           <span className="inline-block rounded-full bg-[#f0f7e4] px-3 py-1 text-xs font-semibold text-[#5c8f16]">
             Proceso
           </span>
@@ -438,27 +425,39 @@ export function HowItWorksSection() {
           </p>
         </div>
 
-        <div className="relative mx-auto max-w-3xl">
-          <div className="absolute left-8 top-2 bottom-2 w-px bg-gradient-to-b from-[#72b01d]/25 via-[#c9a875]/25 to-transparent sm:left-9" />
-          <div className="flex flex-col gap-14 sm:gap-16">
-            {steps.map(({ n, title, body, points }) => (
-              <div key={n} className="relative flex gap-5 sm:gap-6">
-                <span className="relative z-10 flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#86c232] via-[#72b01d] to-[#3f6b0d] text-xl font-bold text-white shadow-lg ring-[3px] ring-[#c9a875]/50 sm:size-[72px] sm:text-2xl">
+        <div className="relative mx-auto max-w-2xl">
+          <div className="absolute left-6 top-1 bottom-1 w-px bg-gradient-to-b from-[#72b01d]/25 via-[#c9a875]/25 to-transparent sm:left-7" />
+          <div className="flex flex-col gap-8 sm:gap-10">
+            {steps.map(({ n, title, points }) => (
+              <div key={n} className="relative flex gap-4 sm:gap-5">
+                <span className="relative z-10 flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#86c232] via-[#72b01d] to-[#3f6b0d] text-base font-bold text-white shadow-md ring-2 ring-[#c9a875]/50 sm:size-14 sm:text-lg">
                   <span className="absolute inset-0 bg-gradient-to-b from-white/35 to-transparent" />
                   <span className="relative">{n}</span>
                 </span>
-                <div className="flex-1 pt-1">
-                  <h3 className="text-xl font-bold text-slate-800 sm:text-2xl">{title}</h3>
-                  <p className="mt-1.5 text-sm text-slate-500 sm:text-base">{body}</p>
-                  <ul className="mt-5 flex flex-col gap-3">
-                    {points.map(({ icon: Icon, label }) => (
-                      <li key={label} className="flex items-center gap-3">
-                        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#86c232] to-[#4a7a0f] shadow-sm">
-                          <Icon className="size-3.5 text-white" />
-                        </span>
-                        <span className="text-sm font-medium text-slate-700">{label}</span>
-                      </li>
-                    ))}
+                <div className="flex-1 pt-0.5">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#a8895a]">
+                    Paso {parseInt(n, 10)}
+                  </span>
+                  <h3 className="text-lg font-bold text-slate-800 sm:text-xl">{title}</h3>
+                  <ul className="mt-3 flex flex-col gap-2">
+                    {points.map(({ icon: Icon, text, bold, tail, pill }) =>
+                      pill ? (
+                        <li key={text}>
+                          <span className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-[#f0f7e4] px-3 py-1 text-sm font-semibold text-[#5c8f16]">
+                            <Icon className="size-3.5" />
+                            {text}
+                          </span>
+                        </li>
+                      ) : (
+                        <li key={text} className="flex items-start gap-2.5">
+                          <Icon className="mt-0.5 size-4 shrink-0 text-[#72b01d]" strokeWidth={1.75} />
+                          <span className="text-sm text-slate-600">
+                            {bold ? <strong className="font-semibold text-slate-800">{text}</strong> : text}
+                            {tail ? ` ${tail}` : ''}
+                          </span>
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </div>
               </div>
