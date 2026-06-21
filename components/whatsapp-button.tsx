@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 
-const WA_HREF = 'https://wa.me/34961221468?text=Hola%2C%20quiero%20saber%20cu%C3%A1nto%20vale%20mi%20vivienda'
+const WA_HREF = 'https://wa.me/34647679553?text=Hola%2C%20quiero%20hacer%20una%20consulta%20sobre%20la%20valoraci%C3%B3n%20de%20mi%20vivienda.'
 const DISMISS_KEY = 'wa-bubble-dismissed-until'
 const SHOW_DELAY_MS = 4500
 const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000

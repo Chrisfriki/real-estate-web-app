@@ -211,7 +211,7 @@ export default function PoliticaCookiesPage() {
           </h2>
           <p className="mt-2 text-slate-600 leading-relaxed">
             Para cualquier consulta sobre el uso de cookies en este sitio, puedes contactar con
-            nosotros a través del teléfono <strong>961 22 14 68</strong>. Puedes consultar
+            nosotros a través del teléfono <strong>647 67 95 53</strong>. Puedes consultar
             también nuestra{' '}
             <Link
               href="/politica-privacidad"

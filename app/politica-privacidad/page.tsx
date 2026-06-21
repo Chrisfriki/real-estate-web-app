@@ -63,7 +63,7 @@ export default function PoliticaPrivacidadPage() {
               <strong>Domicilio:</strong> Avinguda del Nord, 31, 46220 Picassent (Valencia)
             </li>
             <li>
-              <strong>Teléfono:</strong> 961 22 14 68
+              <strong>Teléfono:</strong> 647 67 95 53
             </li>
             <li>
               <strong>Email de contacto:</strong> <PH>[EMAIL DE CONTACTO]</PH>
@@ -236,7 +236,7 @@ export default function PoliticaPrivacidadPage() {
             <p>
               Email: <PH>[EMAIL DE CONTACTO]</PH>
             </p>
-            <p>Teléfono: 961 22 14 68</p>
+            <p>Teléfono: 647 67 95 53</p>
           </div>
           <p className="mt-3 text-slate-600 leading-relaxed">
             Responderemos a tu solicitud en el plazo máximo de <strong>un mes</strong> desde su

@@ -65,7 +65,7 @@ export default function AvisoLegalPage() {
               <strong>Datos registrales:</strong> <PH>[DATOS REGISTRALES — ej. Registro Mercantil de Valencia, Tomo X, Folio X, Hoja V-XXXXX]</PH>
             </li>
             <li>
-              <strong>Teléfono de contacto:</strong> 961 22 14 68
+              <strong>Teléfono de contacto:</strong> 647 67 95 53
             </li>
             <li>
               <strong>Correo electrónico:</strong> <PH>[EMAIL DE CONTACTO]</PH>
@@ -172,7 +172,7 @@ export default function AvisoLegalPage() {
           <div className="mt-10 border-t border-slate-100 pt-6">
             <p className="text-xs text-slate-400">
               Para cualquier consulta relacionada con este aviso legal, puede contactar con nosotros
-              en el teléfono <strong>961 22 14 68</strong> o en la dirección indicada anteriormente.
+              en el teléfono <strong>647 67 95 53</strong> o en la dirección indicada anteriormente.
             </p>
           </div>
         </div>

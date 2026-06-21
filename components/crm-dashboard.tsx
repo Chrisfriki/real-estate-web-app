@@ -2,6 +2,7 @@
 
 import {
   ArrowDownUp,
+  BarChart3,
   Bath,
   BedDouble,
   Building2,
@@ -9,12 +10,15 @@ import {
   Car,
   Clock,
   Compass,
+  Copy,
   Download,
+  FileSpreadsheet,
   FileText,
   Inbox,
   Lightbulb,
   Mail,
   MapPin,
+  MessageCircle,
   Phone,
   RefreshCw,
   Ruler,
@@ -29,7 +33,20 @@ import {
 import { useMemo, useState } from 'react'
 import useSWR from 'swr'
 import type { LeadRow } from '@/lib/db/schema'
+import { getAdvice } from '@/lib/casa-facil-data'
+import { downloadBlob, generateLeadExcelBlob, leadExcelFilename, leadPdfFilename } from '@/lib/lead-export'
+import { CrmStats } from './crm-stats'
+import { generateLeadPdfBlob } from './lead-pdf-document'
 import { useToast } from './toast'
+
+function cleanPhone(phone: string): string {
+  return phone.replace(/\D/g, '')
+}
+
+function toWhatsAppNumber(phone: string): string {
+  const digits = cleanPhone(phone)
+  return digits.startsWith('34') ? digits : `34${digits}`
+}
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -38,33 +55,6 @@ const plazoStyle: Record<string, string> = {
   '3-6 meses': 'bg-[#f0f7e4] text-[#5c8f16]',
   '6-12 meses': 'bg-amber-50 text-amber-700',
   'Solo curiosidad': 'bg-slate-100 text-slate-500',
-}
-
-function getAdvice(lead: LeadRow): { tone: 'hot' | 'warm' | 'cool'; text: string } {
-  if (lead.plazo === 'Inmediato') {
-    return {
-      tone: 'hot',
-      text: `Lead CALIENTE: quiere vender de inmediato. Prioriza la llamada hoy mismo y propón visita en 24-48h. ${
-        lead.estado === 'Para reformar'
-          ? 'Inmueble para reformar: posiciona precio realista y destaca el potencial de la zona.'
-          : 'Inmueble en buen estado: puedes defender precio de mercado alto.'
-      }`,
-    }
-  }
-  if (lead.plazo === '3-6 meses' || lead.plazo === '6-12 meses') {
-    return {
-      tone: 'warm',
-      text: `Lead templado (${lead.plazo}). Cultiva la relación con el informe de mercado y un seguimiento mensual. ${
-        lead.estado === 'A estrenar' || lead.estado === 'Reformado'
-          ? 'Inmueble listo para entrar: ideal para captar en exclusiva con buenas fotos.'
-          : 'Sugiere mejoras de bajo coste que aumenten el valor antes de publicar.'
-      }`,
-    }
-  }
-  return {
-    tone: 'cool',
-    text: 'Lead frío (solo curiosidad). Envía el informe de valor y nútrelo con datos de la zona. No presiones la venta; gánate la confianza para cuando decida dar el paso.',
-  }
 }
 
 function formatDate(d: Date | string): string {
@@ -85,6 +75,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export function CrmDashboard() {
   const { notify } = useToast()
+  const [view, setView] = useState<'leads' | 'stats'>('leads')
   const [query, setQuery] = useState('')
   const [order, setOrder] = useState<'recent' | 'urgent'>('recent')
 
@@ -129,12 +120,40 @@ export function CrmDashboard() {
     (l) => Date.now() - new Date(l.createdAt).getTime() < 1000 * 60 * 60 * 24,
   ).length
 
-  async function handleCall(lead: LeadRow) {
+  function handleCall(lead: LeadRow) {
     notify({
       tone: 'call',
       title: `Llamando a ${lead.nombre.split(' ')[0]}…`,
       description: `Marcando ${lead.telefono} · ${lead.municipio}`,
     })
+    window.location.href = `tel:${cleanPhone(lead.telefono)}`
+  }
+
+  async function handleCopyPhone(lead: LeadRow) {
+    try {
+      await navigator.clipboard.writeText(cleanPhone(lead.telefono))
+      notify({ tone: 'info', title: 'Número copiado', description: lead.telefono })
+    } catch {
+      notify({ tone: 'error', title: 'No se pudo copiar', description: 'Copia el número manualmente.' })
+    }
+  }
+
+  async function handleDownloadPdf(lead: LeadRow) {
+    try {
+      const blob = await generateLeadPdfBlob(lead)
+      downloadBlob(blob, leadPdfFilename(lead))
+    } catch {
+      notify({ tone: 'error', title: 'Error al generar el PDF', description: 'Inténtalo de nuevo.' })
+    }
+  }
+
+  async function handleDownloadExcel(lead: LeadRow) {
+    try {
+      const blob = await generateLeadExcelBlob(lead)
+      downloadBlob(blob, leadExcelFilename(lead))
+    } catch {
+      notify({ tone: 'error', title: 'Error al generar el Excel', description: 'Inténtalo de nuevo.' })
+    }
   }
 
   async function handleDelete(lead: LeadRow) {
@@ -163,15 +182,41 @@ export function CrmDashboard() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:py-10">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-800">
-          Panel de gestión
-        </h1>
-        <p className="mt-1 text-sm text-slate-500">
-          Fichas recibidas en tiempo real · actualización automática cada 30 segundos
-        </p>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-800">
+            Panel de gestión
+          </h1>
+          <p className="mt-1 text-sm text-slate-500">
+            Fichas recibidas en tiempo real · actualización automática cada 30 segundos
+          </p>
+        </div>
+        <div className="inline-flex rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+          <button
+            onClick={() => setView('leads')}
+            className={`inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 text-sm font-medium transition-colors ${
+              view === 'leads' ? 'bg-[#72b01d] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+            }`}
+          >
+            <Inbox className="size-4" />
+            Leads
+          </button>
+          <button
+            onClick={() => setView('stats')}
+            className={`inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 text-sm font-medium transition-colors ${
+              view === 'stats' ? 'bg-[#72b01d] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+            }`}
+          >
+            <BarChart3 className="size-4" />
+            Estadísticas
+          </button>
+        </div>
       </div>
 
+      {view === 'stats' ? (
+        <CrmStats leads={leads} />
+      ) : (
+        <>
       {/* Stats cards */}
       <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <StatCard label="Leads totales" value={leads.length} icon={<Inbox className="size-4" />} color="brand" />
@@ -274,10 +319,15 @@ export function CrmDashboard() {
               key={lead.id}
               lead={lead}
               onCall={() => handleCall(lead)}
+              onCopyPhone={() => handleCopyPhone(lead)}
+              onDownloadPdf={() => handleDownloadPdf(lead)}
+              onDownloadExcel={() => handleDownloadExcel(lead)}
               onDelete={() => handleDelete(lead)}
             />
           ))}
         </div>
+      )}
+        </>
       )}
     </div>
   )
@@ -320,10 +370,16 @@ function StatCard({
 function LeadCard({
   lead,
   onCall,
+  onCopyPhone,
+  onDownloadPdf,
+  onDownloadExcel,
   onDelete,
 }: {
   lead: LeadRow
   onCall: () => void
+  onCopyPhone: () => void
+  onDownloadPdf: () => void
+  onDownloadExcel: () => void
   onDelete: () => void
 }) {
   const advice = getAdvice(lead)
@@ -382,6 +438,40 @@ function LeadCard({
           >
             <Phone className="size-3.5" />
             Llamar ahora
+          </button>
+          <a
+            href={`https://wa.me/${toWhatsAppNumber(lead.telefono)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex size-8 items-center justify-center rounded-lg border border-[#25D366]/30 bg-[#eafaf0] text-[#1ebe5a] transition-colors hover:bg-[#25D366]/20"
+            aria-label="Abrir WhatsApp"
+            title="Abrir WhatsApp"
+          >
+            <MessageCircle className="size-4" />
+          </a>
+          <button
+            onClick={onCopyPhone}
+            className="inline-flex size-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-400 transition-colors hover:border-slate-300 hover:text-slate-600"
+            aria-label="Copiar teléfono"
+            title="Copiar teléfono"
+          >
+            <Copy className="size-4" />
+          </button>
+          <button
+            onClick={onDownloadPdf}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+            title="Descargar PDF"
+          >
+            <FileText className="size-3.5" />
+            PDF
+          </button>
+          <button
+            onClick={onDownloadExcel}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+            title="Descargar Excel"
+          >
+            <FileSpreadsheet className="size-3.5" />
+            Excel
           </button>
           <button
             onClick={onDelete}

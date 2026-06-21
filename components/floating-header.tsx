@@ -156,11 +156,11 @@ export function FloatingHeader() {
 
           {/* Botón teléfono */}
           <a
-            href="tel:+34961221468"
+            href="tel:+34647679553"
             className="relative z-10 inline-flex shrink-0 items-center gap-2 rounded-full bg-white/70 px-3 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-slate-200/60 transition-colors hover:bg-white/90 sm:px-5"
           >
             <Phone className="size-[18px] text-[#72b01d]" />
-            <span className="hidden sm:inline">961 22 14 68</span>
+            <span className="hidden sm:inline">647 67 95 53</span>
           </a>
 
           {/* Hamburger — solo móvil */}

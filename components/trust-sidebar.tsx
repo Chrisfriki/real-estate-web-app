@@ -39,14 +39,14 @@ export function TrustSidebar() {
 
         <div className="flex flex-col gap-2 border-t border-slate-100 pt-4">
           <a
-            href="tel:+34961221468"
+            href="tel:+34647679553"
             className="flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-3 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
           >
             <Phone className="size-4 text-[#72b01d]" />
-            961 22 14 68
+            647 67 95 53
           </a>
           <a
-            href="https://wa.me/34961221468?text=Hola%2C%20quiero%20saber%20cu%C3%A1nto%20vale%20mi%20vivienda"
+            href="https://wa.me/34647679553?text=Hola%2C%20quiero%20hacer%20una%20consulta%20sobre%20la%20valoraci%C3%B3n%20de%20mi%20vivienda."
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 rounded-lg bg-[#72b01d] px-3 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#65a015]"

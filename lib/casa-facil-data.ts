@@ -197,7 +197,7 @@ export function formatDate(ts: number): string {
   })
 }
 
-export function getAdvice(lead: Lead): { tone: 'hot' | 'warm' | 'cool'; text: string } {
+export function getAdvice(lead: Pick<Lead, 'plazo' | 'estado'>): { tone: 'hot' | 'warm' | 'cool'; text: string } {
   if (lead.plazo === 'Inmediato') {
     return {
       tone: 'hot',

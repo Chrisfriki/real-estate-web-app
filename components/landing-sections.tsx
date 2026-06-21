@@ -485,7 +485,7 @@ const FAQS = [
   },
   {
     q: '¿Operáis en mi municipio?',
-    a: 'Cubrimos toda la provincia de Valencia, con asesores especializados en cada municipio. Si tienes dudas sobre tu zona, llámanos al 961 22 14 68 y te confirmamos al momento.',
+    a: 'Cubrimos toda la provincia de Valencia, con asesores especializados en cada municipio. Si tienes dudas sobre tu zona, llámanos al 647 67 95 53 y te confirmamos al momento.',
   },
   {
     q: '¿Qué diferencia hay entre vuestra valoración y las de Idealista o Fotocasa?',
@@ -535,8 +535,8 @@ export function FaqSection() {
           <HelpCircle className="size-4 text-[#72b01d]" />
           <span>
             ¿Tienes otra pregunta?{' '}
-            <a href="tel:+34961221468" className="font-semibold text-[#72b01d] hover:underline">
-              Llámanos al 961 22 14 68
+            <a href="tel:+34647679553" className="font-semibold text-[#72b01d] hover:underline">
+              Llámanos al 647 67 95 53
             </a>
           </span>
         </div>

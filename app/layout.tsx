@@ -56,7 +56,7 @@ const schemaOrg = {
   description:
     'Agencia inmobiliaria local especializada en valoración y venta de viviendas en Valencia y provincia',
   url: 'https://www.casafacil.es',
-  telephone: '+34961221468',
+  telephone: '+34647679553',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Avinguda del Nord, 31',
@@ -106,7 +106,7 @@ const schemaFaq = {
       name: '¿Operáis en mi municipio?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Cubrimos toda la provincia de Valencia. Si tienes dudas, llámanos al 961 22 14 68.',
+        text: 'Cubrimos toda la provincia de Valencia. Si tienes dudas, llámanos al 647 67 95 53.',
       },
     },
     {

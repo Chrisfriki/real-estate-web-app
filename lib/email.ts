@@ -251,7 +251,7 @@ function confirmationHtml(nombre: string): string {
   <tr><td style="padding:0 40px 32px;">
     <p style="margin:0;font-size:13px;color:#94a3b8;line-height:1.6;">
       Si tienes alguna duda puedes llamarnos al
-      <a href="tel:+34961221468" style="color:#72b01d;text-decoration:none;font-weight:600;">961 22 14 68</a>.
+      <a href="tel:+34647679553" style="color:#72b01d;text-decoration:none;font-weight:600;">647 67 95 53</a>.
     </p>
   </td></tr>
 
