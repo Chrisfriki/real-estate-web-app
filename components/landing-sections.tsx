@@ -83,8 +83,8 @@ export function WhySection() {
     },
     {
       icon: ShieldCheck,
-      title: 'Te guiamos con el papeleo',
-      body: 'Arras, notaría, certificado energético y documentación clave.',
+      title: 'Nos encargamos del papeleo',
+      body: 'Gestionamos arras, notaría, certificado energético y toda la documentación.',
     },
     {
       icon: HandshakeIcon,
