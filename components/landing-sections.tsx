@@ -83,8 +83,8 @@ export function WhySection() {
     },
     {
       icon: ShieldCheck,
-      title: 'Nos encargamos del papeleo',
-      body: 'Gestionamos arras, notaría, certificado energético y toda la documentación.',
+      title: 'Nos encargamos de los trámites',
+      body: 'Gestionamos arras, notaría, certificado energético y la documentación necesaria.',
     },
     {
       icon: HandshakeIcon,
