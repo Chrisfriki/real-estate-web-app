@@ -4,6 +4,7 @@ import { Search } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import type { LeadRow } from '@/lib/db/schema'
 import { TIPOS_INMUEBLE } from '@/lib/casa-facil-data'
+import { normalizeMunicipality } from '@/lib/valencia-municipalities'
 
 type RangeOption = 'year' | '6m' | '12m' | 'all'
 
@@ -68,15 +69,17 @@ export function CrmStats({ leads }: { leads: LeadRow[] }) {
     : null
 
   const localityData = useMemo(() => {
-    const counts = leads.reduce<Record<string, { municipio: string; provincia: string; count: number }>>(
-      (acc, l) => {
-        const key = `${l.municipio}__${l.provincia}`
-        if (!acc[key]) acc[key] = { municipio: l.municipio, provincia: l.provincia, count: 0 }
-        acc[key].count++
-        return acc
-      },
-      {},
-    )
+    const counts = leads.reduce<
+      Record<string, { municipio: string; provincia: string; count: number; pending: boolean }>
+    >((acc, l) => {
+      const match = normalizeMunicipality(l.municipio)
+      const municipio = match?.officialName ?? l.municipio
+      const provincia = match?.province ?? l.provincia
+      const key = `${municipio}__${provincia}`
+      if (!acc[key]) acc[key] = { municipio, provincia, count: 0, pending: !match }
+      acc[key].count++
+      return acc
+    }, {})
     const total = leads.length || 1
     return Object.values(counts)
       .map((c) => ({ ...c, pct: Math.round((c.count / total) * 1000) / 10 }))
@@ -203,7 +206,14 @@ export function CrmStats({ leads }: { leads: LeadRow[] }) {
               <tbody>
                 {localityData.map((l) => (
                   <tr key={`${l.municipio}-${l.provincia}`} className="border-t border-slate-100">
-                    <td className="px-3 py-2 font-medium text-slate-700">{l.municipio}</td>
+                    <td className="px-3 py-2 font-medium text-slate-700">
+                      {l.municipio}
+                      {l.pending && (
+                        <span className="ml-2 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                          Localidad pendiente de revisar
+                        </span>
+                      )}
+                    </td>
                     <td className="px-3 py-2 text-slate-500">{l.provincia}</td>
                     <td className="px-3 py-2 text-right font-semibold text-slate-800 tabular-nums">{l.count}</td>
                     <td className="px-3 py-2 text-right text-slate-400 tabular-nums">{l.pct}%</td>

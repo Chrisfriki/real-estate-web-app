@@ -36,17 +36,6 @@ export type LeadForm = Omit<Lead, 'id' | 'createdAt'>
 
 export const PROVINCIAS = ['Valencia', 'Alicante', 'Castellón'] as const
 
-export const MUNICIPIOS_SUGERIDOS = [
-  'Silla',
-  'Alcàsser',
-  'Beniparrell',
-  'Picassent',
-  'Catarroja',
-  'Albal',
-  'Sollana',
-  'Almussafes',
-]
-
 export const TIPOS_INMUEBLE = [
   'Piso',
   'Ático',

@@ -25,7 +25,6 @@ import {
   EXTERIORES,
   GARAJES,
   type LeadForm,
-  MUNICIPIOS_SUGERIDOS,
   ORIENTACIONES,
   PLANTAS,
   PLAZOS,
@@ -34,6 +33,7 @@ import {
   TIPOS_INMUEBLE,
   VISTAS,
 } from '@/lib/casa-facil-data'
+import { normalizeMunicipality } from '@/lib/valencia-municipalities'
 import {
   Field,
   OptionGrid,
@@ -44,6 +44,7 @@ import {
   TextInput,
   Toggle,
 } from './form-controls'
+import { MunicipioCombobox } from './municipio-combobox'
 import { useToast } from './toast'
 import { TrustSidebar } from './trust-sidebar'
 
@@ -69,6 +70,14 @@ export function PublicFunnel() {
           tone: 'error',
           title: 'Faltan datos de ubicación',
           description: 'Completa municipio, dirección y código postal.',
+        })
+        return false
+      }
+      if (!normalizeMunicipality(form.municipio)) {
+        notify({
+          tone: 'error',
+          title: 'Localidad no reconocida',
+          description: 'Selecciona una localidad de la lista para continuar.',
         })
         return false
       }
@@ -224,11 +233,10 @@ export function PublicFunnel() {
                   options={PROVINCIAS}
                 />
               </Field>
-              <Field label="Municipio / Pueblo" hint="Ej: Silla, Alcàsser, Beniparrell">
-                <TextInput
+              <Field label="Municipio / Pueblo" hint="Empieza a escribir y selecciona tu localidad">
+                <MunicipioCombobox
                   value={form.municipio}
-                  onChange={(e) => set('municipio', e.target.value)}
-                  placeholder="Escribe tu municipio"
+                  onChange={(v) => set('municipio', v)}
                 />
               </Field>
               <Field label="Dirección exacta" hint="Calle, número, piso y puerta">

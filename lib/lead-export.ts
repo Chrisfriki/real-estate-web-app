@@ -1,5 +1,6 @@
 import type { LeadRow } from './db/schema'
 import { getAdvice } from './casa-facil-data'
+import { normalizeMunicipality } from './valencia-municipalities'
 
 const FALLBACK = '—'
 const siNo = (v: boolean) => (v ? 'Sí' : 'No')
@@ -36,12 +37,15 @@ export function formatLeadDate(d: Date | string): string {
 
 export function buildLeadExportData(lead: LeadRow): LeadExportData {
   const advice = getAdvice(lead)
+  const match = normalizeMunicipality(lead.municipio)
+  const municipio = match?.officialName ?? lead.municipio
+  const provincia = match?.province ?? lead.provincia
   return {
     propietario: {
       nombre: lead.nombre,
       email: lead.email,
       telefono: lead.telefono,
-      localidad: `${lead.municipio} (${lead.provincia})`,
+      localidad: `${municipio} (${provincia})`,
       fechaEntrada: formatLeadDate(lead.createdAt),
     },
     inmueble: {
@@ -64,8 +68,8 @@ export function buildLeadExportData(lead: LeadRow): LeadExportData {
       climatizacion: lead.climatizacion ?? FALLBACK,
     },
     ubicacion: {
-      provincia: lead.provincia,
-      municipio: lead.municipio,
+      provincia,
+      municipio,
       direccion: lead.direccion,
       codigoPostal: lead.codigoPostal,
     },
