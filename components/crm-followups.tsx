@@ -1,8 +1,9 @@
 'use client'
 
-import { CalendarX2, CheckCircle2, Clock4, Mail, MapPin, MessageCircle, Phone, Sparkles } from 'lucide-react'
+import { CalendarDays, CalendarX2, CheckCircle2, Clock4, List, Mail, MapPin, MessageCircle, Phone, Sparkles } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import type { LeadRow } from '@/lib/db/schema'
+import { CrmCalendar } from './crm-calendar'
 
 export type FollowUpRow = {
   id: number
@@ -53,12 +54,15 @@ export function CrmFollowUps({
   followUps,
   onComplete,
   onViewLead,
+  onOpenFollowUp,
 }: {
   leads: LeadRow[]
   followUps: FollowUpRow[]
   onComplete: (id: number, resultNote: string) => Promise<void>
   onViewLead: (leadId: number) => void
+  onOpenFollowUp: (followUp: FollowUpRow) => void
 }) {
+  const [subView, setSubView] = useState<'list' | 'calendar'>('list')
   const now = new Date()
   const todayStart = startOfDay(now)
   const todayEnd = endOfDay(now)
@@ -79,7 +83,32 @@ export function CrmFollowUps({
   const withoutFollowUp = leads.filter((l) => !leadIdsWithFollowUp.has(l.id))
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
+      <div className="inline-flex w-fit rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+        <button
+          onClick={() => setSubView('list')}
+          className={`inline-flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-sm font-medium transition-colors ${
+            subView === 'list' ? 'bg-[#72b01d] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+          }`}
+        >
+          <List className="size-4" />
+          Lista
+        </button>
+        <button
+          onClick={() => setSubView('calendar')}
+          className={`inline-flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-sm font-medium transition-colors ${
+            subView === 'calendar' ? 'bg-[#72b01d] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+          }`}
+        >
+          <CalendarDays className="size-4" />
+          Calendario
+        </button>
+      </div>
+
+      {subView === 'calendar' ? (
+        <CrmCalendar followUps={followUps} onOpenFollowUp={onOpenFollowUp} />
+      ) : (
+        <div className="flex flex-col gap-8">
       <FollowUpSection
         title="Vencidos"
         icon={<CalendarX2 className="size-4 text-[#c41616]" />}
@@ -137,6 +166,8 @@ export function CrmFollowUps({
           </div>
         )}
       </section>
+        </div>
+      )}
     </div>
   )
 }

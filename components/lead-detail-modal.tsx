@@ -17,8 +17,22 @@ import {
 import { useState } from 'react'
 import useSWR from 'swr'
 import type { LeadRow } from '@/lib/db/schema'
+import type { FollowUpRow } from './crm-followups'
 import { Field, OptionGrid, TextArea } from './form-controls'
 import { useToast } from './toast'
+
+const FOLLOW_UP_TYPE_ICON: Record<string, typeof Phone> = {
+  call: Phone,
+  whatsapp: MessageCircle,
+  email: Mail,
+  visit: MapPin,
+}
+const FOLLOW_UP_TYPE_LABEL: Record<string, string> = {
+  call: 'Llamada',
+  whatsapp: 'WhatsApp',
+  email: 'Email',
+  visit: 'Visita',
+}
 
 type ActivityRow = {
   id: number
@@ -88,7 +102,19 @@ function formatDateTime(d: Date | string): string {
   })
 }
 
-export function LeadDetailModal({ lead, onClose }: { lead: LeadRow; onClose: () => void }) {
+export function LeadDetailModal({
+  lead,
+  onClose,
+  focusFollowUp,
+  onMarkFollowUpComplete,
+  onScheduleNext,
+}: {
+  lead: LeadRow
+  onClose: () => void
+  focusFollowUp?: FollowUpRow
+  onMarkFollowUpComplete?: (id: number, resultNote: string) => Promise<void>
+  onScheduleNext?: () => void
+}) {
   const { notify } = useToast()
   const { data, mutate } = useSWR<{ activities: ActivityRow[] }>(
     `/api/leads/activities?leadId=${lead.id}`,
@@ -101,6 +127,22 @@ export function LeadDetailModal({ lead, onClose }: { lead: LeadRow; onClose: () 
   const [notes, setNotes] = useState('')
   const [nextNotes, setNextNotes] = useState('')
   const [saving, setSaving] = useState(false)
+  const [completing, setCompleting] = useState(false)
+  const [resultNote, setResultNote] = useState('')
+  const [completingSaving, setCompletingSaving] = useState(false)
+
+  async function handleCompleteFollowUp() {
+    if (!focusFollowUp || !onMarkFollowUpComplete) return
+    setCompletingSaving(true)
+    try {
+      await onMarkFollowUpComplete(focusFollowUp.id, resultNote)
+      setCompleting(false)
+      setResultNote('')
+      mutate()
+    } finally {
+      setCompletingSaving(false)
+    }
+  }
 
   async function handleAddActivity() {
     setSaving(true)
@@ -158,6 +200,90 @@ export function LeadDetailModal({ lead, onClose }: { lead: LeadRow; onClose: () 
           <SummaryItem label="Fase" value={STAGE_LABEL[pipelineStage]} icon={<CheckCircle2 className="size-3.5" />} />
           <SummaryItem label="Interacciones" value={String(activities.length)} icon={<StickyNote className="size-3.5" />} />
         </div>
+
+        {/* Focused follow-up */}
+        {focusFollowUp && (
+          <div className="border-b border-slate-100 bg-[#f0f7e4] px-6 py-4">
+            {(() => {
+              const Icon = FOLLOW_UP_TYPE_ICON[focusFollowUp.type] ?? Phone
+              return (
+                <div className="flex items-start gap-3">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
+                    <Icon className="size-4 text-[#5c8f16]" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-slate-800">
+                      {FOLLOW_UP_TYPE_LABEL[focusFollowUp.type] ?? focusFollowUp.type} ·{' '}
+                      {new Date(focusFollowUp.scheduledAt).toLocaleString('es-ES', {
+                        day: '2-digit',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </p>
+                    {focusFollowUp.note && (
+                      <p className="mt-1 text-sm italic text-slate-600">&ldquo;{focusFollowUp.note}&rdquo;</p>
+                    )}
+                    {focusFollowUp.status === 'completed' ? (
+                      <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-[#5c8f16]">
+                        <CheckCircle2 className="size-3.5" />
+                        Completado
+                      </p>
+                    ) : (
+                      <div className="mt-2.5 flex flex-wrap gap-2">
+                        {onMarkFollowUpComplete && (
+                          <button
+                            onClick={() => setCompleting((c) => !c)}
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-[#72b01d] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#65a015]"
+                          >
+                            <CheckCircle2 className="size-3.5" />
+                            Marcar completado
+                          </button>
+                        )}
+                        {onScheduleNext && (
+                          <button
+                            onClick={onScheduleNext}
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-[#72b01d]/30 bg-white px-3 py-1.5 text-xs font-semibold text-[#5c8f16] transition-colors hover:bg-[#f0f7e4]"
+                          >
+                            <CalendarClock className="size-3.5" />
+                            Programar siguiente
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    {completing && (
+                      <div className="mt-3 flex flex-col gap-2 rounded-lg bg-white p-3">
+                        <label className="text-xs font-semibold text-slate-600">¿Cómo fue el seguimiento?</label>
+                        <textarea
+                          value={resultNote}
+                          onChange={(e) => setResultNote(e.target.value)}
+                          rows={2}
+                          placeholder="Ej: Cliente sigue interesado, llamar de nuevo en 2 semanas."
+                          className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-[#72b01d] focus:ring-2 focus:ring-[#72b01d]/20"
+                        />
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={() => setCompleting(false)}
+                            className="rounded-lg px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-100"
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            onClick={handleCompleteFollowUp}
+                            disabled={completingSaving}
+                            className="rounded-lg bg-[#72b01d] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#65a015] disabled:opacity-60"
+                          >
+                            {completingSaving ? 'Guardando…' : 'Guardar'}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
+        )}
 
         {/* Body: history + add activity */}
         <div className="flex-1 overflow-y-auto px-6 py-4">

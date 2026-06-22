@@ -114,6 +114,7 @@ export function CrmDashboard() {
   const [statusFilter, setStatusFilter] = useState<'all' | LeadStatus>('all')
   const [scheduleFor, setScheduleFor] = useState<LeadRow | null>(null)
   const [detailFor, setDetailFor] = useState<LeadRow | null>(null)
+  const [focusFollowUp, setFocusFollowUp] = useState<FollowUpRow | null>(null)
   const [stageChange, setStageChange] = useState<{ lead: LeadRow; target: 'captured' | 'lost' } | null>(null)
   const [highlightedLeadId, setHighlightedLeadId] = useState<number | null>(null)
 
@@ -164,6 +165,13 @@ export function CrmDashboard() {
   const last24h = leads.filter(
     (l) => Date.now() - new Date(l.createdAt).getTime() < 1000 * 60 * 60 * 24,
   ).length
+
+  function handleOpenFollowUp(followUp: FollowUpRow) {
+    const lead = leads.find((l) => l.id === followUp.leadId)
+    if (!lead) return
+    setFocusFollowUp(followUp)
+    setDetailFor(lead)
+  }
 
   function handleViewLead(leadId: number) {
     setView('leads')
@@ -298,7 +306,23 @@ export function CrmDashboard() {
           onScheduled={() => mutateFollowUps()}
         />
       )}
-      {detailFor && <LeadDetailModal lead={detailFor} onClose={() => setDetailFor(null)} />}
+      {detailFor && (
+        <LeadDetailModal
+          lead={detailFor}
+          focusFollowUp={focusFollowUp ?? undefined}
+          onClose={() => {
+            setDetailFor(null)
+            setFocusFollowUp(null)
+          }}
+          onMarkFollowUpComplete={handleCompleteFollowUp}
+          onScheduleNext={() => {
+            const lead = detailFor
+            setDetailFor(null)
+            setFocusFollowUp(null)
+            setScheduleFor(lead)
+          }}
+        />
+      )}
       {stageChange && (
         <ConfirmStageModal
           leadNombre={stageChange.lead.nombre}
@@ -356,6 +380,7 @@ export function CrmDashboard() {
           followUps={followUps}
           onComplete={handleCompleteFollowUp}
           onViewLead={handleViewLead}
+          onOpenFollowUp={handleOpenFollowUp}
         />
       ) : (
         <>
