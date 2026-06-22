@@ -6,6 +6,14 @@ import type { LeadRow } from '@/lib/db/schema'
 import { TIPOS_INMUEBLE } from '@/lib/casa-facil-data'
 import { normalizeMunicipality } from '@/lib/valencia-municipalities'
 
+const STATUS_LABELS: Record<string, string> = { cold: 'Frío', warm: 'Templado', hot: 'Caliente' }
+const STATUS_ORDER_STATS = ['cold', 'warm', 'hot']
+const STATUS_BAR_COLOR: Record<string, string> = {
+  cold: 'from-slate-300 to-slate-400',
+  warm: 'from-amber-300 to-amber-500',
+  hot: 'from-[#f29999] to-[#e62020]',
+}
+
 type RangeOption = 'year' | '6m' | '12m' | 'all'
 
 const RANGE_LABELS: Record<RangeOption, string> = {
@@ -105,8 +113,45 @@ export function CrmStats({ leads }: { leads: LeadRow[] }) {
 
   const maxTipoCount = Math.max(1, ...tipoData.map((t) => t.count))
 
+  const statusData = useMemo(() => {
+    const counts = leads.reduce<Record<string, number>>((acc, l) => {
+      const key = STATUS_ORDER_STATS.includes(l.status) ? l.status : 'cold'
+      acc[key] = (acc[key] || 0) + 1
+      return acc
+    }, {})
+    const total = leads.length || 1
+    return STATUS_ORDER_STATS.map((status) => ({
+      status,
+      label: STATUS_LABELS[status],
+      count: counts[status] ?? 0,
+      pct: Math.round(((counts[status] ?? 0) / total) * 1000) / 10,
+    }))
+  }, [leads])
+
+  const maxStatusCount = Math.max(1, ...statusData.map((s) => s.count))
+
   return (
     <div className="flex flex-col gap-8">
+      {/* ── Por estado del lead ──────────────────────────────────────────── */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <h2 className="mb-4 text-base font-bold text-slate-800">Leads por estado</h2>
+        <div className="flex flex-col gap-3">
+          {statusData.map((s) => (
+            <div key={s.status} className="flex items-center gap-3">
+              <span className="w-24 shrink-0 text-sm text-slate-600">{s.label}</span>
+              <div className="h-3 flex-1 overflow-hidden rounded-full bg-slate-100">
+                <div
+                  className={`h-full rounded-full bg-gradient-to-r ${STATUS_BAR_COLOR[s.status]}`}
+                  style={{ width: `${(s.count / maxStatusCount) * 100}%` }}
+                />
+              </div>
+              <span className="w-10 shrink-0 text-right text-sm font-semibold text-slate-800 tabular-nums">{s.count}</span>
+              <span className="w-12 shrink-0 text-right text-xs text-slate-400 tabular-nums">{s.pct}%</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Por mes ──────────────────────────────────────────────────────── */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">

@@ -5,6 +5,7 @@ import {
   boolean,
   serial,
   integer,
+  jsonb,
 } from 'drizzle-orm/pg-core'
 
 // --- Better Auth required tables -------------------------------------------
@@ -94,6 +95,41 @@ export const leads = pgTable('leads', {
   // Catastral document
   catastralDocPathname: text('catastral_doc_pathname'),
   catastralDocName: text('catastral_doc_name'),
+  // Seguimiento comercial
+  status: text('status').notNull().default('cold'), // 'cold' | 'warm' | 'hot'
+  statusUpdatedAt: timestamp('status_updated_at').notNull().defaultNow(),
 })
 
 export type LeadRow = typeof leads.$inferSelect
+
+// --- Lead activities (historial) --------------------------------------------
+export const leadActivities = pgTable('lead_activities', {
+  id: serial('id').primaryKey(),
+  leadId: integer('lead_id')
+    .notNull()
+    .references(() => leads.id, { onDelete: 'cascade' }),
+  type: text('type').notNull(), // call | whatsapp | email | visit | note | status_change | follow_up_scheduled | follow_up_completed
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  notes: text('notes'),
+  nextNotes: text('next_notes'),
+  metadata: jsonb('metadata'),
+})
+
+export type LeadActivityRow = typeof leadActivities.$inferSelect
+
+// --- Lead follow-ups (seguimientos programados) -----------------------------
+export const leadFollowUps = pgTable('lead_follow_ups', {
+  id: serial('id').primaryKey(),
+  leadId: integer('lead_id')
+    .notNull()
+    .references(() => leads.id, { onDelete: 'cascade' }),
+  scheduledAt: timestamp('scheduled_at').notNull(),
+  type: text('type').notNull(), // call | whatsapp | email | visit
+  status: text('status').notNull().default('pending'), // pending | completed
+  note: text('note'),
+  completedAt: timestamp('completed_at'),
+  resultNote: text('result_note'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+})
+
+export type LeadFollowUpRow = typeof leadFollowUps.$inferSelect

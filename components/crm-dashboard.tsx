@@ -57,6 +57,14 @@ const plazoStyle: Record<string, string> = {
   'Solo curiosidad': 'bg-slate-100 text-slate-500',
 }
 
+type LeadStatus = 'cold' | 'warm' | 'hot'
+const STATUS_ORDER: LeadStatus[] = ['cold', 'warm', 'hot']
+const STATUS_CONFIG: Record<LeadStatus, { label: string; active: string }> = {
+  cold: { label: 'Frío', active: 'bg-slate-200 text-slate-700' },
+  warm: { label: 'Templado', active: 'bg-amber-100 text-amber-700' },
+  hot: { label: 'Caliente', active: 'bg-[#fdeaea] text-[#c41616]' },
+}
+
 function formatDate(d: Date | string): string {
   return new Date(d).toLocaleString('es-ES', {
     day: '2-digit',
@@ -65,6 +73,17 @@ function formatDate(d: Date | string): string {
     hour: '2-digit',
     minute: '2-digit',
   })
+}
+
+function formatRelative(d: Date | string): string {
+  const diffMs = Date.now() - new Date(d).getTime()
+  const mins = Math.floor(diffMs / 60000)
+  if (mins < 1) return 'ahora mismo'
+  if (mins < 60) return `hace ${mins} min`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return `hace ${hours}h`
+  const days = Math.floor(hours / 24)
+  return `hace ${days}d`
 }
 
 // ─── Fetcher ────────────────────────────────────────────────────────────────
@@ -78,6 +97,7 @@ export function CrmDashboard() {
   const [view, setView] = useState<'leads' | 'stats'>('leads')
   const [query, setQuery] = useState('')
   const [order, setOrder] = useState<'recent' | 'urgent'>('recent')
+  const [statusFilter, setStatusFilter] = useState<'all' | LeadStatus>('all')
 
   const { data, error, isLoading, mutate } = useSWR<{ leads: LeadRow[] }>(
     '/api/leads/list',
@@ -96,6 +116,7 @@ export function CrmDashboard() {
     }
     const q = query.trim().toLowerCase()
     return [...leads]
+      .filter((l) => statusFilter === 'all' || l.status === statusFilter)
       .filter(
         (l) =>
           !q ||
@@ -110,7 +131,7 @@ export function CrmDashboard() {
           : urgencyRank[a.plazo] - urgencyRank[b.plazo] ||
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       )
-  }, [leads, query, order])
+  }, [leads, query, order, statusFilter])
 
   // Stats
   const hotCount = leads.filter((l) => l.plazo === 'Inmediato').length
@@ -119,6 +140,25 @@ export function CrmDashboard() {
   const last24h = leads.filter(
     (l) => Date.now() - new Date(l.createdAt).getTime() < 1000 * 60 * 60 * 24,
   ).length
+
+  async function handleStatusChange(lead: LeadRow, status: LeadStatus) {
+    if (lead.status === status) return
+    try {
+      const res = await fetch('/api/leads/status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: lead.id, status }),
+      })
+      if (!res.ok) throw new Error()
+      mutate()
+    } catch {
+      notify({
+        tone: 'error',
+        title: 'No se pudo cambiar el estado',
+        description: 'Inténtalo de nuevo.',
+      })
+    }
+  }
 
   function handleCall(lead: LeadRow) {
     notify({
@@ -267,6 +307,29 @@ export function CrmDashboard() {
         </button>
       </div>
 
+      {/* Filtro por estado */}
+      <div className="mb-3 inline-flex flex-wrap gap-1.5 rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
+        <button
+          onClick={() => setStatusFilter('all')}
+          className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
+            statusFilter === 'all' ? 'bg-slate-700 text-white' : 'text-slate-500 hover:bg-slate-50'
+          }`}
+        >
+          Todos
+        </button>
+        {STATUS_ORDER.map((s) => (
+          <button
+            key={s}
+            onClick={() => setStatusFilter(s)}
+            className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
+              statusFilter === s ? STATUS_CONFIG[s].active : 'text-slate-500 hover:bg-slate-50'
+            }`}
+          >
+            {STATUS_CONFIG[s].label}
+          </button>
+        ))}
+      </div>
+
       {/* Controls */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
@@ -323,6 +386,7 @@ export function CrmDashboard() {
               onDownloadPdf={() => handleDownloadPdf(lead)}
               onDownloadExcel={() => handleDownloadExcel(lead)}
               onDelete={() => handleDelete(lead)}
+              onStatusChange={(status) => handleStatusChange(lead, status)}
             />
           ))}
         </div>
@@ -374,6 +438,7 @@ function LeadCard({
   onDownloadPdf,
   onDownloadExcel,
   onDelete,
+  onStatusChange,
 }: {
   lead: LeadRow
   onCall: () => void
@@ -381,7 +446,9 @@ function LeadCard({
   onDownloadPdf: () => void
   onDownloadExcel: () => void
   onDelete: () => void
+  onStatusChange: (status: LeadStatus) => void
 }) {
+  const status = (lead.status as LeadStatus) in STATUS_CONFIG ? (lead.status as LeadStatus) : 'cold'
   const advice = getAdvice(lead)
   const adviceTone =
     advice.tone === 'hot'
@@ -408,11 +475,24 @@ function LeadCard({
             <p className="text-sm font-semibold text-slate-800">{lead.nombre}</p>
             <p className="flex items-center gap-1 text-xs text-slate-400">
               <CalendarClock className="size-3" />
-              {formatDate(lead.createdAt)}
+              {formatDate(lead.createdAt)} · estado actualizado {formatRelative(lead.statusUpdatedAt)}
             </p>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex rounded-full border border-slate-200 bg-white p-0.5">
+            {STATUS_ORDER.map((s) => (
+              <button
+                key={s}
+                onClick={() => onStatusChange(s)}
+                className={`rounded-full px-2.5 py-1 text-xs font-semibold transition-colors ${
+                  status === s ? STATUS_CONFIG[s].active : 'text-slate-400 hover:bg-slate-50'
+                }`}
+              >
+                {STATUS_CONFIG[s].label}
+              </button>
+            ))}
+          </div>
           <span
             className={`rounded-full px-3 py-1 text-xs font-semibold ${
               plazoStyle[lead.plazo] ?? 'bg-slate-100 text-slate-500'
