@@ -36,15 +36,35 @@ export type LeadForm = Omit<Lead, 'id' | 'createdAt'>
 
 export const PROVINCIAS = ['Valencia', 'Alicante', 'Castellón'] as const
 
-export const TIPOS_INMUEBLE = [
+export const TIPOS_INMUEBLE_PRINCIPALES = [
   'Piso',
   'Ático',
-  'Dúplex',
-  'Bajo vivienda',
   'Chalet',
-  'Casa adosada',
+  'Adosado / Pareado',
+  'Casa de pueblo',
+  'Bajo vivienda',
   'Local comercial',
+] as const
+
+export const TIPOS_INMUEBLE_OTROS = [
+  'Apartamento',
+  'Dúplex',
+  'Edificio',
+  'Garaje',
+  'Nave',
+  'Parcela',
+  'Rústica',
+  'Solar',
+  'Trastero',
+  'Cortijo',
+] as const
+
+// Lista completa (principales + "Otro" + sub-tipos) — útil para estadísticas que deben
+// mostrar todas las categorías posibles, no solo las visibles de entrada en el formulario.
+export const TIPOS_INMUEBLE = [
+  ...TIPOS_INMUEBLE_PRINCIPALES,
   'Otro',
+  ...TIPOS_INMUEBLE_OTROS,
 ] as const
 
 export const ESTADOS = [

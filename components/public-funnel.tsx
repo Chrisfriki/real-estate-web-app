@@ -30,7 +30,8 @@ import {
   PLAZOS,
   PROVINCIAS,
   STEP_TITLES,
-  TIPOS_INMUEBLE,
+  TIPOS_INMUEBLE_OTROS,
+  TIPOS_INMUEBLE_PRINCIPALES,
   VISTAS,
 } from '@/lib/casa-facil-data'
 import { normalizeMunicipality } from '@/lib/valencia-municipalities'
@@ -49,6 +50,7 @@ import { useToast } from './toast'
 import { TrustSidebar } from './trust-sidebar'
 
 const STEP_ICONS = [MapPin, Building2, Home, Settings2, UserRound]
+const TIPOS_INMUEBLE_PRIMARIOS = [...TIPOS_INMUEBLE_PRINCIPALES, 'Otro']
 
 export function PublicFunnel() {
   const [step, setStep] = useState(0)
@@ -260,12 +262,37 @@ export function PublicFunnel() {
           {step === 1 && (
             <div className="flex flex-col gap-6">
               <Field label="Tipo de inmueble">
-                <OptionGrid
-                  value={form.tipo}
-                  onChange={(v) => set('tipo', v)}
-                  options={TIPOS_INMUEBLE}
-                  columns={3}
-                />
+                {(() => {
+                  const isPrimaryTipo = (TIPOS_INMUEBLE_PRINCIPALES as readonly string[]).includes(form.tipo)
+                  return (
+                    <>
+                      <OptionGrid
+                        value={isPrimaryTipo ? form.tipo : 'Otro'}
+                        onChange={(v) => {
+                          // Si ya estábamos en la rama "Otro" con un sub-tipo concreto elegido,
+                          // volver a pulsar el botón "Otro" no debe borrar esa selección.
+                          if (v === 'Otro' && !isPrimaryTipo) return
+                          set('tipo', v)
+                        }}
+                        options={TIPOS_INMUEBLE_PRIMARIOS}
+                        columns={3}
+                      />
+                      {!isPrimaryTipo && (
+                        <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3.5">
+                          <p className="mb-2.5 text-xs text-slate-500">
+                            ¿No aparece tu tipo de inmueble? Selecciónalo aquí.
+                          </p>
+                          <OptionGrid
+                            value={form.tipo}
+                            onChange={(v) => set('tipo', v)}
+                            options={TIPOS_INMUEBLE_OTROS}
+                            columns={3}
+                          />
+                        </div>
+                      )}
+                    </>
+                  )
+                })()}
               </Field>
               <Field
                 label="Metros cuadrados aproximados"
