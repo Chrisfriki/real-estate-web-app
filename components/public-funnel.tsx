@@ -24,6 +24,7 @@ import {
   ESTADOS,
   EXTERIORES,
   GARAJES,
+  getMetrosFieldConfig,
   type LeadForm,
   ORIENTACIONES,
   PLANTAS,
@@ -294,36 +295,43 @@ export function PublicFunnel() {
                   )
                 })()}
               </Field>
-              <Field
-                label="Metros cuadrados aproximados"
-                hint="Si no lo sabes exacto, introduce una aproximación. Nosotros lo revisamos después."
-              >
-                <div className="flex flex-col gap-4">
-                  <div className="relative">
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      min={1}
-                      value={form.metros || ''}
-                      onChange={(e) => set('metros', Math.max(0, Number(e.target.value) || 0))}
-                      placeholder="Ej: 92 m²"
-                      className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 pr-12 text-2xl font-bold text-slate-800 shadow-sm outline-none transition-all placeholder:text-base placeholder:font-medium placeholder:text-slate-400 focus:border-[#72b01d] focus:ring-2 focus:ring-[#72b01d]/20"
-                    />
-                    <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-slate-400">
-                      m²
-                    </span>
-                  </div>
-                  <RangeSlider
-                    value={form.metros}
-                    onChange={(v) => set('metros', v)}
-                    min={20}
-                    max={500}
-                    step={5}
-                    unit="m²"
-                    hideValue
-                  />
-                </div>
-              </Field>
+              {(() => {
+                const { label: metrosLabel, sliderMax } = getMetrosFieldConfig(form.tipo)
+                return (
+                  <Field
+                    label={metrosLabel}
+                    hint="Si no lo sabes exacto, introduce una aproximación. Nosotros lo revisamos después."
+                  >
+                    <div className="flex flex-col gap-4">
+                      <div className="relative">
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          min={1}
+                          value={form.metros || ''}
+                          onChange={(e) => set('metros', Math.max(0, Number(e.target.value) || 0))}
+                          placeholder="Ej: 92 m²"
+                          className="w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 pr-12 text-2xl font-bold text-slate-800 shadow-sm outline-none transition-all placeholder:text-base placeholder:font-medium placeholder:text-slate-400 focus:border-[#72b01d] focus:ring-2 focus:ring-[#72b01d]/20"
+                        />
+                        <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-slate-400">
+                          m²
+                        </span>
+                      </div>
+                      {sliderMax !== null && (
+                        <RangeSlider
+                          value={form.metros}
+                          onChange={(v) => set('metros', v)}
+                          min={20}
+                          max={sliderMax}
+                          step={sliderMax >= 2000 ? 50 : sliderMax >= 1000 ? 20 : 5}
+                          unit="m²"
+                          hideValue
+                        />
+                      )}
+                    </div>
+                  </Field>
+                )
+              })()}
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label={form.tipo === 'Local comercial' ? 'Estancias / despachos' : 'Habitaciones'}>
                   <Stepper

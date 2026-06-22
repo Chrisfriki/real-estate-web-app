@@ -59,6 +59,20 @@ export const TIPOS_INMUEBLE_OTROS = [
   'Cortijo',
 ] as const
 
+// Tope orientativo del slider de metros y label del campo según el tipo de inmueble.
+// El input numérico nunca tiene límite superior — esto solo afecta a la escala visual del slider.
+const METROS_BUCKETS: { tipos: readonly string[]; sliderMax: number | null; label?: string }[] = [
+  { tipos: ['Piso', 'Apartamento', 'Ático', 'Dúplex', 'Bajo vivienda', 'Garaje', 'Trastero'], sliderMax: 400 },
+  { tipos: ['Chalet', 'Casa de pueblo', 'Adosado / Pareado', 'Cortijo'], sliderMax: 1000 },
+  { tipos: ['Local comercial', 'Edificio', 'Nave'], sliderMax: 2000 },
+  { tipos: ['Parcela', 'Solar', 'Rústica'], sliderMax: null, label: 'Superficie aproximada' },
+]
+
+export function getMetrosFieldConfig(tipo: string): { label: string; sliderMax: number | null } {
+  const bucket = METROS_BUCKETS.find((b) => b.tipos.includes(tipo))
+  return { label: bucket?.label ?? 'Metros cuadrados aproximados', sliderMax: bucket ? bucket.sliderMax : 500 }
+}
+
 // Lista completa (principales + "Otro" + sub-tipos) — útil para estadísticas que deben
 // mostrar todas las categorías posibles, no solo las visibles de entrada en el formulario.
 export const TIPOS_INMUEBLE = [
