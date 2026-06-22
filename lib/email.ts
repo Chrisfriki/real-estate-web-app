@@ -49,7 +49,7 @@ export async function sendInternalLeadEmail(data: LeadEmailData): Promise<void> 
   }
 
   await getResend().emails.send({
-    from: process.env.FROM_EMAIL ?? 'Casa Fácil <noreply@casafacil.es>',
+    from: process.env.FROM_EMAIL ?? 'Casa Fácil <noreply@valoratucasafacil.es>',
     to,
     subject: `🏠 Nuevo lead: ${data.nombre} — ${data.municipio} (${data.tipo})`,
     html: internalHtml(data),
@@ -65,7 +65,7 @@ export async function sendUserConfirmationEmail(nombre: string, email: string): 
   }
 
   await getResend().emails.send({
-    from: process.env.FROM_EMAIL ?? 'Casa Fácil <noreply@casafacil.es>',
+    from: process.env.FROM_EMAIL ?? 'Casa Fácil <noreply@valoratucasafacil.es>',
     to: email,
     subject: 'Hemos recibido tu solicitud de valoración',
     html: confirmationHtml(nombre),
@@ -165,7 +165,7 @@ function internalHtml(d: LeadEmailData): string {
   <!-- Aviso -->
   <tr><td style="padding:20px 32px 0;">
     <p style="margin:0;font-size:14px;color:#475569;line-height:1.6;">
-      Se ha recibido una nueva solicitud desde la landing de <strong>casafacil.es</strong>.
+      Se ha recibido una nueva solicitud desde la landing de <strong>valoratucasafacil.es</strong>.
       A continuación tienes todos los datos del formulario.
     </p>
   </td></tr>
@@ -259,7 +259,7 @@ function confirmationHtml(nombre: string): string {
   <tr><td style="padding:20px 32px;border-top:1px solid #e2e8f0;text-align:center;">
     <p style="margin:0;font-size:12px;color:#94a3b8;">
       Casa Fácil · Soluciones Inmobiliarias · Valencia y provincia<br>
-      <a href="https://www.casafacil.es" style="color:#72b01d;text-decoration:none;">www.casafacil.es</a>
+      <a href="https://www.valoratucasafacil.es" style="color:#72b01d;text-decoration:none;">www.valoratucasafacil.es</a>
     </p>
   </td></tr>
 

@@ -14,17 +14,17 @@ export const metadata: Metadata = {
     'Descubre el precio real de tu vivienda en Valencia y provincia. Valoración gratuita, sin robots: un asesor local te llama en menos de 24h con datos catastrales reales.',
   generator: 'v0.app',
   alternates: {
-    canonical: 'https://www.casafacil.es/',
+    canonical: 'https://www.valoratucasafacil.es/',
   },
   openGraph: {
     title: '¿Cuánto vale tu casa? Valoración gratuita en 24h | Casa Fácil',
     description:
       'Un asesor local cruza datos catastrales reales y te llama en menos de 24h. Sin robots, sin estimaciones erróneas.',
-    url: 'https://www.casafacil.es/',
+    url: 'https://www.valoratucasafacil.es/',
     siteName: 'Casa Fácil',
     images: [
       {
-        url: 'https://www.casafacil.es/og-image.png',
+        url: 'https://www.valoratucasafacil.es/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Casa Fácil - Valoración de viviendas en Valencia y provincia',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '¿Cuánto vale tu casa? Valoración gratuita | Casa Fácil',
     description: 'Asesor local + datos catastrales reales. Te llamamos en 24h.',
-    images: ['https://www.casafacil.es/og-image.png'],
+    images: ['https://www.valoratucasafacil.es/og-image.png'],
   },
   icons: {
     icon: [
@@ -55,7 +55,7 @@ const schemaOrg = {
   name: 'Casa Fácil - Soluciones Inmobiliarias',
   description:
     'Agencia inmobiliaria local especializada en valoración y venta de viviendas en Valencia y provincia',
-  url: 'https://www.casafacil.es',
+  url: 'https://www.valoratucasafacil.es',
   telephone: '+34647679553',
   address: {
     '@type': 'PostalAddress',

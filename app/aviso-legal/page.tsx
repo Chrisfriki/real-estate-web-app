@@ -73,12 +73,12 @@ export default function AvisoLegalPage() {
             <li>
               <strong>Sitio web:</strong>{' '}
               <a
-                href="https://www.casafacil.es"
+                href="https://www.valoratucasafacil.es"
                 className="text-[#72b01d] underline hover:text-[#4a7a0f]"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                www.casafacil.es
+                www.valoratucasafacil.es
               </a>
             </li>
           </ul>
