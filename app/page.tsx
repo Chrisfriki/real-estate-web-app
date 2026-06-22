@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Lock } from 'lucide-react'
+import { Lock, Settings } from 'lucide-react'
+import { AccountSettings } from '@/components/account-settings'
 import { CasaFacilLogo } from '@/components/casa-facil-logo'
 import { CrmDashboard } from '@/components/crm-dashboard'
 import { PublicFunnel } from '@/components/public-funnel'
@@ -25,11 +26,18 @@ export default function Page() {
   const { data: session, isPending } = useSession()
   const isAuthenticated = !!session?.user
   const [showLogin, setShowLogin] = useState(false)
+  const [showAccountSettings, setShowAccountSettings] = useState(false)
 
   // ── Authenticated: show CRM panel ────────────────────────────────────────
   if (!isPending && isAuthenticated) {
     return (
       <ToastProvider>
+        {showAccountSettings && (
+          <AccountSettings
+            email={session.user.email}
+            onClose={() => setShowAccountSettings(false)}
+          />
+        )}
         <div className="min-h-screen bg-slate-50">
           <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-md">
             <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
@@ -38,6 +46,13 @@ export default function Page() {
                 <span className="hidden text-xs text-slate-400 sm:block">
                   {session.user.email}
                 </span>
+                <button
+                  onClick={() => setShowAccountSettings(true)}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-50"
+                >
+                  <Settings className="size-3.5" />
+                  Ajustes
+                </button>
                 <button
                   onClick={() => signOut()}
                   className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-50"
