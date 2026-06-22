@@ -7,6 +7,7 @@ import {
   BedDouble,
   Building2,
   CalendarClock,
+  CalendarDays,
   Car,
   Clock,
   Compass,
@@ -35,8 +36,10 @@ import useSWR from 'swr'
 import type { LeadRow } from '@/lib/db/schema'
 import { getAdvice } from '@/lib/casa-facil-data'
 import { downloadBlob, generateLeadExcelBlob, leadExcelFilename, leadPdfFilename } from '@/lib/lead-export'
+import { CrmFollowUps, type FollowUpRow } from './crm-followups'
 import { CrmStats } from './crm-stats'
 import { generateLeadPdfBlob } from './lead-pdf-document'
+import { ScheduleFollowUpModal } from './schedule-followup-modal'
 import { useToast } from './toast'
 
 function cleanPhone(phone: string): string {
@@ -94,16 +97,24 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export function CrmDashboard() {
   const { notify } = useToast()
-  const [view, setView] = useState<'leads' | 'stats'>('leads')
+  const [view, setView] = useState<'leads' | 'stats' | 'followups'>('leads')
   const [query, setQuery] = useState('')
   const [order, setOrder] = useState<'recent' | 'urgent'>('recent')
   const [statusFilter, setStatusFilter] = useState<'all' | LeadStatus>('all')
+  const [scheduleFor, setScheduleFor] = useState<LeadRow | null>(null)
+  const [highlightedLeadId, setHighlightedLeadId] = useState<number | null>(null)
 
   const { data, error, isLoading, mutate } = useSWR<{ leads: LeadRow[] }>(
     '/api/leads/list',
     fetcher,
     { refreshInterval: 30000 },
   )
+  const { data: followUpsData, mutate: mutateFollowUps } = useSWR<{ followUps: FollowUpRow[] }>(
+    '/api/leads/follow-ups',
+    fetcher,
+    { refreshInterval: 30000 },
+  )
+  const followUps = followUpsData?.followUps ?? []
 
   const leads = data?.leads ?? []
 
@@ -140,6 +151,32 @@ export function CrmDashboard() {
   const last24h = leads.filter(
     (l) => Date.now() - new Date(l.createdAt).getTime() < 1000 * 60 * 60 * 24,
   ).length
+
+  function handleViewLead(leadId: number) {
+    setView('leads')
+    setQuery('')
+    setStatusFilter('all')
+    setHighlightedLeadId(leadId)
+    setTimeout(() => {
+      document.getElementById(`lead-${leadId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 50)
+    setTimeout(() => setHighlightedLeadId(null), 2500)
+  }
+
+  async function handleCompleteFollowUp(id: number, resultNote: string) {
+    try {
+      const res = await fetch('/api/leads/follow-ups', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, resultNote }),
+      })
+      if (!res.ok) throw new Error()
+      mutateFollowUps()
+      notify({ tone: 'success', title: 'Seguimiento completado', description: 'Se ha registrado en el historial.' })
+    } catch {
+      notify({ tone: 'error', title: 'No se pudo completar', description: 'Inténtalo de nuevo.' })
+    }
+  }
 
   async function handleStatusChange(lead: LeadRow, status: LeadStatus) {
     if (lead.status === status) return
@@ -221,6 +258,14 @@ export function CrmDashboard() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:py-10">
+      {scheduleFor && (
+        <ScheduleFollowUpModal
+          leadId={scheduleFor.id}
+          leadNombre={scheduleFor.nombre}
+          onClose={() => setScheduleFor(null)}
+          onScheduled={() => mutateFollowUps()}
+        />
+      )}
       {/* Header */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -250,11 +295,27 @@ export function CrmDashboard() {
             <BarChart3 className="size-4" />
             Estadísticas
           </button>
+          <button
+            onClick={() => setView('followups')}
+            className={`inline-flex items-center gap-1.5 rounded-md px-3.5 py-2 text-sm font-medium transition-colors ${
+              view === 'followups' ? 'bg-[#72b01d] text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'
+            }`}
+          >
+            <CalendarDays className="size-4" />
+            Seguimientos
+          </button>
         </div>
       </div>
 
       {view === 'stats' ? (
         <CrmStats leads={leads} />
+      ) : view === 'followups' ? (
+        <CrmFollowUps
+          leads={leads}
+          followUps={followUps}
+          onComplete={handleCompleteFollowUp}
+          onViewLead={handleViewLead}
+        />
       ) : (
         <>
       {/* Stats cards */}
@@ -381,12 +442,14 @@ export function CrmDashboard() {
             <LeadCard
               key={lead.id}
               lead={lead}
+              highlighted={highlightedLeadId === lead.id}
               onCall={() => handleCall(lead)}
               onCopyPhone={() => handleCopyPhone(lead)}
               onDownloadPdf={() => handleDownloadPdf(lead)}
               onDownloadExcel={() => handleDownloadExcel(lead)}
               onDelete={() => handleDelete(lead)}
               onStatusChange={(status) => handleStatusChange(lead, status)}
+              onScheduleFollowUp={() => setScheduleFor(lead)}
             />
           ))}
         </div>
@@ -433,20 +496,24 @@ function StatCard({
 
 function LeadCard({
   lead,
+  highlighted,
   onCall,
   onCopyPhone,
   onDownloadPdf,
   onDownloadExcel,
   onDelete,
   onStatusChange,
+  onScheduleFollowUp,
 }: {
   lead: LeadRow
+  highlighted: boolean
   onCall: () => void
   onCopyPhone: () => void
   onDownloadPdf: () => void
   onDownloadExcel: () => void
   onDelete: () => void
   onStatusChange: (status: LeadStatus) => void
+  onScheduleFollowUp: () => void
 }) {
   const status = (lead.status as LeadStatus) in STATUS_CONFIG ? (lead.status as LeadStatus) : 'cold'
   const advice = getAdvice(lead)
@@ -464,7 +531,12 @@ function LeadCard({
         : 'text-slate-600'
 
   return (
-    <div className="animate-fade-up overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div
+      id={`lead-${lead.id}`}
+      className={`animate-fade-up overflow-hidden rounded-2xl border bg-white shadow-sm transition-shadow ${
+        highlighted ? 'border-[#72b01d] ring-4 ring-[#72b01d]/30' : 'border-slate-200'
+      }`}
+    >
       {/* Top bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/60 px-5 py-3.5">
         <div className="flex items-center gap-3">
@@ -552,6 +624,14 @@ function LeadCard({
           >
             <FileSpreadsheet className="size-3.5" />
             Excel
+          </button>
+          <button
+            onClick={onScheduleFollowUp}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[#72b01d]/30 bg-[#f0f7e4] px-3 py-1.5 text-xs font-semibold text-[#5c8f16] transition-colors hover:bg-[#72b01d]/20"
+            title="Programar seguimiento"
+          >
+            <CalendarClock className="size-3.5" />
+            Seguimiento
           </button>
           <button
             onClick={onDelete}
