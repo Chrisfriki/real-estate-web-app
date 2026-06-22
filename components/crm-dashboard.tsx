@@ -9,12 +9,14 @@ import {
   CalendarClock,
   CalendarDays,
   Car,
+  CheckCircle2,
   Clock,
   Compass,
   Copy,
   Download,
   FileSpreadsheet,
   FileText,
+  History,
   Inbox,
   Lightbulb,
   Mail,
@@ -30,14 +32,17 @@ import {
   TrendingUp,
   Trees,
   UserRound,
+  XCircle,
 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import useSWR from 'swr'
 import type { LeadRow } from '@/lib/db/schema'
 import { getAdvice } from '@/lib/casa-facil-data'
 import { downloadBlob, generateLeadExcelBlob, leadExcelFilename, leadPdfFilename } from '@/lib/lead-export'
+import { ConfirmStageModal } from './confirm-stage-modal'
 import { CrmFollowUps, type FollowUpRow } from './crm-followups'
 import { CrmStats } from './crm-stats'
+import { LeadDetailModal } from './lead-detail-modal'
 import { generateLeadPdfBlob } from './lead-pdf-document'
 import { ScheduleFollowUpModal } from './schedule-followup-modal'
 import { useToast } from './toast'
@@ -66,6 +71,12 @@ const STATUS_CONFIG: Record<LeadStatus, { label: string; active: string }> = {
   cold: { label: 'Frío', active: 'bg-slate-200 text-slate-700' },
   warm: { label: 'Templado', active: 'bg-amber-100 text-amber-700' },
   hot: { label: 'Caliente', active: 'bg-[#fdeaea] text-[#c41616]' },
+}
+
+type PipelineStage = 'pending' | 'in_follow_up' | 'captured' | 'lost'
+const PIPELINE_BADGE: Partial<Record<PipelineStage, { label: string; className: string }>> = {
+  captured: { label: 'Captado', className: 'bg-[#f0f7e4] text-[#5c8f16]' },
+  lost: { label: 'Perdido', className: 'bg-slate-100 text-slate-500' },
 }
 
 function formatDate(d: Date | string): string {
@@ -102,6 +113,8 @@ export function CrmDashboard() {
   const [order, setOrder] = useState<'recent' | 'urgent'>('recent')
   const [statusFilter, setStatusFilter] = useState<'all' | LeadStatus>('all')
   const [scheduleFor, setScheduleFor] = useState<LeadRow | null>(null)
+  const [detailFor, setDetailFor] = useState<LeadRow | null>(null)
+  const [stageChange, setStageChange] = useState<{ lead: LeadRow; target: 'captured' | 'lost' } | null>(null)
   const [highlightedLeadId, setHighlightedLeadId] = useState<number | null>(null)
 
   const { data, error, isLoading, mutate } = useSWR<{ leads: LeadRow[] }>(
@@ -175,6 +188,25 @@ export function CrmDashboard() {
       notify({ tone: 'success', title: 'Seguimiento completado', description: 'Se ha registrado en el historial.' })
     } catch {
       notify({ tone: 'error', title: 'No se pudo completar', description: 'Inténtalo de nuevo.' })
+    }
+  }
+
+  async function handleStageChange(lead: LeadRow, stage: 'captured' | 'lost', note: string) {
+    try {
+      const res = await fetch('/api/leads/stage', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: lead.id, stage, note }),
+      })
+      if (!res.ok) throw new Error()
+      mutate()
+      notify({
+        tone: 'success',
+        title: stage === 'captured' ? 'Lead marcado como captado' : 'Lead marcado como perdido',
+        description: lead.nombre,
+      })
+    } catch {
+      notify({ tone: 'error', title: 'No se pudo actualizar la fase', description: 'Inténtalo de nuevo.' })
     }
   }
 
@@ -264,6 +296,15 @@ export function CrmDashboard() {
           leadNombre={scheduleFor.nombre}
           onClose={() => setScheduleFor(null)}
           onScheduled={() => mutateFollowUps()}
+        />
+      )}
+      {detailFor && <LeadDetailModal lead={detailFor} onClose={() => setDetailFor(null)} />}
+      {stageChange && (
+        <ConfirmStageModal
+          leadNombre={stageChange.lead.nombre}
+          targetStage={stageChange.target}
+          onClose={() => setStageChange(null)}
+          onConfirm={(note) => handleStageChange(stageChange.lead, stageChange.target, note)}
         />
       )}
       {/* Header */}
@@ -450,6 +491,9 @@ export function CrmDashboard() {
               onDelete={() => handleDelete(lead)}
               onStatusChange={(status) => handleStatusChange(lead, status)}
               onScheduleFollowUp={() => setScheduleFor(lead)}
+              onViewHistory={() => setDetailFor(lead)}
+              onMarkCaptured={() => setStageChange({ lead, target: 'captured' })}
+              onMarkLost={() => setStageChange({ lead, target: 'lost' })}
             />
           ))}
         </div>
@@ -504,6 +548,9 @@ function LeadCard({
   onDelete,
   onStatusChange,
   onScheduleFollowUp,
+  onViewHistory,
+  onMarkCaptured,
+  onMarkLost,
 }: {
   lead: LeadRow
   highlighted: boolean
@@ -514,8 +561,12 @@ function LeadCard({
   onDelete: () => void
   onStatusChange: (status: LeadStatus) => void
   onScheduleFollowUp: () => void
+  onViewHistory: () => void
+  onMarkCaptured: () => void
+  onMarkLost: () => void
 }) {
   const status = (lead.status as LeadStatus) in STATUS_CONFIG ? (lead.status as LeadStatus) : 'cold'
+  const pipelineBadge = PIPELINE_BADGE[lead.pipelineStatus as PipelineStage]
   const advice = getAdvice(lead)
   const adviceTone =
     advice.tone === 'hot'
@@ -572,6 +623,18 @@ function LeadCard({
           >
             {lead.plazo}
           </span>
+          {pipelineBadge && (
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${pipelineBadge.className}`}
+            >
+              {lead.pipelineStatus === 'captured' ? (
+                <CheckCircle2 className="size-3.5" />
+              ) : (
+                <XCircle className="size-3.5" />
+              )}
+              {pipelineBadge.label}
+            </span>
+          )}
           {lead.catastralDocPathname && (
             <a
               href={`/api/file?pathname=${encodeURIComponent(lead.catastralDocPathname)}`}
@@ -633,6 +696,34 @@ function LeadCard({
             <CalendarClock className="size-3.5" />
             Seguimiento
           </button>
+          <button
+            onClick={onViewHistory}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
+            title="Ver historial completo"
+          >
+            <History className="size-3.5" />
+            Historial
+          </button>
+          {lead.pipelineStatus !== 'captured' && (
+            <button
+              onClick={onMarkCaptured}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:border-[#72b01d]/30 hover:bg-[#f0f7e4] hover:text-[#5c8f16]"
+              title="Marcar como captado"
+            >
+              <CheckCircle2 className="size-3.5" />
+              Captado
+            </button>
+          )}
+          {lead.pipelineStatus !== 'lost' && (
+            <button
+              onClick={onMarkLost}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50"
+              title="Marcar como perdido"
+            >
+              <XCircle className="size-3.5" />
+              Perdido
+            </button>
+          )}
           <button
             onClick={onDelete}
             className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white p-1.5 text-slate-400 transition-colors hover:border-[#e62020]/30 hover:bg-[#fdeaea] hover:text-[#e62020]"

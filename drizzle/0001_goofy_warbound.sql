@@ -1,0 +1,1 @@
+ALTER TABLE "leads" ADD COLUMN "pipeline_status" text DEFAULT 'pending' NOT NULL;

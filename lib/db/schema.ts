@@ -98,6 +98,7 @@ export const leads = pgTable('leads', {
   // Seguimiento comercial
   status: text('status').notNull().default('cold'), // 'cold' | 'warm' | 'hot'
   statusUpdatedAt: timestamp('status_updated_at').notNull().defaultNow(),
+  pipelineStatus: text('pipeline_status').notNull().default('pending'), // 'pending' | 'in_follow_up' | 'captured' | 'lost'
 })
 
 export type LeadRow = typeof leads.$inferSelect

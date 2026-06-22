@@ -8,6 +8,13 @@
       "when": 1782123891044,
       "tag": "0000_watery_tarantula",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782129444613,
+      "tag": "0001_goofy_warbound",
+      "breakpoints": true
     }
   ]
 }

@@ -68,6 +68,12 @@ export async function POST(request: NextRequest) {
       .values({ leadId, scheduledAt: new Date(scheduledAt), type, note: note || null })
       .returning()
 
+    // Primer seguimiento de un lead que seguía "pendiente" → pasa a "en seguimiento" automáticamente.
+    const [lead] = await db.select().from(leads).where(eq(leads.id, leadId))
+    if (lead?.pipelineStatus === 'pending') {
+      await db.update(leads).set({ pipelineStatus: 'in_follow_up' }).where(eq(leads.id, leadId))
+    }
+
     await db.insert(leadActivities).values({
       leadId,
       type: 'follow_up_scheduled',
