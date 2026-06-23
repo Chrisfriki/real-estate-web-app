@@ -152,11 +152,9 @@ function internalHtml(d: LeadEmailData): string {
 
   <!-- Cabecera -->
   <tr>
-    <td style="background:#72b01d;padding:28px 32px;">
-      <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#d4edaa;">
-        Casa Fácil · Soluciones Inmobiliarias
-      </p>
-      <h1 style="margin:8px 0 0;font-size:22px;color:#ffffff;font-weight:700;">
+    <td style="background:#ffffff;padding:32px 32px 24px;text-align:center;border-bottom:4px solid #72b01d;">
+      <img src="https://www.valoratucasafacil.es/logo.png" alt="Casa Fácil" width="200" style="display:block;margin:0 auto 18px;max-width:200px;height:auto;border:0;" />
+      <h1 style="margin:0;font-size:20px;color:#1e293b;font-weight:700;">
         🏠 Nuevo lead de valoración
       </h1>
     </td>
@@ -200,13 +198,11 @@ function confirmationHtml(nombre: string): string {
 <table width="560" cellpadding="0" cellspacing="0"
   style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
 
-  <!-- Cabecera verde -->
+  <!-- Cabecera -->
   <tr>
-    <td style="background:#72b01d;padding:28px 32px;text-align:center;">
-      <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#d4edaa;">
-        Casa Fácil · Soluciones Inmobiliarias
-      </p>
-      <h1 style="margin:10px 0 0;font-size:22px;color:#ffffff;font-weight:700;">
+    <td style="background:#ffffff;padding:32px 32px 24px;text-align:center;border-bottom:4px solid #72b01d;">
+      <img src="https://www.valoratucasafacil.es/logo.png" alt="Casa Fácil" width="200" style="display:block;margin:0 auto 18px;max-width:200px;height:auto;border:0;" />
+      <h1 style="margin:0;font-size:20px;color:#1e293b;font-weight:700;">
         ¡Hemos recibido tu solicitud!
       </h1>
     </td>
