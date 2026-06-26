@@ -167,7 +167,7 @@ export function PublicFunnel() {
           <span className="text-[#72b01d]">Valencia y provincia</span>?
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
-          Las estimaciones automáticas pueden equivocarse. Obtén un análisis
+          Las valoraciones automáticas pueden equivocarse. Obtén un análisis
           realizado por un asesor de tu zona, que cruzará los datos catastrales
           de tu vivienda para ofrecerte un informe personalizado y una
           valoración más ajustada al valor del mercado.
