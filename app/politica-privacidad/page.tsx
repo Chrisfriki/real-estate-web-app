@@ -2,12 +2,6 @@ import Link from 'next/link'
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
-const PH = ({ children }: { children: string }) => (
-  <span className="rounded bg-amber-100 px-1 font-mono text-xs font-semibold text-amber-800">
-    {children}
-  </span>
-)
-
 export const metadata = {
   title: 'Política de Privacidad | Casa Fácil',
   robots: { index: false },
@@ -169,12 +163,12 @@ export default function PoliticaPrivacidadPage() {
           <ul className="mt-3 list-disc space-y-1.5 pl-6 text-slate-600 leading-relaxed">
             <li>
               <strong>Proveedor de alojamiento web (hosting):</strong>{' '}
-              <PH>[NOMBRE DEL PROVEEDOR — ej. Vercel Inc. / AWS]</PH> — para el almacenamiento y
+              Vercel Inc. — para el almacenamiento y
               servicio de la plataforma.
             </li>
             <li>
               <strong>Servicio de correo electrónico:</strong>{' '}
-              <PH>[NOMBRE DEL PROVEEDOR — ej. Resend / Brevo / Mailgun]</PH> — para el envío de
+              Resend — para el envío de
               notificaciones internas de nuevas solicitudes.
             </li>
           </ul>
