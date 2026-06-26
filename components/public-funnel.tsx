@@ -29,7 +29,6 @@ import {
   ORIENTACIONES,
   PLANTAS,
   PLAZOS,
-  PROVINCIAS,
   STEP_TITLES,
   TIPOS_INMUEBLE_OTROS,
   TIPOS_INMUEBLE_PRINCIPALES,
@@ -40,7 +39,6 @@ import {
   Field,
   OptionGrid,
   RangeSlider,
-  Select,
   Stepper,
   TextArea,
   TextInput,
@@ -229,19 +227,14 @@ export function PublicFunnel() {
         <div key={step} className="animate-fade-up">
           {step === 0 && (
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Provincia">
-                <Select
-                  value={form.provincia}
-                  onChange={(v) => set('provincia', v)}
-                  options={PROVINCIAS}
-                />
-              </Field>
-              <Field label="Municipio / Pueblo" hint="Empieza a escribir y selecciona tu localidad">
-                <MunicipioCombobox
-                  value={form.municipio}
-                  onChange={(v) => set('municipio', v)}
-                />
-              </Field>
+              <div className="sm:col-span-2">
+                <Field label="Municipio / Pueblo" hint="Empieza a escribir y selecciona tu localidad">
+                  <MunicipioCombobox
+                    value={form.municipio}
+                    onChange={(v) => set('municipio', v)}
+                  />
+                </Field>
+              </div>
               <Field label="Dirección exacta" hint="Calle, número, piso y puerta">
                 <TextInput
                   value={form.direccion}
