@@ -784,7 +784,7 @@ function LeadCard({
           </div>
           <Row
             icon={<Building2 className="size-3.5" />}
-            value={`${lead.planta} · Ascensor: ${lead.ascensor ? 'Sí' : 'No'}`}
+            value={`Ascensor: ${lead.ascensor ? 'Sí' : 'No'}`}
           />
         </Column>
 
@@ -793,7 +793,6 @@ function LeadCard({
           <div className="flex flex-wrap gap-1.5">
             <Tag>{lead.estado}</Tag>
             {lead.anio && <Tag>Año {lead.anio}</Tag>}
-            {lead.vistas && <Tag>{lead.vistas}</Tag>}
           </div>
           <Row icon={<Car className="size-3.5" />} value={`Garaje: ${lead.garaje}`} />
           {lead.orientacion && (

@@ -27,12 +27,10 @@ import {
   getMetrosFieldConfig,
   type LeadForm,
   ORIENTACIONES,
-  PLANTAS,
   PLAZOS,
   STEP_TITLES,
   TIPOS_INMUEBLE_OTROS,
   TIPOS_INMUEBLE_PRINCIPALES,
-  VISTAS,
 } from '@/lib/casa-facil-data'
 import { normalizeMunicipality } from '@/lib/valencia-municipalities'
 import {
@@ -357,19 +355,11 @@ export function PublicFunnel() {
                   columns={2}
                 />
               </Field>
-              <Field label="Altura / planta real">
-                <OptionGrid
-                  value={form.planta}
-                  onChange={(v) => set('planta', v)}
-                  options={PLANTAS}
-                  columns={2}
-                />
-              </Field>
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Ascensor">
                   <Toggle value={form.ascensor} onChange={(v) => set('ascensor', v)} />
                 </Field>
-                <Field label="Año de edificación">
+                <Field label="Año de edificación (opcional)">
                   <TextInput
                     inputMode="numeric"
                     value={form.anio}
@@ -378,14 +368,6 @@ export function PublicFunnel() {
                   />
                 </Field>
               </div>
-              <Field label="Vistas">
-                <OptionGrid
-                  value={form.vistas}
-                  onChange={(v) => set('vistas', v)}
-                  options={VISTAS}
-                  columns={2}
-                />
-              </Field>
             </div>
           )}
 
@@ -407,7 +389,7 @@ export function PublicFunnel() {
                   <Toggle value={form.piscina} onChange={(v) => set('piscina', v)} />
                 </Field>
               </div>
-              <Field label="Salidas / exteriores">
+              <Field label="Exteriores">
                 <OptionGrid
                   value={form.exteriores}
                   onChange={(v) => set('exteriores', v)}
@@ -423,7 +405,7 @@ export function PublicFunnel() {
                   columns={2}
                 />
               </Field>
-              <Field label="Orientación">
+              <Field label="Orientación (opcional)">
                 <OptionGrid
                   value={form.orientacion}
                   onChange={(v) => set('orientacion', v)}

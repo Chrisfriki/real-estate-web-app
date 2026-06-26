@@ -13,10 +13,8 @@ export type Lead = {
   banos: number
   // Paso 3 — Conservación e interior
   estado: string
-  planta: string
   ascensor: boolean
   anio: string
-  vistas: string
   // Paso 4 — Instalaciones y extras
   garaje: string
   trastero: boolean
@@ -88,15 +86,6 @@ export const ESTADOS = [
   'A estrenar',
 ] as const
 
-export const PLANTAS = [
-  'Planta baja',
-  'Planta intermedia',
-  'Planta alta',
-  'Chalet / unifamiliar',
-] as const
-
-export const VISTAS = ['Despejadas', 'A la calle', 'A patio', 'Mar / montaña'] as const
-
 export const GARAJES = ['No tiene', '1 plaza', '2 o más plazas'] as const
 
 export const EXTERIORES = ['Terraza', 'Balcón', 'Jardín', 'Ninguno'] as const
@@ -127,10 +116,8 @@ export const EMPTY_FORM: LeadForm = {
   habitaciones: 3,
   banos: 2,
   estado: 'Buen estado',
-  planta: 'Planta intermedia',
   ascensor: true,
   anio: '',
-  vistas: 'A la calle',
   garaje: 'No tiene',
   trastero: false,
   exteriores: 'Terraza',
@@ -165,10 +152,8 @@ export const SEED_LEADS: Lead[] = [
     habitaciones: 3,
     banos: 2,
     estado: 'Reformado',
-    planta: 'Planta alta',
     ascensor: true,
     anio: '1998',
-    vistas: 'Despejadas',
     garaje: '1 plaza',
     trastero: true,
     exteriores: 'Terraza',
@@ -193,10 +178,8 @@ export const SEED_LEADS: Lead[] = [
     habitaciones: 4,
     banos: 3,
     estado: 'Para reformar',
-    planta: 'Chalet / unifamiliar',
     ascensor: false,
     anio: '1985',
-    vistas: 'A la calle',
     garaje: '2 o más plazas',
     trastero: true,
     exteriores: 'Jardín',

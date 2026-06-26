@@ -2,12 +2,6 @@ import Link from 'next/link'
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
 
-const PH = ({ children }: { children: string }) => (
-  <span className="rounded bg-amber-100 px-1 font-mono text-xs font-semibold text-amber-800">
-    {children}
-  </span>
-)
-
 export const metadata = {
   title: 'Aviso Legal | Casa Fácil',
   robots: { index: false },
@@ -53,22 +47,22 @@ export default function AvisoLegalPage() {
           </p>
           <ul className="mt-4 space-y-1.5 text-slate-600 leading-relaxed">
             <li>
-              <strong>Denominación social:</strong> <PH>[NOMBRE LEGAL DE LA EMPRESA]</PH>
+              <strong>Denominación social:</strong> Casa Fácil, Soluciones Inmobiliarias, S.L.
             </li>
             <li>
-              <strong>NIF/CIF:</strong> <PH>[CIF/NIF]</PH>
+              <strong>NIF/CIF:</strong> B-96.651.302
             </li>
             <li>
-              <strong>Domicilio social:</strong> Avinguda del Nord, 31, 46220 Picassent (Valencia)
+              <strong>Domicilio social:</strong> Avinguda del Nord, número 33 bajo izquierda, 46220 Picassent (Valencia)
             </li>
             <li>
-              <strong>Datos registrales:</strong> <PH>[DATOS REGISTRALES — ej. Registro Mercantil de Valencia, Tomo X, Folio X, Hoja V-XXXXX]</PH>
+              <strong>Datos registrales:</strong> Inscrita en el Registro Mercantil de Valencia, Tomo 5.823, Libro 3.129, Folio 156, Secc 8ª, hoja V-55.009, inscripción 4ª, C.I.F. B-96.651.302
             </li>
             <li>
               <strong>Teléfono de contacto:</strong> 647 67 95 53
             </li>
             <li>
-              <strong>Correo electrónico:</strong> <PH>[EMAIL DE CONTACTO]</PH>
+              <strong>Correo electrónico:</strong> gerenciacasafacil@gmail.com
             </li>
             <li>
               <strong>Sitio web:</strong>{' '}

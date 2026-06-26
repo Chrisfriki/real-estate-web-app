@@ -75,7 +75,7 @@ export const leads = pgTable('leads', {
   banos: integer('banos').notNull(),
   // Paso 3
   estado: text('estado_conservacion').notNull(),
-  planta: text('planta').notNull(),
+  planta: text('planta'),
   ascensor: boolean('ascensor').notNull().default(false),
   anio: integer('anio_edificacion'),
   vistas: text('vistas'),

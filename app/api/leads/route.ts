@@ -46,10 +46,8 @@ export async function POST(request: NextRequest) {
     const habitaciones = parseInt(formData.get('habitaciones') as string, 10)
     const banos = parseInt(formData.get('banos') as string, 10)
     const estado = formData.get('estado') as string
-    const planta = formData.get('planta') as string
     const ascensor = formData.get('ascensor') === 'true'
     const anioRaw = formData.get('anio') as string
-    const vistas = formData.get('vistas') as string
     const garaje = formData.get('garaje') as string
     const trastero = formData.get('trastero') === 'true'
     const exteriores = formData.get('exteriores') as string
@@ -92,10 +90,8 @@ export async function POST(request: NextRequest) {
         habitaciones,
         banos,
         estado,
-        planta,
         ascensor,
         anio: anioRaw ? parseInt(anioRaw, 10) : null,
-        vistas: vistas || null,
         garaje,
         trastero,
         exteriores: exteriores || null,
@@ -117,9 +113,8 @@ export async function POST(request: NextRequest) {
       sendInternalLeadEmail({
         provincia, municipio, direccion, codigoPostal,
         tipo, metros, habitaciones, banos,
-        estado, planta, ascensor,
+        estado, ascensor,
         anio: anioRaw ? parseInt(anioRaw, 10) : null,
-        vistas: vistas || null,
         garaje, trastero,
         exteriores: exteriores || null,
         climatizacion: climatizacion || null,

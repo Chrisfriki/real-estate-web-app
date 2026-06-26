@@ -12,7 +12,6 @@ export type LeadExportData = {
     metros: number
     habitaciones: number
     banos: number
-    planta: string
     ascensor: string
     garaje: string
     trastero: string
@@ -20,7 +19,7 @@ export type LeadExportData = {
     piscina: string
     orientacion: string
   }
-  calidades: { estado: string; anio: string; vistas: string; climatizacion: string }
+  calidades: { estado: string; anio: string; climatizacion: string }
   ubicacion: { provincia: string; municipio: string; direccion: string; codigoPostal: string }
   recomendacion_agente: { temperatura: string; recomendacion: string; observaciones: string }
 }
@@ -53,7 +52,6 @@ export function buildLeadExportData(lead: LeadRow): LeadExportData {
       metros: lead.metros,
       habitaciones: lead.habitaciones,
       banos: lead.banos,
-      planta: lead.planta,
       ascensor: siNo(lead.ascensor),
       garaje: lead.garaje,
       trastero: siNo(lead.trastero),
@@ -64,7 +62,6 @@ export function buildLeadExportData(lead: LeadRow): LeadExportData {
     calidades: {
       estado: lead.estado,
       anio: lead.anio ? String(lead.anio) : FALLBACK,
-      vistas: lead.vistas ?? FALLBACK,
       climatizacion: lead.climatizacion ?? FALLBACK,
     },
     ubicacion: {
@@ -151,7 +148,6 @@ export async function generateLeadExcelBlob(lead: LeadRow): Promise<Blob> {
     ['Metros aproximados', data.inmueble.metros],
     ['Habitaciones', data.inmueble.habitaciones],
     ['Baños', data.inmueble.banos],
-    ['Planta', data.inmueble.planta],
     ['Ascensor', data.inmueble.ascensor],
     ['Garaje', data.inmueble.garaje],
     ['Trastero', data.inmueble.trastero],
@@ -160,7 +156,6 @@ export async function generateLeadExcelBlob(lead: LeadRow): Promise<Blob> {
     ['Orientación', data.inmueble.orientacion],
     ['Estado de conservación', data.calidades.estado],
     ['Año de construcción', data.calidades.anio],
-    ['Vistas', data.calidades.vistas],
     ['Climatización', data.calidades.climatizacion],
   ])
 

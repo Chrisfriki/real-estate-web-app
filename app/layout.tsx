@@ -78,7 +78,7 @@ const schemaFaq = {
       name: '¿La valoración de mi vivienda tiene algún coste?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'No. La valoración es completamente gratuita y sin compromiso. Si decides no vender, el informe es tuyo.',
+        text: 'No. La valoración es completamente gratuita y sin compromiso.',
       },
     },
     {
@@ -107,10 +107,10 @@ const schemaFaq = {
     },
     {
       '@type': 'Question',
-      name: '¿Qué diferencia hay entre vuestra valoración y las automáticas de Idealista o Fotocasa?',
+      name: '¿Qué diferencia hay entre nuestra valoración y la de los portales inmobiliarios?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Las valoraciones automáticas se equivocan hasta un 30% porque no tienen en cuenta el estado real del inmueble ni las ventas concretas de tu calle. Nosotros cruzamos datos catastrales reales con ventas recientes en tu zona.',
+        text: 'Las valoraciones automáticas son una buena referencia inicial, pero no siempre tienen en cuenta el estado real del inmueble, las reformas, las calidades o las operaciones cerradas más recientes en tu zona. En Casa Fácil complementamos los datos catastrales con información de compraventas recientes y un análisis más detallado de las características de la vivienda para ofrecerte una estimación más ajustada al mercado.',
       },
     },
   ],

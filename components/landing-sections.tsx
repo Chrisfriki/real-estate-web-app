@@ -18,7 +18,6 @@ import {
   HelpCircle,
   Landmark,
   MapPin,
-  Megaphone,
   Phone,
   ShieldCheck,
   Star,
@@ -74,17 +73,17 @@ export function WhySection() {
     {
       icon: FileText,
       title: 'Valoración real, no automática',
-      body: 'Cruzamos datos del Catastro con ventas recientes de tu zona.',
+      body: 'Cruzamos datos con compraventas recientes de tu zona.',
     },
     {
       icon: MapPin,
-      title: 'Especialistas en Valencia',
-      body: 'Conocemos el mercado local de Valencia ciudad y provincia.',
+      title: 'Asesores especializados en Valencia y todos sus municipios',
+      body: 'Conocemos el mercado real de cada zona: no somos una agencia de ciudad que visita tu pueblo de vez en cuando.',
     },
     {
       icon: ShieldCheck,
-      title: 'Nos encargamos de los trámites',
-      body: 'Gestionamos arras, notaría, certificado energético y la documentación necesaria.',
+      title: 'Olvídate de los trámites',
+      body: 'Gestionamos el contrato de arras, notaría, IIVTNU, cambios de titularidad y toda la documentación necesaria para que vendas con total tranquilidad.',
     },
     {
       icon: HandshakeIcon,
@@ -392,9 +391,8 @@ export function HowItWorksSection() {
     },
     {
       n: '04',
-      title: 'Publicamos en los principales portales',
+      title: 'Publicamos en los principales portales inmobiliarios',
       points: [
-        { icon: Megaphone, text: 'Difusión en los grandes portales (Idealista, Fotocasa y más).' },
         { icon: Users, text: 'Gestión de contactos y visitas de interesados.' },
       ],
     },
@@ -402,9 +400,9 @@ export function HowItWorksSection() {
       n: '05',
       title: 'Vendemos tu vivienda',
       points: [
-        { icon: TrendingUp, text: 'Negociamos el mejor precio', bold: true, tail: 'con los interesados.' },
-        { icon: FileCheck, text: 'Gestionamos la firma de contratos (reserva y arras).' },
-        { icon: Landmark, text: 'Te acompañamos hasta la firma ante notario.' },
+        { icon: TrendingUp, text: 'Negociamos las mejores condiciones para la venta de tu vivienda.' },
+        { icon: FileCheck, text: 'Gestionamos toda la documentación y coordinamos el proceso contractual con total seguridad.' },
+        { icon: Landmark, text: 'Te asesoramos y acompañamos hasta la firma de la escritura pública ante notario.' },
       ],
     },
   ]
@@ -473,7 +471,7 @@ export function HowItWorksSection() {
 const FAQS = [
   {
     q: '¿La valoración de mi vivienda tiene algún coste?',
-    a: 'No. La valoración es completamente gratuita y sin compromiso. Rellenamos el informe, te lo explicamos en una llamada y, si decides no vender, el informe es tuyo.',
+    a: 'No. La valoración es completamente gratuita y sin compromiso.',
   },
   {
     q: '¿En cuánto tiempo me contactáis?',
@@ -488,8 +486,8 @@ const FAQS = [
     a: 'Cubrimos toda la provincia de Valencia, con asesores especializados en cada municipio. Si tienes dudas sobre tu zona, llámanos al 647 67 95 53 y te confirmamos al momento.',
   },
   {
-    q: '¿Qué diferencia hay entre vuestra valoración y las de Idealista o Fotocasa?',
-    a: 'Las valoraciones automáticas se equivocan hasta un 30% porque no tienen en cuenta el estado real del inmueble, las reformas o las ventas concretas de tu calle. Nosotros cruzamos datos catastrales reales con operaciones cerradas recientemente en tu zona.',
+    q: '¿Qué diferencia hay entre nuestra valoración y la de los portales inmobiliarios?',
+    a: 'Las valoraciones automáticas son una buena referencia inicial, pero no siempre tienen en cuenta el estado real del inmueble, las reformas, las calidades o las operaciones cerradas más recientes en tu zona. En Casa Fácil complementamos los datos catastrales con información de compraventas recientes y un análisis más detallado de las características de la vivienda para ofrecerte una estimación más ajustada al mercado.',
   },
 ]
 
@@ -560,7 +558,7 @@ export function ZonesSection() {
             <span className="text-[#72b01d]">provincia de Valencia</span>
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
-            Asesores especializados en Valencia ciudad y todos sus municipios.
+            Asesores especializados en Valencia y todos sus municipios.
             Conocemos el mercado real de cada zona: no somos una agencia de ciudad que visita
             tu pueblo de vez en cuando.
           </p>
@@ -623,7 +621,7 @@ export function ZonesSection() {
 // ─── Trust / legal badges ────────────────────────────────────────────────────
 export function TrustSection() {
   const badges = [
-    { icon: BadgeCheck, label: 'Agencia registrada RAICV' },
+    { icon: BadgeCheck, label: 'RAICV 2193' },
     { icon: ShieldCheck, label: 'RGPD & privacidad garantizada' },
     { icon: BookOpen, label: 'Asesoría jurídica incluida' },
     { icon: FileText, label: 'Valoración sin compromiso' },

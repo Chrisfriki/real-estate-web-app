@@ -54,19 +54,19 @@ export default function PoliticaPrivacidadPage() {
           </h2>
           <ul className="mt-3 space-y-1.5 text-slate-600 leading-relaxed">
             <li>
-              <strong>Denominación social:</strong> <PH>[NOMBRE LEGAL DE LA EMPRESA]</PH>
+              <strong>Denominación social:</strong> Casa Fácil, Soluciones Inmobiliarias, S.L.
             </li>
             <li>
-              <strong>NIF/CIF:</strong> <PH>[CIF/NIF]</PH>
+              <strong>NIF/CIF:</strong> B-96.651.302
             </li>
             <li>
-              <strong>Domicilio:</strong> Avinguda del Nord, 31, 46220 Picassent (Valencia)
+              <strong>Domicilio:</strong> Avinguda del Nord, número 33 bajo izquierda, 46220 Picassent (Valencia)
             </li>
             <li>
               <strong>Teléfono:</strong> 647 67 95 53
             </li>
             <li>
-              <strong>Email de contacto:</strong> <PH>[EMAIL DE CONTACTO]</PH>
+              <strong>Email de contacto:</strong> gerenciacasafacil@gmail.com
             </li>
           </ul>
 
@@ -230,11 +230,11 @@ export default function PoliticaPrivacidadPage() {
           </p>
           <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 text-slate-600 leading-relaxed">
             <p>
-              <strong>Casa Fácil Soluciones Inmobiliarias</strong>
+              <strong>Casa Fácil, Soluciones Inmobiliarias, S.L.</strong>
             </p>
-            <p>Avinguda del Nord, 31, 46220 Picassent (Valencia)</p>
+            <p>Avinguda del Nord, número 33 bajo izquierda, 46220 Picassent (Valencia)</p>
             <p>
-              Email: <PH>[EMAIL DE CONTACTO]</PH>
+              Email: gerenciacasafacil@gmail.com
             </p>
             <p>Teléfono: 647 67 95 53</p>
           </div>

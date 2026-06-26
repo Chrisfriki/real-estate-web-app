@@ -83,7 +83,6 @@ export function LeadPdfDocument({ lead }: { lead: LeadRow }) {
           <Row label="Metros aproximados" value={`${d.inmueble.metros} m²`} />
           <Row label="Habitaciones" value={d.inmueble.habitaciones} />
           <Row label="Baños" value={d.inmueble.banos} />
-          <Row label="Planta" value={d.inmueble.planta} />
           <Row label="Ascensor" value={d.inmueble.ascensor} />
           <Row label="Garaje" value={d.inmueble.garaje} />
           <Row label="Trastero" value={d.inmueble.trastero} />
@@ -96,7 +95,6 @@ export function LeadPdfDocument({ lead }: { lead: LeadRow }) {
           <Text style={styles.sectionTitle}>Calidades y conservación</Text>
           <Row label="Estado de conservación" value={d.calidades.estado} />
           <Row label="Año de construcción" value={d.calidades.anio} />
-          <Row label="Vistas" value={d.calidades.vistas} />
           <Row label="Climatización" value={d.calidades.climatizacion} />
         </View>
 

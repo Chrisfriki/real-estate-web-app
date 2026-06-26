@@ -17,10 +17,8 @@ export interface LeadEmailData {
   habitaciones: number
   banos: number
   estado: string
-  planta: string
   ascensor: boolean
   anio: number | null
-  vistas: string | null
   garaje: string
   trastero: boolean
   exteriores: string | null
@@ -117,10 +115,8 @@ function internalHtml(d: LeadEmailData): string {
 
   const conservacion = [
     row('Estado', d.estado),
-    row('Planta', d.planta),
     row('Ascensor', d.ascensor),
     row('Año edificación', d.anio ?? '—'),
-    row('Vistas', d.vistas),
   ].join('')
 
   const extras = [
