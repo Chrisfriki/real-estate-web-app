@@ -78,7 +78,7 @@ export function WhySection() {
     {
       icon: MapPin,
       title: 'Asesores especializados en Valencia y todos sus municipios',
-      body: 'Conocemos el mercado real de cada zona: no somos una agencia de ciudad que visita tu pueblo de vez en cuando.',
+      body: 'Conocemos el mercado real de cada zona.',
     },
     {
       icon: ShieldCheck,
@@ -559,8 +559,7 @@ export function ZonesSection() {
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
             Asesores especializados en Valencia y todos sus municipios.
-            Conocemos el mercado real de cada zona: no somos una agencia de ciudad que visita
-            tu pueblo de vez en cuando.
+            Conocemos el mercado real de cada zona.
           </p>
         </div>
 
