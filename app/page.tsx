@@ -100,11 +100,11 @@ export default function Page() {
             {/* Contenido por encima del overlay */}
             <div className="relative z-10">
               <StatsInline />
-              <p className="mx-auto mb-2 max-w-xl px-4 text-center text-xs">
-                <span className="rounded-full bg-white/80 px-3 py-1 text-slate-600 backdrop-blur-sm">
+              <div className="mx-auto mb-4 max-w-xs px-4 sm:max-w-xl">
+                <p className="text-balance rounded-2xl bg-white/90 px-4 py-2.5 text-center text-xs font-medium leading-snug text-slate-600 shadow-sm ring-1 ring-slate-900/5 backdrop-blur-sm sm:px-6 sm:py-2 sm:text-sm">
                   Valoración gratuita de pisos, casas y áticos en Valencia y provincia
-                </span>
-              </p>
+                </p>
+              </div>
               <PublicFunnel />
             </div>
           </section>

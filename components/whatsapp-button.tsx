@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 
 const WA_HREF = 'https://wa.me/34647679553?text=Hola%2C%20quiero%20hacer%20una%20consulta%20sobre%20la%20valoraci%C3%B3n%20de%20mi%20vivienda.'
@@ -8,14 +8,30 @@ const DISMISS_KEY = 'wa-bubble-dismissed-until'
 const SHOW_DELAY_MS = 4500
 const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000
 
+// Disparado al mostrar la confirmación de envío: evita que este globo se superponga
+// al CTA de WhatsApp y al texto de la propia confirmación.
+export const WA_SUPPRESS_EVENT = 'casafacil:wa-suppress'
+
 export function WhatsAppButton() {
   const [showBubble, setShowBubble] = useState(false)
+  const suppressedRef = useRef(false)
+
+  useEffect(() => {
+    function suppress() {
+      suppressedRef.current = true
+      setShowBubble(false)
+    }
+    window.addEventListener(WA_SUPPRESS_EVENT, suppress)
+    return () => window.removeEventListener(WA_SUPPRESS_EVENT, suppress)
+  }, [])
 
   useEffect(() => {
     const dismissedUntil = Number(localStorage.getItem(DISMISS_KEY) ?? 0)
     if (Date.now() < dismissedUntil) return
 
-    const timer = setTimeout(() => setShowBubble(true), SHOW_DELAY_MS)
+    const timer = setTimeout(() => {
+      if (!suppressedRef.current) setShowBubble(true)
+    }, SHOW_DELAY_MS)
     return () => clearTimeout(timer)
   }, [])
 

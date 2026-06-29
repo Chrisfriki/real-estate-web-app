@@ -92,7 +92,7 @@ export const EXTERIORES = ['Terraza', 'Balcón', 'Jardín', 'Ninguno'] as const
 
 export const CLIMATIZACION = [
   'Calefacción',
-  'Splits',
+  'Aire acondicionado por split',
   'Conductos',
   'Ninguna',
 ] as const
@@ -121,7 +121,7 @@ export const EMPTY_FORM: LeadForm = {
   garaje: 'No tiene',
   trastero: false,
   exteriores: 'Terraza',
-  climatizacion: 'Splits',
+  climatizacion: 'Aire acondicionado por split',
   orientacion: 'Sur',
   piscina: false,
   nombre: '',

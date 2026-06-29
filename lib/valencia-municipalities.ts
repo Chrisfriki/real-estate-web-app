@@ -184,7 +184,7 @@ export const VALENCIA_MUNICIPALITIES: Municipality[] = [
   { officialName: 'Mislata', spanishName: 'Mislata', valencianName: 'Mislata', slug: 'mislata', province: 'Valencia', aliases: [] },
   { officialName: 'Moixent', spanishName: 'Mogente', valencianName: 'Moixent', slug: 'moixent', province: 'Valencia', aliases: ['Mogente'] },
   { officialName: 'Montcada', spanishName: 'Moncada', valencianName: 'Montcada', slug: 'montcada', province: 'Valencia', aliases: ['Moncada'] },
-  { officialName: 'Montserrat d\'Alcalà', spanishName: 'Monserrat', valencianName: 'Montserrat d\'Alcalà', slug: 'montserrat-d-alcala', province: 'Valencia', aliases: ['Monserrat', 'Montserrat'] },
+  { officialName: 'Montserrat', spanishName: 'Monserrat', valencianName: 'Montserrat', slug: 'montserrat', province: 'Valencia', aliases: ['Monserrat'] },
   { officialName: 'Montaverner', spanishName: 'Montaverner', valencianName: 'Montaverner', slug: 'montaverner', province: 'Valencia', aliases: [] },
   { officialName: 'Montesa', spanishName: 'Montesa', valencianName: 'Montesa', slug: 'montesa', province: 'Valencia', aliases: [] },
   { officialName: 'Montixelvo', spanishName: 'Montichelvo', valencianName: 'Montixelvo', slug: 'montixelvo', province: 'Valencia', aliases: ['Montichelvo'] },

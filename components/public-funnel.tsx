@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   ArrowLeft,
   ArrowRight,
@@ -10,6 +10,7 @@ import {
   FileText,
   Home,
   MapPin,
+  MessageCircle,
   Phone,
   Settings2,
   ShieldCheck,
@@ -45,9 +46,12 @@ import {
 import { MunicipioCombobox } from './municipio-combobox'
 import { useToast } from './toast'
 import { TrustSidebar } from './trust-sidebar'
+import { WA_SUPPRESS_EVENT } from './whatsapp-button'
 
 const STEP_ICONS = [MapPin, Building2, Home, Settings2, UserRound]
 const TIPOS_INMUEBLE_PRIMARIOS = [...TIPOS_INMUEBLE_PRINCIPALES, 'Otro']
+const WA_HREF =
+  'https://wa.me/34647679553?text=Hola%2C%20acabo%20de%20enviar%20mi%20solicitud%20de%20valoraci%C3%B3n%20en%20la%20web%20y%20quiero%20comentar%20algo%20m%C3%A1s.'
 
 export function PublicFunnel() {
   const [step, setStep] = useState(0)
@@ -57,10 +61,20 @@ export function PublicFunnel() {
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
   const { notify } = useToast()
 
   const set = <K extends keyof LeadForm>(key: K, value: LeadForm[K]) =>
     setForm((f) => ({ ...f, [key]: value }))
+
+  // La confirmación es más corta que el último paso del formulario: sin este
+  // ajuste mínimo, el scroll del usuario queda "flotando" más abajo, mostrando
+  // la siguiente sección de la landing en vez de la confirmación.
+  useEffect(() => {
+    if (!done) return
+    cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    window.dispatchEvent(new Event(WA_SUPPRESS_EVENT))
+  }, [done])
 
   function validateStep(): boolean {
     if (step === 0) {
@@ -144,10 +158,6 @@ export function PublicFunnel() {
     setDone(false)
   }
 
-  if (done) {
-    return <SuccessScreen municipio={form.municipio} onRestart={restart} />
-  }
-
   const progress = ((step + 1) / 5) * 100
 
   return (
@@ -177,8 +187,8 @@ export function PublicFunnel() {
         <div className="mb-3 flex items-center justify-between">
           {STEP_TITLES.map((t, i) => {
             const Icon = STEP_ICONS[i]
-            const active = i === step
-            const complete = i < step
+            const active = i === step && !done
+            const complete = done || i < step
             return (
               <div key={t} className="flex flex-1 flex-col items-center gap-1.5">
                 <div
@@ -212,17 +222,29 @@ export function PublicFunnel() {
       </div>
 
       {/* Card */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <div ref={cardRef} className="scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <div className="mb-6 flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-[#72b01d]">
-            Paso {step + 1} de 5
-          </span>
-          <span className="h-px flex-1 bg-slate-100" />
-          <span className="text-sm font-semibold text-slate-700">
-            {STEP_TITLES[step]}
-          </span>
+          {done ? (
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#72b01d]">
+              <CheckCircle2 className="size-3.5" />
+              Solicitud completada
+            </span>
+          ) : (
+            <>
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#72b01d]">
+                Paso {step + 1} de 5
+              </span>
+              <span className="h-px flex-1 bg-slate-100" />
+              <span className="text-sm font-semibold text-slate-700">
+                {STEP_TITLES[step]}
+              </span>
+            </>
+          )}
         </div>
 
+        {done ? (
+          <ConfirmationCard municipio={form.municipio} onRestart={restart} />
+        ) : (
         <div key={step} className="animate-fade-up">
           {step === 0 && (
             <div className="grid gap-5 sm:grid-cols-2">
@@ -562,8 +584,10 @@ export function PublicFunnel() {
             </div>
           )}
         </div>
+        )}
 
         {/* Nav */}
+        {!done && (
         <div className="mt-8 flex items-center justify-between gap-3">
           <button
             type="button"
@@ -607,6 +631,7 @@ export function PublicFunnel() {
             </button>
           )}
         </div>
+        )}
       </div>
 
       <p className="mt-5 flex items-center justify-center text-center text-xs">
@@ -622,7 +647,7 @@ export function PublicFunnel() {
   )
 }
 
-function SuccessScreen({
+function ConfirmationCard({
   municipio,
   onRestart,
 }: {
@@ -630,22 +655,26 @@ function SuccessScreen({
   onRestart: () => void
 }) {
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-col items-center px-4 py-16 text-center">
-      <div className="animate-pop flex size-24 items-center justify-center rounded-full bg-[#f0f7e4]">
-        <CheckCircle2 className="size-14 text-[#72b01d]" strokeWidth={2.2} />
+    <div className="animate-fade-up mx-auto flex w-full max-w-lg flex-col items-center px-1 py-1 text-center sm:px-2">
+      <div className="animate-pop flex size-16 shrink-0 items-center justify-center rounded-full bg-[#f0f7e4] sm:size-20">
+        <CheckCircle2 className="size-9 text-[#72b01d] sm:size-11" strokeWidth={2.2} />
       </div>
-      <h2 className="animate-fade-up mt-7 text-balance text-3xl font-bold tracking-tight text-slate-800">
+
+      <h2 className="mt-5 text-balance text-xl font-bold leading-tight tracking-tight text-slate-800 sm:text-2xl">
         ¡Solicitud recibida con éxito!
       </h2>
-      <p className="animate-fade-up mt-4 text-pretty leading-relaxed text-slate-500">
-        Gracias por confiar en <strong className="text-slate-700">Casa Fácil</strong>.
-        Un <strong className="text-[#5c8f16]">asesor especialista de tu zona</strong>
-        {municipio ? ` (${municipio} y alrededores)` : ''} ya ha recibido tu
-        ficha y se pondrá manos a la obra.
+
+      <p className="mx-auto mt-3 max-w-md text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
+        Gracias por confiar en <strong className="text-slate-800">Casa Fácil</strong>. Un{' '}
+        <strong className="text-[#5c8f16]">asesor especialista de tu zona</strong>
+        {municipio ? ` (${municipio})` : ''} ya ha recibido tu ficha y se pondrá manos a la obra.
+      </p>
+      <p className="mx-auto mt-2 max-w-md text-pretty text-sm leading-relaxed text-slate-600 sm:text-base">
+        En breve revisaremos los datos de tu vivienda y nos pondremos en contacto contigo.
       </p>
 
-      <div className="animate-fade-up mt-7 w-full rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm">
-        <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-700">
+      <div className="mt-6 w-full rounded-2xl border border-slate-200 bg-slate-50 p-5 text-left">
+        <h3 className="mb-4 text-xs font-bold uppercase tracking-wider text-slate-500">
           ¿Qué ocurre ahora?
         </h3>
         <ul className="flex flex-col gap-4">
@@ -678,14 +707,25 @@ function SuccessScreen({
         </ul>
       </div>
 
-      <button
-        type="button"
-        onClick={onRestart}
-        className="animate-fade-up mt-8 inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50"
-      >
-        <Home className="size-4" />
-        Valorar otra vivienda
-      </button>
+      <div className="mt-7 mb-1 flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <a
+          href={WA_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#1ebe5a]"
+        >
+          <MessageCircle className="size-4" />
+          Hablar por WhatsApp
+        </a>
+        <button
+          type="button"
+          onClick={onRestart}
+          className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50"
+        >
+          <Home className="size-4" />
+          Valorar otra vivienda
+        </button>
+      </div>
     </div>
   )
 }
