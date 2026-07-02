@@ -9,7 +9,6 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Clock,
   FileCheck,
   FileText,
   Gift,
@@ -31,12 +30,11 @@ export function StatsInline() {
   const stats = [
     { value: '+800', label: 'Propiedades', icon: Home },
     { value: '+30 años', label: 'Experiencia local', icon: Award },
-    { value: '24h', label: 'Tiempo de respuesta', icon: Clock },
   ]
 
   return (
     <div className="mx-auto mb-4 mt-6 max-w-2xl px-4 lg:hidden">
-      <div className="grid grid-cols-4 gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
+      <div className="grid grid-cols-3 gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 shadow-sm">
         {stats.map(({ value, label, icon: Icon }) => (
           <div key={label} className="flex flex-col items-center gap-1 text-center">
             <Icon className="size-5 text-[#72b01d]" strokeWidth={1.75} />
@@ -144,7 +142,7 @@ export function CtaBanner() {
               ¿Quieres una <span className="text-[#72b01d]">valoración real</span> de tu vivienda?
             </h2>
             <p className="mt-1 text-sm leading-relaxed text-slate-500">
-              Un asesor local revisa tu caso y te responde en menos de 24h. Sin compromiso y sin estimaciones automáticas.
+              Un asesor local revisa tu caso y te responde con un análisis de mercado real. Sin compromiso y sin estimaciones automáticas.
             </p>
           </div>
           <a
@@ -370,14 +368,14 @@ export function HowItWorksSection() {
       title: 'Indica tu vivienda',
       points: [
         { icon: MapPin, text: 'Introduce la dirección y algunos detalles del inmueble.' },
-        { icon: Gift, text: 'Valoración gratuita en 24h máx', pill: true },
+        { icon: Gift, text: 'Valoración gratuita y sin compromiso', pill: true },
       ],
     },
     {
       n: '02',
       title: 'Llamada y asesoramiento',
       points: [
-        { icon: Phone, text: 'Te llamamos en menos de 24h para darte el valor estimado.' },
+        { icon: Phone, text: 'Te llamamos para darte el valor estimado de tu vivienda.' },
         { icon: ShieldCheck, text: 'Sin obligación de vender', bold: true, tail: 'tú decides si quieres avanzar.' },
       ],
     },
@@ -475,7 +473,7 @@ const FAQS = [
   },
   {
     q: '¿En cuánto tiempo me contactáis?',
-    a: 'Un asesor especializado en tu municipio te llama en menos de 24 horas laborables desde que recibes la confirmación de tu solicitud.',
+    a: 'Un asesor especializado en tu municipio te llama en cuanto revisa tu solicitud y cruza los datos de tu vivienda.',
   },
   {
     q: '¿Estoy obligado a vender si pido la valoración?',

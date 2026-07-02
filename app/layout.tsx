@@ -11,15 +11,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: '¿Cuánto vale mi casa en Valencia y provincia? | Casa Fácil',
   description:
-    'Descubre el precio real de tu vivienda en Valencia y provincia. Valoración gratuita, sin robots: un asesor local te llama en menos de 24h con datos catastrales reales.',
+    'Descubre el precio real de tu vivienda en Valencia y provincia. Valoración gratuita, sin robots: un asesor local cruza datos catastrales reales para ofrecerte una estimación precisa.',
   generator: 'v0.app',
   alternates: {
     canonical: 'https://www.valoratucasafacil.es/',
   },
   openGraph: {
-    title: '¿Cuánto vale tu casa? Valoración gratuita en 24h | Casa Fácil',
+    title: '¿Cuánto vale tu casa? Valoración gratuita sin robots | Casa Fácil',
     description:
-      'Un asesor local cruza datos catastrales reales y te llama en menos de 24h. Sin robots, sin estimaciones erróneas.',
+      'Un asesor local cruza datos catastrales reales y te ofrece un informe personalizado. Sin robots, sin estimaciones erróneas.',
     url: 'https://www.valoratucasafacil.es/',
     siteName: 'Casa Fácil',
     images: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '¿Cuánto vale tu casa? Valoración gratuita | Casa Fácil',
-    description: 'Asesor local + datos catastrales reales. Te llamamos en 24h.',
+    description: 'Asesor local + datos catastrales reales. Valoración personalizada sin estimaciones automáticas.',
     images: ['https://www.valoratucasafacil.es/og-image.png'],
   },
   icons: {
@@ -86,7 +86,7 @@ const schemaFaq = {
       name: '¿En cuánto tiempo me contactáis?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Un asesor de tu zona te llama en menos de 24 horas laborables tras recibir tu solicitud.',
+        text: 'Un asesor de tu zona te llama en cuanto revisa tu solicitud y cruza los datos catastrales de tu vivienda.',
       },
     },
     {

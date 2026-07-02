@@ -1,10 +1,9 @@
-import { Award, Clock, Home, MessageCircle, Phone, Star } from 'lucide-react'
+import { Award, Home, MessageCircle, Phone, Star } from 'lucide-react'
 import { CasaFacilLogo } from './casa-facil-logo'
 
 const STATS = [
   { icon: Home, value: '+800', label: 'Propiedades vendidas' },
   { icon: Award, value: '+30 años', label: 'Experiencia local' },
-  { icon: Clock, value: '24h', label: 'Tiempo de respuesta' },
 ]
 
 export function TrustSidebar() {

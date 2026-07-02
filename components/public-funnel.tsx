@@ -137,7 +137,7 @@ export function PublicFunnel() {
       notify({
         tone: 'success',
         title: '¡Solicitud enviada!',
-        description: 'Un asesor de Casa Fácil te contactará en menos de 24h.',
+        description: 'Tu solicitud ha sido recibida. Un asesor se pondrá en contacto contigo.',
       })
     } catch {
       notify({
@@ -637,7 +637,7 @@ export function PublicFunnel() {
       <p className="mt-5 flex items-center justify-center text-center text-xs">
         <span className="flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-slate-600 backdrop-blur-sm">
           <Phone className="size-3.5" />
-          Sin compromiso · Te llamamos en menos de 24 horas
+          Sin compromiso · Valoración real por un asesor local
         </span>
       </p>
         </div>
@@ -688,8 +688,8 @@ function ConfirmationCard({
               d: 'Estudiamos ventas recientes en Silla, Alcàsser, Picassent y municipios cercanos.',
             },
             {
-              t: 'Te llamamos en menos de 24h',
-              d: 'Recibirás un informe de mercado real personalizado, sin estimaciones automáticas.',
+              t: 'Te contactamos en cuanto tenemos tu informe',
+              d: 'Recibirás un análisis de mercado real personalizado, sin estimaciones automáticas.',
             },
           ].map((item, i) => (
             <li key={item.t} className="flex gap-3">

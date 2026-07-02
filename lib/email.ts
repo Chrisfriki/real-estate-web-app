@@ -222,9 +222,9 @@ function confirmationHtml(nombre: string): string {
       <tr>
         <td style="background:#f0f7e4;border-left:4px solid #72b01d;border-radius:6px;padding:16px 20px;">
           <p style="margin:0;font-size:14px;color:#4a7a0f;line-height:1.6;">
-            ⏱ <strong>Te llamamos en menos de 24 h</strong><br>
-            Un asesor especialista de tu zona revisará tu solicitud y preparará
-            un informe de valoración personalizado.
+            📋 <strong>Tu asesor ya está revisando tu solicitud</strong><br>
+            Un asesor especialista de tu zona preparará tu informe de valoración
+            personalizado y se pondrá en contacto contigo pronto.
           </p>
         </td>
       </tr>
